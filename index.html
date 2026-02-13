@@ -5,59 +5,44 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>光風濟月工作室</title>
 <style>
-  body {
-    margin: 0;
-    font-family: sans-serif;
-    background-color: #0f1115;
-    color: #e0e0e0;
-  }
-  header {
-    background-color: #0f1115;
-    padding: 2rem;
-    text-align: center;
-  }
-  header h1 {
-    color: #3fa34d;
-    margin: 0;
-    font-size: 2.5rem;
-  }
-  header p {
-    margin: 0.5rem 0 0;
-    font-size: 1.2rem;
-    color: #e0e0e0;
-  }
-  nav {
-    text-align: center;
-    padding: 1rem 0;
-  }
-  nav a {
-    margin: 0 1rem;
-    color: #3fa34d;
-    text-decoration: none;
-    font-weight: bold;
-  }
-  section {
-    padding: 2rem;
-    max-width: 900px;
-    margin: 0 auto;
-  }
-  h2 {
-    color: #3fa34d;
-  }
-  .project iframe {
-    width: 100%;
-    height: 500px;
-    border: none;
-  }
-  footer {
-    background-color: #0f1115;
-    text-align: center;
-    padding: 1rem;
-    color: #666;
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', sans-serif; background-color: #0f1115; color: #e0e0e0; line-height: 1.6; }
+
+  header { text-align: center; padding: 3rem 1rem; background: linear-gradient(135deg, #0f1115, #1a1c22); }
+  header h1 { color: #3fa34d; font-size: 3rem; margin-bottom: 0.5rem; }
+  header p { color: #c0c0c0; font-size: 1.3rem; }
+
+  nav { background-color: #101218; padding: 1rem 0; position: sticky; top: 0; z-index: 100; }
+  nav a { margin: 0 1rem; color: #3fa34d; font-weight: bold; text-decoration: none; transition: 0.2s; }
+  nav a:hover { color: #9ae69a; }
+
+  section { max-width: 1000px; margin: 2rem auto; padding: 0 1rem; }
+  h2 { color: #3fa34d; margin-bottom: 1rem; font-size: 2rem; border-bottom: 2px solid #3fa34d; display: inline-block; padding-bottom: 0.3rem; }
+
+  .about p, .philosophy p { margin-bottom: 1rem; }
+  .about ul, .philosophy ul { list-style: disc; padding-left: 1.5rem; margin-bottom: 1rem; }
+
+  .projects { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+  .project-card { background-color: #1a1c22; padding: 1rem; border-radius: 8px; transition: 0.3s; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+  .project-card:hover { transform: translateY(-5px); box-shadow: 0 8px 15px rgba(0,0,0,0.4); }
+  .project-card h3 { color: #3fa34d; margin-bottom: 0.5rem; }
+  .project-card p { font-size: 0.95rem; color: #ccc; margin-bottom: 0.8rem; }
+  .project-card img { width: 100%; border-radius: 4px; margin-bottom: 0.5rem; }
+  .project-card a { display: inline-block; padding: 0.5rem 1rem; background-color: #3fa34d; color: #0f1115; font-weight: bold; border-radius: 4px; text-decoration: none; transition: 0.2s; }
+  .project-card a:hover { background-color: #9ae69a; }
+
+  footer { text-align: center; padding: 2rem 1rem; background-color: #101218; color: #666; margin-top: 3rem; }
+
+  #topBtn {
+    position: fixed; bottom: 30px; right: 30px;
+    background-color: #3fa34d; color: #fff; border: none; border-radius: 50%;
+    width: 50px; height: 50px; font-size: 1.5rem; cursor: pointer; display: none; z-index: 200;
   }
 </style>
 </head>
 <body>
+
+<button id="topBtn" onclick="window.scrollTo({top:0, behavior:'smooth'})">↑</button>
 
 <header>
   <h1>光風濟月工作室</h1>
@@ -70,38 +55,67 @@
   <a href="#philosophy">設計理念</a>
 </nav>
 
-<section id="about">
+<section id="about" class="about">
   <h2>關於我</h2>
-  <p>我專注於設計結構化、可擴充、以邏輯為核心的系統，重點不只是遊戲玩法，更是架構與系統思維。</p>
+  <p>我專注於設計結構化、可擴充、以邏輯為核心的系統與程式，重點不只是遊戲玩法，更是架構與系統思維。</p>
   <ul>
-    <li>核心專長：系統架構設計、模擬邏輯、安全性設計、模組化設定控制</li>
-    <li>使用工具：TurboWarp、Scratch</li>
+    <li>核心技能：程式設計、模組化控制系統、TurboWarp/Scratch 遊戲開發、互動式專案設計</li>
+    <li>特色：能將複雜系統拆解成模組、設計互動式界面、完善動畫效果</li>
+    <li>工具：Scratch、TurboWarp、HTML/CSS、JavaScript</li>
   </ul>
 </section>
 
 <section id="projects">
   <h2>專案</h2>
-  <p>以下為目前的主要作品：</p>
-  <div class="project">
-    <!-- TurboWarp 遊戲嵌入 -->
-    <iframe src="index.html" title="3D engine TurboWarp Galaxy"></iframe>
+  <div class="projects">
+    <div class="project-card">
+      <img src="game/epic-project-cover.png" alt="史詩專案封面">
+      <h3>史詩級專案</h3>
+      <p>一個龐大且複雜的系統，展示我對邏輯與模組化設計的能力，包含多個互動模組和動畫效果。</p>
+      <a href="https://fuguangji.github.io/game/epic" target="_blank">前往遊玩</a>
+    </div>
+
+    <div class="project-card">
+      <img src="game/minigame1-cover.png" alt="小遊戲1封面">
+      <h3>小遊戲 1</h3>
+      <p>使用 Scratch 開發的迷你遊戲，結合簡單互動與邏輯挑戰，適合快速體驗。</p>
+      <a href="https://fuguangji.github.io/game/minigame1" target="_blank">前往遊玩</a>
+    </div>
+
+    <div class="project-card">
+      <img src="game/minigame2-cover.png" alt="小遊戲2封面">
+      <h3>小遊戲 2</h3>
+      <p>另一個互動式迷你遊戲，加入更多動畫效果與系統邏輯控制，提供獨特體驗。</p>
+      <a href="https://fuguangji.github.io/game/minigame2" target="_blank">前往遊玩</a>
+    </div>
   </div>
 </section>
 
-<section id="philosophy">
-  <h2>系統設計理念</h2>
+<section id="philosophy" class="philosophy">
+  <h2>設計理念</h2>
+  <p>設計系統的核心在於邏輯、可擴展性與安全可靠，不只是能運作，更要易於理解與維護。</p>
   <ul>
     <li>清晰的結構邏輯</li>
-    <li>可擴充的系統設計</li>
-    <li>以設定為核心的控制</li>
-    <li>安全性導向架構</li>
+    <li>模組化與可擴充設計</li>
+    <li>互動與動畫效果</li>
+    <li>專業可靠，使用者導向</li>
   </ul>
-  <p>系統不只是能運作，更要能擴展、可靠。</p>
 </section>
 
 <footer>
-  &copy; 2026 傅光濟工作室
+  &copy; 2026 光風濟月工作室
 </footer>
+
+<script>
+  const topBtn = document.getElementById("topBtn");
+  window.onscroll = function() {
+    if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+      topBtn.style.display = "block";
+    } else {
+      topBtn.style.display = "none";
+    }
+  }
+</script>
 
 </body>
 </html>
