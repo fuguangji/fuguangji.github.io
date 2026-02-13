@@ -3,284 +3,258 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>光風濟月 | SYSTEM_OS_v3.0</title>
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&family=Noto+Sans+TC:wght@900&display=swap" rel="stylesheet">
+    <title>fuguangji | 光風濟月系統架構</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&family=Noto+Sans+TC:wght@300;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
             --neon: #39ff14;
-            --neon-dim: rgba(57, 255, 20, 0.3);
-            --bg: #050505;
-            --surface: #0a0a0a;
-            --glitch-offset: 3px;
+            --neon-glow: rgba(57, 255, 20, 0.4);
+            --bg: #050608;
+            --surface: #0d0f14;
+            --border: #1e232b;
         }
 
         * { margin:0; padding:0; box-sizing:border-box; cursor: crosshair; }
         body { 
-            background: var(--bg); color: #eee; 
+            background: var(--bg); color: #cdd9e5; 
             font-family: 'Fira Code', 'Noto Sans TC', monospace;
-            overflow-x: hidden; scroll-behavior: smooth;
+            line-height: 1.6; overflow-x: hidden;
         }
 
-        /* 背景：互動粒子 */
-        #canvas-bg { position: fixed; top:0; left:0; z-index: -1; }
-
-        /* 系統開機遮罩 */
-        #boot-screen {
-            position: fixed; inset: 0; background: #000; z-index: 9999;
-            display: flex; flex-direction: column; justify-content: center;
-            padding: 10%; font-size: 1.2rem; color: var(--neon);
-            transition: opacity 1s ease-out;
-        }
-
-        /* 滾動進度條 */
-        #progress-bar {
-            position: fixed; top: 0; left: 0; height: 3px;
-            background: var(--neon); box-shadow: 0 0 10px var(--neon);
-            width: 0%; z-index: 1001;
-        }
+        /* 互動背景 */
+        #bg-canvas { position: fixed; inset: 0; z-index: -1; opacity: 0.4; }
 
         /* 導覽列 */
         nav { 
-            position: fixed; width: 100%; top: 0; z-index: 100;
-            padding: 1.5rem; display: flex; justify-content: space-around;
-            backdrop-filter: blur(10px); background: rgba(0,0,0,0.5);
-            border-bottom: 1px solid var(--neon-dim);
+            position: fixed; top: 0; width: 100%; height: 60px;
+            background: rgba(13, 15, 20, 0.8); backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border); display: flex; 
+            align-items: center; justify-content: space-between; padding: 0 2rem; z-index: 1000;
         }
-        nav a { 
-            color: var(--neon); text-decoration: none; font-size: 0.8rem;
-            letter-spacing: 2px; transition: 0.3s;
-        }
-        nav a:hover { text-shadow: 0 0 8px var(--neon); transform: scale(1.1); }
+        .nav-brand { color: var(--neon); font-weight: 900; letter-spacing: 2px; }
+        .nav-links a { color: #8b949e; text-decoration: none; margin-left: 1.5rem; font-size: 0.8rem; transition: 0.3s; }
+        .nav-links a:hover { color: var(--neon); }
 
-        /* 主標題 Glitch 效果 */
-        .hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; }
-        .glitch-title {
-            font-size: 5rem; font-weight: 900; position: relative;
-            color: var(--neon); text-shadow: 0.05em 0 0 rgba(255,0,0,.75), -0.025em -0.05em 0 rgba(0,255,0,.75);
-            animation: glitch 500ms infinite;
-        }
-        @keyframes glitch {
-            0% { text-shadow: 2px 2px var(--neon-dim); transform: translate(0); }
-            20% { transform: translate(-2px, 2px); }
-            40% { transform: translate(-2px, -2px); }
-            60% { transform: translate(2px, 2px); }
-            80% { transform: translate(2px, -2px); }
-            100% { transform: translate(0); }
-        }
+        /* 主視覺區 */
+        .hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
+        .glitch { font-size: 5rem; font-weight: 900; color: var(--neon); text-shadow: 2px 2px #000; position: relative; }
+        .hero p { color: #8b949e; letter-spacing: 0.5rem; margin-top: 1rem; }
 
-        /* 3D 傾斜卡片容器 */
-        section { max-width: 1200px; margin: 10vh auto; padding: 2rem; perspective: 1000px; }
-        .card-container {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-        }
+        /* 核心內容區佈局 */
+        .container { max-width: 1100px; margin: 0 auto; padding: 4rem 1.5rem; }
 
-        .tilt-card {
-            background: var(--surface); border: 1px solid var(--neon-dim);
-            padding: 2rem; position: relative; border-radius: 4px;
-            transform-style: preserve-3d; transition: transform 0.1s ease;
-        }
-        .tilt-card:hover { border-color: var(--neon); box-shadow: 0 0 20px var(--neon-dim); }
-        .card-content { transform: translateZ(50px); }
+        .grid-layout { display: grid; grid-template-columns: 1fr 320px; gap: 2rem; }
 
-        /* 技術進度條動畫 */
-        .bar-container { background: #1a1a1a; height: 6px; margin: 15px 0; position: relative; }
-        .bar-fill { 
-            height: 100%; background: var(--neon); width: 0;
-            box-shadow: 0 0 10px var(--neon); transition: 2s cubic-bezier(0.1, 1, 0.1, 1);
-        }
+        /* 技術規格卡片 */
+        section { margin-bottom: 4rem; }
+        h2 { color: var(--neon); font-size: 1.5rem; margin-bottom: 2rem; border-left: 4px solid var(--neon); padding-left: 1rem; }
 
-        /* 終端機日誌 */
-        .terminal-log {
-            background: #000; border: 1px solid #333; padding: 1rem;
-            height: 300px; overflow-y: auto; font-size: 0.8rem;
-            line-height: 1.4; color: #888;
+        .tech-card {
+            background: var(--surface); border: 1px solid var(--border);
+            padding: 2rem; border-radius: 4px; position: relative; overflow: hidden;
+            transition: 0.3s;
         }
-        .log-entry::before { content: "[SUCCESS] "; color: var(--neon); }
+        .tech-card:hover { border-color: var(--neon); box-shadow: 0 0 15px var(--neon-glow); }
+        
+        /* 數據指標 */
+        .metrics { display: flex; gap: 20px; margin-bottom: 1.5rem; }
+        .metric-item { background: #161b22; padding: 10px 20px; border-radius: 4px; border: 1px solid #30363d; }
+        .metric-value { display: block; font-size: 1.5rem; color: var(--neon); font-weight: bold; }
+        .metric-label { font-size: 0.7rem; color: #8b949e; text-transform: uppercase; }
 
-        .btn-neon {
-            border: 1px solid var(--neon); padding: 10px 20px;
-            background: transparent; color: var(--neon); font-weight: bold;
-            display: inline-block; margin-top: 1rem; text-decoration: none;
-            position: relative; overflow: hidden;
+        /* 更新日誌 */
+        .log-box {
+            background: #000; border: 1px solid var(--border); padding: 1.5rem;
+            font-size: 0.85rem; max-height: 400px; overflow-y: auto;
         }
-        .btn-neon:hover { background: var(--neon); color: #000; box-shadow: 0 0 20px var(--neon); }
+        .log-entry { margin-bottom: 1rem; border-left: 2px solid #30363d; padding-left: 1rem; }
+        .log-date { color: var(--neon); font-weight: bold; margin-right: 10px; }
 
-        footer { text-align: center; padding: 5rem; opacity: 0.3; font-size: 0.7rem; }
+        /* 未來計畫標籤 */
+        .roadmap-item {
+            padding: 15px; border: 1px dashed #30363d; margin-bottom: 10px;
+            display: flex; align-items: center; gap: 15px; transition: 0.3s;
+        }
+        .roadmap-item:hover { background: rgba(57, 255, 20, 0.05); border-style: solid; border-color: var(--neon); }
+
+        .btn {
+            display: inline-block; padding: 10px 25px; border: 1px solid var(--neon);
+            color: var(--neon); text-decoration: none; font-weight: bold; transition: 0.3s;
+            margin-top: 1rem; font-size: 0.8rem;
+        }
+        .btn:hover { background: var(--neon); color: #000; }
+
+        footer { text-align: center; padding: 5rem; border-top: 1px solid var(--border); opacity: 0.5; font-size: 0.7rem; }
+
+        @media (max-width: 900px) { .grid-layout { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
 
-<div id="boot-screen"></div>
-<div id="progress-bar"></div>
-<canvas id="canvas-bg"></canvas>
+<canvas id="bg-canvas"></canvas>
 
 <nav>
-    <a href="#about">// IDENTITY</a>
-    <a href="#projects">// SYSTEMS</a>
-    <a href="#logs">// DEPLOY_LOGS</a>
+    <div class="nav-brand">FUGUANGJI // 光風濟月</div>
+    <div class="nav-links">
+        <a href="#engine">CORE_ENGINE</a>
+        <a href="#projects">PROJECTS</a>
+        <a href="#roadmap">FUTURE</a>
+    </div>
 </nav>
 
-<div class="hero">
-    <h1 class="glitch-title">光風濟月</h1>
-    <p style="letter-spacing: 5px; color: var(--neon);">SYSTEM_ARCHITECT_LABS</p>
+<header class="hero">
+    <div class="glitch" id="brand-name">光風濟月</div>
+    <p>獨立系統架構師 — fuguangji</p>
+    <div style="margin-top: 2rem;">
+        <span style="color:var(--neon)">[ STATUS: STABLE ]</span>
+    </div>
+</header>
+
+<div class="container">
+    <div class="grid-layout">
+        <main>
+            <section id="engine">
+                <h2>核心技術：University Alpha 2.0.0</h2>
+                <div class="tech-card">
+                    <p>這不只是一個 3D 引擎，它是針對極限效能設計的互動架構。在開發過程中，我們拋棄了簡單的邏輯，選擇了最具挑戰性的實現方式，只為換取最極致的使用者體驗。</p>
+                    
+                    <div class="metrics" style="margin-top:20px;">
+                        <div class="metric-item"><span class="metric-value">60+</span><span class="metric-label">Mobile FPS</span></div>
+                        <div class="metric-item"><span class="metric-value">HD</span><span class="metric-label">Resolution</span></div>
+                        <div class="metric-item"><span class="metric-value">Custom</span><span class="metric-label">Texture Mapping</span></div>
+                    </div>
+
+                    <h4 style="margin: 1.5rem 0 0.5rem; color:var(--neon);">核心突破 (Core Breakthroughs)</h4>
+                    <ul style="padding-left: 1.2rem; font-size: 0.9rem;">
+                        <li><strong>紋理繪製系統：</strong> 實現了高精度紋理映射，解決了傳統引擎畫面模糊的痛點。</li>
+                        <li><strong>圖層與畫筆管理器：</strong> 複雜的圖層覆蓋邏輯，確保在大量圖層與畫筆混用的情況下，畫面依然清晰且不衝突。</li>
+                        <li><strong>高效率偵測系統：</strong> 自研偵測演算法，以極低功耗處理複雜的碰撞與互動數據。</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="projects">
+                <h2>專案分析：Rust Survival 鏽跡餘生</h2>
+                <div class="tech-card">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                        <div>
+                            <h3 style="color:var(--neon)">版本 j1.5.2</h3>
+                            <p style="font-size: 0.85rem; color: #8b949e;">部署平台: 手機端優化導向</p>
+                        </div>
+                        <a href="https://fuguangji.github.io/game/rustsurvival" class="btn">執行系統連結</a>
+                    </div>
+                    <p style="margin-top: 1.5rem;">
+                        本專案是光風濟月的技術實驗場。為了在手機上跑出穩定 60FPS 的碾壓級效能，我們對每一行程式進行了深度優化。
+                    </p>
+                    <div class="log-box" style="margin-top: 1.5rem;">
+                        <div class="log-entry"><span class="log-date">2026-02-13</span><strong>j1.5.2:</strong> 啟用相容 3D 引擎底層，解決多層次畫筆覆蓋衝突。</div>
+                        <div class="log-entry"><span class="log-date">2026-02-13</span><strong>j1.5.0:</strong> UI 重構，優化手機端搖桿與滑動操作邏輯。</div>
+                        <div class="log-entry"><span class="log-date">2026-02-10</span><strong>j1.3.0:</strong> 導入高效率背包資料結構，維持實時運算的低延遲。</div>
+                        <div class="log-entry"><span class="log-date">2026-02-07</span><strong>j1.1.0:</strong> 全球首發 University 引擎替換，確立 60FPS 效能基準。</div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <aside>
+            <section id="philosophy">
+                <h2>設計理念</h2>
+                <div class="tech-card" style="font-size: 0.85rem;">
+                    <p style="color:var(--neon); font-weight: bold;">「使用者體驗 > 程式複雜度」</p>
+                    <p style="margin-top: 10px;">
+                        程式的難寫、系統的複雜，都不應該是犧牲效能的理由。我們追求的是極致的流暢感。目前我們專注於手機端的搖桿、螢幕滑動方案研究，力求打造出最直覺的行動端操作。
+                    </p>
+                </div>
+            </section>
+
+            <section id="roadmap">
+                <h2>2026 發展路徑</h2>
+                <div class="roadmap-item">
+                    <div style="font-size: 1.2rem;">👁️</div>
+                    <div>
+                        <div style="font-size:0.8rem; font-weight: bold;">裸眼 3D 技術</div>
+                        <div style="font-size:0.7rem; color:#8b949e;">在 2D 螢幕實現深度視覺突破</div>
+                    </div>
+                </div>
+                <div class="roadmap-item">
+                    <div style="font-size: 1.2rem;">✈️</div>
+                    <div>
+                        <div style="font-size:0.8rem; font-weight: bold;">3D 飛行模擬</div>
+                        <div style="font-size:0.7rem; color:#8b949e;">挑戰最高階的物理與渲染引擎</div>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h2>關於作者</h2>
+                <div class="tech-card" style="font-size: 0.85rem;">
+                    目前雖然默默無名，但我相信理念能透過作品傳遞。希望每一位訪客都能在這裡找到喜歡的遊戲，並感受到我對技術的堅持。
+                </div>
+            </section>
+        </aside>
+    </div>
 </div>
 
-<section id="about">
-    <div class="tilt-card" data-tilt>
-        <div class="card-content">
-            <h2 style="color:var(--neon)">> 核心技術矩陣</h2>
-            <p style="margin: 1rem 0;">致力於在邏輯底層進行極限開發，將 0 與 1 的轉換效率提升至最高境界。</p>
-            
-            <span>ENGINE_STABILITY</span>
-            <div class="bar-container"><div class="bar-fill" data-width="95%"></div></div>
-            <span>LOGIC_OPTIMIZATION</span>
-            <div class="bar-container"><div class="bar-fill" data-width="88%"></div></div>
-            <span>3D_RENDERING_SPEED</span>
-            <div class="bar-container"><div class="bar-fill" data-width="92%"></div></div>
-        </div>
-    </div>
-</section>
-
-<section id="projects">
-    <h2 style="margin-bottom: 2rem;">精選開發項目</h2>
-    <div class="card-container">
-        <div class="tilt-card" data-tilt>
-            <div class="card-content">
-                <h3 style="color:var(--neon)">Rust Survival</h3>
-                <p style="font-size: 0.8rem; color: #aaa;">Version: j1.5.2 | Architecture: 3D Univ 2.0</p>
-                <p style="margin: 1rem 0;">光風濟月科技結晶。搭載 CMTE 2.0 繁體中文引擎，突破 Scratch 原生顯示限制。</p>
-                <a href="https://fuguangji.github.io/game/rustsurvival" class="btn-neon">EXECUTE</a>
-            </div>
-        </div>
-
-        <div class="tilt-card" data-tilt>
-            <div class="card-content">
-                <h3 style="color:var(--neon)">Experimental Lab</h3>
-                <p style="font-size: 0.8rem; color: #aaa;">Status: Active Research</p>
-                <p style="margin: 1rem 0;">測試高效能計時系統 V2 (0.001s 精度) 與模組化回收演算法。</p>
-                <div style="display: flex; gap: 10px;">
-                    <a href="https://fuguangji.github.io/game/minigame1" class="btn-neon">LAB_01</a>
-                    <a href="https://fuguangji.github.io/game/minigame2" class="btn-neon">LAB_02</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section id="logs">
-    <h2>實時部署日誌</h2>
-    <div class="terminal-log" id="terminal"></div>
-</section>
-
 <footer>
-    © 2026 FUGUANGJIYUE_STUDIO | KERNEL_ESTABLISHED
+    © 2026 fuguangji - 光風濟月工作室 // SYSTEM STATUS: OPERATIONAL
 </footer>
 
 <script>
-    // 1. 開機動畫
-    const bootLines = [
-        "INITIALIZING CORE...",
-        "LOADING ARCHITECTURE: UNIVERSITY_V2",
-        "CONNECTING TO RUST_SURVIVAL_DATABASE...",
-        "MOUNTING 3D_SCANNER_PARSER...",
-        "SYSTEM CHECK: ALL MODULES NOMINAL.",
-        "ACCESS GRANTED."
-    ];
-    const bootScreen = document.getElementById('boot-screen');
-    let lineIdx = 0;
-    function printBoot() {
-        if(lineIdx < bootLines.length) {
-            const div = document.createElement('div');
-            div.textContent = "> " + bootLines[lineIdx];
-            bootScreen.appendChild(div);
-            lineIdx++;
-            setTimeout(printBoot, 200);
-        } else {
-            setTimeout(() => { bootScreen.style.opacity = '0'; setTimeout(()=>bootScreen.remove(), 1000); startAnims(); }, 800);
-        }
-    }
-    printBoot();
+    // 背景粒子特效
+    const canvas = document.getElementById('bg-canvas');
+    const ctx = canvas.getContext('2d');
+    let points = [];
 
-    // 2. 啟動後動畫（進度條）
-    function startAnims() {
-        document.querySelectorAll('.bar-fill').forEach(bar => {
-            bar.style.width = bar.getAttribute('data-width');
+    window.onresize = () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    };
+    window.onresize();
+
+    for(let i=0; i<70; i++) {
+        points.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            vx: (Math.random() - 0.5) * 0.3,
+            vy: (Math.random() - 0.5) * 0.3
         });
     }
 
-    // 3. 背景粒子 & 滑鼠互動
-    const canvas = document.getElementById('canvas-bg');
-    const ctx = canvas.getContext('2d');
-    let points = [];
-    let mouse = { x: null, y: null };
-
-    window.onmousemove = (e) => { mouse.x = e.clientX; mouse.y = e.clientY; };
-    window.onresize = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; };
-    window.onresize();
-
-    for(let i=0; i<100; i++) points.push({ x: Math.random()*canvas.width, y: Math.random()*canvas.height, vx: Math.random()-0.5, vy: Math.random()-0.5 });
-
     function animate() {
-        ctx.clearRect(0,0,canvas.width, canvas.height);
-        points.forEach(p => {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.strokeStyle = 'rgba(57, 255, 20, 0.1)';
+        ctx.beginPath();
+        points.forEach((p, i) => {
             p.x += p.vx; p.y += p.vy;
             if(p.x < 0 || p.x > canvas.width) p.vx *= -1;
             if(p.y < 0 || p.y > canvas.height) p.vy *= -1;
             
-            // 與滑鼠互動：微弱吸引力
-            if(mouse.x) {
-                let dx = mouse.x - p.x; let dy = mouse.y - p.y;
-                let dist = Math.sqrt(dx*dx + dy*dy);
-                if(dist < 200) { p.x += dx*0.01; p.y += dy*0.01; }
+            for(let j=i+1; j<points.length; j++) {
+                let p2 = points[j];
+                let dist = Math.hypot(p.x - p2.x, p.y - p2.y);
+                if(dist < 150) {
+                    ctx.moveTo(p.x, p.y);
+                    ctx.lineTo(p2.x, p2.y);
+                }
             }
-
-            ctx.fillStyle = 'rgba(57, 255, 20, 0.5)';
-            ctx.fillRect(p.x, p.y, 2, 2);
         });
+        ctx.stroke();
         requestAnimationFrame(animate);
     }
     animate();
 
-    // 4. 3D 傾斜效果 (Tilt)
-    document.querySelectorAll('[data-tilt]').forEach(card => {
-        card.onmousemove = (e) => {
+    // 滑鼠移入 3D 卡片傾斜效果
+    document.querySelectorAll('.tech-card').forEach(card => {
+        card.addEventListener('mousemove', (e) => {
             const rect = card.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            const centerX = rect.width / 2;
-            const centerY = rect.height / 2;
-            const rotateX = (y - centerY) / 10;
-            const rotateY = (centerX - x) / 10;
-            card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-        };
-        card.onmouseleave = () => card.style.transform = `rotateX(0deg) rotateY(0deg)`;
+            const x = (e.clientX - rect.left) / rect.width - 0.5;
+            const y = (e.clientY - rect.top) / rect.height - 0.5;
+            card.style.transform = `perspective(1000px) rotateY(${x * 5}deg) rotateX(${y * -5}deg) translateY(-5px)`;
+        });
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = `none`;
+        });
     });
-
-    // 5. 終端機模擬
-    const logs = [
-        "j1.5.2 Patch: 3D Shader compatibility fixed.",
-        "Memory allocated for Backpack System...",
-        "Rendering CMTE 2.0 font glyphs (7122 characters)...",
-        "Checking server sync for Rust Survival...",
-        "Logic Controller j2.0 optimized for ARM processors."
-    ];
-    const terminal = document.getElementById('terminal');
-    setInterval(() => {
-        const p = document.createElement('div');
-        p.className = 'log-entry';
-        p.textContent = logs[Math.floor(Math.random()*logs.length)];
-        terminal.appendChild(p);
-        terminal.scrollTop = terminal.scrollHeight;
-        if(terminal.childElementCount > 20) terminal.removeChild(terminal.firstChild);
-    }, 2000);
-
-    // 滾動進度
-    window.onscroll = () => {
-        const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-        document.getElementById("progress-bar").style.width = (winScroll / height) * 100 + "%";
-    };
 </script>
 
 </body>
