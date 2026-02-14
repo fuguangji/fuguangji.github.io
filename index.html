@@ -1,294 +1,266 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>fuguangji | 光風濟月工作室</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;500;900&family=Fira+Code:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --brand: #3fa34d;
-            --brand-dim: rgba(63, 163, 77, 0.2);
-            --bg: #030405;
-            --panel: rgba(20, 25, 30, 0.8);
-            --border: #2a323d;
-            --text-main: #e6edf3;
-            --text-dim: #8b949e;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>光風濟月 | Architecture Research</title>
 
-        /* 基礎設置 */
-        * { margin:0; padding:0; box-sizing:border-box; }
-        body { 
-            background: var(--bg); color: var(--text-main); 
-            font-family: 'Noto Sans TC', sans-serif; overflow-x: hidden;
-        }
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;500;700&display=swap" rel="stylesheet">
 
-        /* 動態背景層 */
-        .bg-grid {
-            position: fixed; inset: 0; z-index: -1;
-            background-image: 
-                linear-gradient(var(--brand-dim) 1px, transparent 1px),
-                linear-gradient(90deg, var(--brand-dim) 1px, transparent 1px);
-            background-size: 50px 50px;
-            perspective: 1000px;
-        }
-        .bg-grid::after {
-            content: ''; position: absolute; inset: 0;
-            background: linear-gradient(to bottom, transparent, var(--bg));
-        }
-        .scan-line {
-            position: fixed; width: 100%; height: 2px; background: rgba(63, 163, 77, 0.1);
-            top: -100px; animation: scan 8s linear infinite; z-index: -1;
-        }
-        @keyframes scan { from { top: -10%; } to { top: 110%; } }
+<style>
 
-        /* 導航系統 */
-        nav {
-            position: fixed; left: 0; top: 0; width: 100%; height: 80px;
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 0 4%; background: rgba(5,7,10,0.95); border-bottom: 2px solid var(--brand);
-            z-index: 1000; backdrop-filter: blur(10px);
-        }
-        .nav-brand { display: flex; align-items: center; gap: 15px; }
-        .nav-brand img { width: 45px; border: 1px solid var(--brand); border-radius: 4px; }
-        .nav-brand .titles { display: flex; flex-direction: column; }
-        .nav-brand h1 { font-size: 1.2rem; font-weight: 900; letter-spacing: 2px; }
-        .nav-brand span { font-size: 0.7rem; color: var(--brand); font-family: 'Fira Code'; }
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Noto Sans TC', sans-serif;
+    scroll-behavior:smooth;
+}
 
-        .nav-links { display: flex; gap: 40px; }
-        .nav-links a { 
-            text-decoration: none; color: var(--text-dim); font-size: 0.9rem; font-weight: 500;
-            transition: 0.3s; position: relative;
-        }
-        .nav-links a:hover, .nav-links a.active { color: var(--brand); }
-        .nav-links a.active::after { content: ''; position: absolute; bottom: -8px; left: 0; width: 100%; height: 2px; background: var(--brand); box-shadow: 0 0 10px var(--brand); }
+body{
+    background:#070b14;
+    color:#d6e2ff;
+    overflow-x:hidden;
+}
 
-        /* 內容容器 */
-        .main-frame {
-            margin-top: 80px; padding: 40px 6%;
-            height: calc(100vh - 80px); overflow-y: auto; scroll-behavior: smooth;
-        }
+/* ===== 背景掃描線 ===== */
 
-        .section-page { display: none; opacity: 0; transform: translateY(20px); transition: 0.6s ease-out; }
-        .section-page.active { display: block; opacity: 1; transform: translateY(0); }
+body::before{
+    content:"";
+    position:fixed;
+    width:100%;
+    height:100%;
+    background:linear-gradient(
+        transparent 95%,
+        rgba(0,180,255,0.05) 100%
+    );
+    background-size:100% 4px;
+    animation:scan 6s linear infinite;
+    pointer-events:none;
+    z-index:-1;
+}
 
-        /* 佈景組件：儀表板卡片 */
-        .dashboard-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 30px; margin-top: 20px; }
-        .panel { 
-            background: var(--panel); border: 1px solid var(--border); border-radius: 4px;
-            padding: 30px; position: relative; overflow: hidden;
-        }
-        .panel::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--brand); }
-        .panel-header { display: flex; justify-content: space-between; border-bottom: 1px solid var(--border); margin-bottom: 20px; padding-bottom: 10px; }
-        .panel-header h2 { font-size: 1.5rem; color: #fff; }
+@keyframes scan{
+    from{background-position:0 0;}
+    to{background-position:0 100px;}
+}
 
-        /* 特色功能 */
-        .feature-list { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        .feature-item { background: rgba(255,255,255,0.03); padding: 20px; border-radius: 4px; border-left: 2px solid var(--text-dim); }
-        .feature-item h4 { color: var(--brand); margin-bottom: 10px; }
-        .feature-item p { font-size: 0.9rem; color: var(--text-dim); line-height: 1.7; }
+/* ===== 區塊 ===== */
 
-        /* 數據指標 */
-        .stat-group { display: flex; gap: 15px; margin-top: 20px; }
-        .stat-card { background: #000; border: 1px solid var(--border); padding: 15px; flex: 1; text-align: center; }
-        .stat-card .val { display: block; font-size: 1.8rem; font-weight: 900; color: var(--brand); font-family: 'Fira Code'; }
-        .stat-card .lab { font-size: 0.7rem; color: var(--text-dim); }
+section{
+    padding:120px 12%;
+    opacity:0;
+    transform:translateY(40px);
+    transition:all 1s ease;
+}
 
-        /* --- 文字動畫 --- */
-        .scramble-text { font-family: 'Fira Code'; }
+section.show{
+    opacity:1;
+    transform:translateY(0);
+}
 
-        footer { margin-top: 60px; padding: 30px; border-top: 1px solid var(--border); text-align: center; font-size: 0.8rem; color: var(--text-dim); }
+/* ===== Hero ===== */
 
-        @media (max-width: 1000px) { .dashboard-grid { grid-template-columns: 1fr; } .feature-list { grid-template-columns: 1fr; } }
-    </style>
+.hero{
+    padding-top:180px;
+}
+
+.hero h1{
+    font-size:46px;
+    font-weight:700;
+    letter-spacing:4px;
+    background:linear-gradient(90deg,#7aa2ff,#00d4ff);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+.subtitle{
+    margin-top:20px;
+    font-size:18px;
+    opacity:0.8;
+}
+
+.tagline{
+    margin-top:30px;
+    font-size:16px;
+    color:#7aa2ff;
+    border-left:3px solid #7aa2ff;
+    padding-left:15px;
+}
+
+/* ===== 按鈕 ===== */
+
+.btn-group{
+    margin-top:40px;
+}
+
+.btn{
+    display:inline-block;
+    padding:12px 28px;
+    margin:10px 10px 0 0;
+    border:1px solid rgba(122,162,255,0.4);
+    color:#7aa2ff;
+    text-decoration:none;
+    transition:all 0.4s ease;
+    letter-spacing:1px;
+}
+
+.btn:hover{
+    background:#7aa2ff;
+    color:#000;
+    box-shadow:0 0 15px rgba(0,180,255,0.6);
+}
+
+/* ===== 標題 ===== */
+
+h2{
+    font-size:28px;
+    margin-bottom:50px;
+    color:#7aa2ff;
+    letter-spacing:2px;
+}
+
+/* ===== 研究卡片 ===== */
+
+.card{
+    border-left:2px solid rgba(122,162,255,0.4);
+    padding:20px 25px;
+    margin-bottom:30px;
+    transition:all 0.4s ease;
+}
+
+.card:hover{
+    border-left:2px solid #00d4ff;
+    transform:translateX(8px);
+}
+
+.card h3{
+    margin-bottom:10px;
+    font-weight:500;
+    color:#b3c8ff;
+}
+
+.card p{
+    opacity:0.75;
+    line-height:1.8;
+}
+
+/* ===== Footer ===== */
+
+footer{
+    text-align:center;
+    padding:80px 0;
+    opacity:0.4;
+    font-size:14px;
+}
+
+</style>
 </head>
+
 <body>
 
-<div class="bg-grid"></div>
-<div class="scan-line"></div>
-
-<nav>
-    <div class="nav-brand">
-        <img src="https://files.catbox.moe/kixhmi.png" alt="Logo">
-        <div class="titles">
-            <h1>光風濟月工作室</h1>
-            <span>FUGUANGJIYUE_STUDIO // v2.6.0</span>
-        </div>
+<section class="hero show">
+    <h1>光風濟月</h1>
+    <div class="subtitle">
+        系統架構設計者 / 技術研究者
     </div>
-    <div class="nav-links">
-        <a href="#" onclick="showPage('home')" id="l-home" class="active">系統概覽</a>
-        <a href="#" onclick="showPage('philosophy')" id="l-philosophy">設計哲學</a>
-        <a href="#" onclick="showPage('tech')" id="l-tech">University核心</a>
-        <a href="#" onclick="showPage('works')" id="l-works">作品檔案</a>
+    <div class="tagline" id="typewriter">
+        <!-- 打字機文字 -->
     </div>
-</nav>
 
-<main class="main-frame">
+    <div class="btn-group">
+        <a href="YOUR_SCRATCH_LINK" target="_blank" class="btn">Scratch 個人主頁</a>
+        <a href="YOUR_TEAM_LINK" target="_blank" class="btn">團隊頁面</a>
+    </div>
+</section>
 
-    <section id="home" class="section-page active">
-        <div class="dashboard-grid">
-            <div class="panel">
-                <div class="panel-header">
-                    <h2 class="scramble-text" data-value="CORE_IDENTIFICATION">核心標識</h2>
-                    <span style="color:var(--brand)">STATUS: ACTIVE</span>
-                </div>
-                <div style="display:flex; gap:30px; align-items:flex-start;">
-                    <img src="https://files.catbox.moe/oat85a.png" style="width:200px; border-radius:8px; border:1px solid var(--brand);" alt="fuguangji">
-                    <div>
-                        <h3 style="font-size: 2rem; margin-bottom: 10px;">設計師：fuguangji</h3>
-                        <p style="color:var(--text-dim); line-height:1.8;">
-                            我是 fuguangji，光風濟月工作室的創立者。我致力於在「極限限制」下挑戰行動端的視覺與操作邊界。
-                            對我而言，開發不是數字的堆砌，而是將複雜的底層邏輯轉化為玩家指尖下那份「理所當然」的流暢感。
-                            目前雖然默默無名，但我相信「代碼的深度決定了作品的高度」。
-                        </p>
-                        <div class="stat-group">
-                            <div class="stat-card"><span class="val">60</span><span class="lab">STABLE FPS</span></div>
-                            <div class="stat-card"><span class="val">3D</span><span class="lab">CORE ARCH</span></div>
-                            <div class="stat-card"><span class="val">HD</span><span class="lab">PEN RENDER</span></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="panel">
-                <div class="panel-header"><h2>即時日誌</h2></div>
-                <div style="font-family:'Fira Code'; font-size:0.85rem; color:var(--brand); line-height:1.6;">
-                    > [SYSTEM]: Initializing fuguangji_bio...<br>
-                    > [INFO]: University Alpha v2.0 running.<br>
-                    > [LOG]: Layer collision resolved.<br>
-                    > [LOG]: Texture cache optimized.<br>
-                    > [STATUS]: Ready for deployment.
-                </div>
-                <p style="margin-top:20px; font-size:0.8rem; color:var(--text-dim);">
-                    本工作室致力於掃除網頁與行動裝置之間的技術隔閡，讓 3D 生存體驗不再是高階設備的專利。
-                </p>
-            </div>
-        </div>
-    </section>
+<section>
+    <h2>設計哲學</h2>
 
-    <section id="philosophy" class="section-page">
-        <div class="panel">
-            <div class="panel-header"><h2>設計哲學：拒絕敷衍的藝術</h2></div>
-            <div class="feature-list">
-                <div class="feature-item">
-                    <h4>拒絕「無意義資訊」</h4>
-                    <p>
-                        在許多開發者追求華麗裝飾時，我們選擇「減法」。過多的術語堆疊與無關的數據展示只會干擾使用者。
-                        我們將 100% 的精力投入在「你看不到的地方」——優化偵測演算法、減少內存佔用，只為了讓你看到「你想看的內容」。
-                    </p>
-                </div>
-                <div class="feature-item">
-                    <h4>為人而非為機器開發</h4>
-                    <p>
-                        技術的強大不該體現在炫耀專業術語，而該體現在「直覺」。如果一個玩家需要去了解什麼是 FPS 才能玩遊戲，那是開發者的失敗。
-                        在光風濟月，我們將複雜留給自己，將極致的簡單留給世界。
-                    </p>
-                </div>
-                <div class="feature-item">
-                    <h4>默默無名的工匠精神</h4>
-                    <p>
-                        「光風濟月」代表一種坦蕩、明澈的境界。即便身處幕後，即便作品目前尚未廣為人知，
-                        我們依然對每一處 3D 紋理的映射、每一次輸入回饋的緩衝做到最好。這是對技術最基本的敬畏。
-                    </p>
-                </div>
-                <div class="feature-item">
-                    <h4>光風濟月的未來</h4>
-                    <p>
-                        我們不滿足於現狀。2026 年，工作室將全面轉向「物理擬真」與「深度視覺」的研究，
-                        包括裸眼 3D 技術的標準化應用，讓網頁端作品擁有媲美原生應用的震撼力。
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
+    <div class="card">
+        <h3>Architecture First</h3>
+        <p>功能可以重寫，架構不能混亂。任何專案開始前，必須確立層級與模組關係。</p>
+    </div>
 
-    <section id="tech" class="section-page">
-        <div class="dashboard-grid">
-            <div class="panel">
-                <div class="panel-header"><h2>核心引擎：University Alpha 2.0</h2></div>
-                <p style="margin-bottom:20px;">這是一套基於自研邏輯的高效能 3D 渲染系統，解決了傳統網頁端開發的數大痛點：</p>
-                <div class="feature-list">
-                    <div class="feature-item">
-                        <h4>1. 畫筆層次覆蓋邏輯 (Layer Occlusion)</h4>
-                        <p>透過創新的圖層排序演算法，我們成功解決了畫筆 (Pen) 在大量繪製時的圖層衝突，實現了高清 (HD) 且不閃爍的視覺效果。</p>
-                    </div>
-                    <div class="feature-item">
-                        <h4>2. 極速碰撞偵測演算法</h4>
-                        <p>拋棄傳統的逐點檢測，採用分區緩存與向量計算，讓手機端在處理複雜 3D 場景時依然能維持穩定 60 幀。</p>
-                    </div>
-                    <div class="feature-item">
-                        <h4>3. 模擬輸入緩衝 (Input Buffer)</h4>
-                        <p>專為觸控開發的線性回饋系統。透過算法補償螢幕更新率與輸入之間的延遲，實現「指哪打哪」的操控感。</p>
-                    </div>
-                    <div class="feature-item">
-                        <h4>4. 自適應紋理映射</h4>
-                        <p>根據設備性能動態調整渲染解析度，確保從入門機到旗艦機都能獲得最優的視覺/效能平衡點。</p>
-                    </div>
-                </div>
-            </div>
-            <div class="panel">
-                <div class="panel-header"><h2>技術背書</h2></div>
-                <div class="stat-card" style="margin-bottom:15px;"><span class="val">7,122+</span><span class="lab">漢字字庫支援</span></div>
-                <div class="stat-card" style="margin-bottom:15px;"><span class="val">< 16ms</span><span class="lab">渲染延遲</span></div>
-                <div class="stat-card"><span class="val">Vector</span><span class="lab">物理運算核心</span></div>
-            </div>
-        </div>
-    </section>
+    <div class="card">
+        <h3>Efficiency Above Simplicity</h3>
+        <p>演算法可以複雜，但不能低效。追求的是可計算的最優解。</p>
+    </div>
 
-    <section id="works" class="section-page">
-        <div class="panel">
-            <div class="panel-header"><h2>經典案例：鏽跡餘生 (Rust Survival)</h2></div>
-            <p style="margin-bottom:20px;">這是光風濟月工作室目前最重要的技術里程碑。它不僅是一個遊戲，更是我們所有技術的集成體。</p>
-            <div style="background:rgba(0,0,0,0.4); padding:20px; border:1px dashed var(--brand); margin-bottom:20px;">
-                <ul style="list-style:none; line-height:2;">
-                    <li><strong style="color:var(--brand);">■ 項目代號：</strong> Rust_Survival_Mobile</li>
-                    <li><strong style="color:var(--brand);">■ 核心技術：</strong> University 3D Pen Engine</li>
-                    <li><strong style="color:var(--brand);">■ 操作系統：</strong> 雙搖桿 + 智能快捷欄</li>
-                    <li><strong style="color:var(--brand);">■ 特色功能：</strong> 實時光影模擬、動態背包系統、高清地圖渲染</li>
-                </ul>
-            </div>
-            <p style="color:var(--text-dim); font-size:0.9rem;">
-                在《鏽跡餘生》中，我們克服了網頁端處理複雜 3D 物體的瓶頸。玩家可以體驗到極致流暢的生存探索。這正是光風濟月工作室「將複雜技術轉化為簡單樂趣」的最佳證明。
-            </p>
-            <a href="https://fuguangji.github.io/game/rustsurvival" style="display:inline-block; margin-top:20px; padding:15px 40px; border:1px solid var(--brand); color:var(--brand); text-decoration:none; font-weight:900; transition:0.3s;">啟動系統連結 →</a>
-        </div>
-    </section>
+    <div class="card">
+        <h3>Mobile Priority</h3>
+        <p>在限制環境中取得最佳體驗，才是真正的最佳設計。</p>
+    </div>
+</section>
 
-    <footer>
-        © 2026 光風濟月工作室 | fuguangji - 「以邏輯勾勒美感，在極限中定義流暢」
-    </footer>
-</main>
+<section>
+    <h2>系統實驗</h2>
+
+    <div class="card">
+        <h3>Rust Survival 架構實驗場</h3>
+        <p>整合 3D Engine 層、控制層、UI 模組與邏輯層。每次更新的核心是架構優化，而非功能堆疊。</p>
+    </div>
+</section>
+
+<section>
+    <h2>研究方向</h2>
+
+    <div class="card">
+        <h3>可模組化 3D 引擎</h3>
+        <p>建立可拆解與重組的引擎核心結構。</p>
+    </div>
+
+    <div class="card">
+        <h3>多語系文字渲染系統</h3>
+        <p>支援中 / 英 / 日的高效率顯示架構。</p>
+    </div>
+
+    <div class="card">
+        <h3>裸眼 3D 呈現探索</h3>
+        <p>研究低運算成本的立體視覺呈現方式。</p>
+    </div>
+
+    <div class="card">
+        <h3>飛行模擬架構設計</h3>
+        <p>雙人合作研究計畫，專注控制模型與運算優化。</p>
+    </div>
+</section>
+
+<footer>
+© 2026 光風濟月 | Architecture Research
+</footer>
 
 <script>
-    // 頁面切換系統
-    function showPage(pageId) {
-        document.querySelectorAll('.section-page').forEach(p => p.classList.remove('active'));
-        document.getElementById(pageId).classList.add('active');
-        
-        document.querySelectorAll('.nav-links a').forEach(l => l.classList.remove('active'));
-        document.getElementById('l-' + pageId).classList.add('active');
 
-        // 重啟文字解碼動畫
-        const header = document.querySelector(`#${pageId} .scramble-text`);
-        if (header) scrambleEffect(header);
+/* 滾動顯現 */
+
+const sections = document.querySelectorAll("section");
+
+window.addEventListener("scroll", () => {
+    sections.forEach(sec => {
+        const top = sec.getBoundingClientRect().top;
+        if(top < window.innerHeight - 120){
+            sec.classList.add("show");
+        }
+    });
+});
+
+/* 打字機效果 */
+
+const text = "我設計系統，而不是堆疊功能。";
+const target = document.getElementById("typewriter");
+let i = 0;
+
+function typeEffect(){
+    if(i < text.length){
+        target.innerHTML += text.charAt(i);
+        i++;
+        setTimeout(typeEffect, 60);
     }
+}
 
-    // 文字解碼動畫 (Scramble Effect)
-    function scrambleEffect(el) {
-        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*';
-        const finalValue = el.getAttribute('data-value') || el.innerText;
-        let iteration = 0;
-        const interval = setInterval(() => {
-            el.innerText = finalValue.split('').map((char, index) => {
-                if (index < iteration) return finalValue[index];
-                return chars[Math.floor(Math.random() * chars.length)];
-            }).join('');
-            if (iteration >= finalValue.length) clearInterval(interval);
-            iteration += 1 / 3;
-        }, 30);
-    }
+typeEffect();
 
-    // 初始化第一個頁面的動畫
-    scrambleEffect(document.querySelector('.scramble-text'));
 </script>
 
 </body>
