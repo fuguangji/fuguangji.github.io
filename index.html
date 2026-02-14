@@ -1,259 +1,262 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>光風濟月 | Design Research Lab</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>光風濟月 | FUGUANGJIYUE TERMINAL</title>
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Noto+Sans+TC:wght@400;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #00ff88;
+            --bg: #010201;
+            --panel-bg: rgba(10, 15, 10, 0.9);
+            --border: rgba(0, 255, 136, 0.25);
+            --text-dim: #7a8a7a;
+        }
 
-<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { 
+            background: var(--bg); color: var(--primary); 
+            font-family: 'Share Tech Mono', 'Noto Sans TC', sans-serif;
+            line-height: 1.6; overflow: hidden;
+        }
 
-<style>
+        /* --- 背景掃描感 --- */
+        body::before {
+            content: ""; position: fixed; inset: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%),
+                        linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+            background-size: 100% 3px, 3px 100%; z-index: 100; pointer-events: none;
+        }
 
-:root{
-    --green:#00ff88;
-    --soft:#00cc66;
-    --bg:#040604;
-}
+        /* --- 框架佈局 --- */
+        .wrapper {
+            display: grid; grid-template-columns: 320px 1fr 280px;
+            height: 100vh; gap: 1px; background: var(--border);
+        }
 
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Share Tech Mono', monospace;
-}
+        .panel { background: var(--bg); padding: 25px; overflow-y: auto; position: relative; }
+        .panel-header {
+            font-size: 0.75rem; background: var(--primary); color: #000;
+            padding: 2px 8px; font-weight: 900; margin-bottom: 20px; display: inline-block;
+        }
 
-body{
-    background:var(--bg);
-    color:var(--green);
-    overflow-x:hidden;
-}
+        /* --- 導覽列 --- */
+        nav {
+            grid-column: 1 / -1; height: 60px; background: #000;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0 30px; border-bottom: 1px solid var(--primary);
+        }
+        .nav-brand { display: flex; align-items: center; gap: 15px; }
+        .nav-brand img { height: 35px; border: 1px solid var(--primary); }
+        .nav-links button {
+            background: none; border: 1px solid transparent; color: var(--primary);
+            padding: 6px 15px; cursor: pointer; font-family: inherit; transition: 0.2s;
+        }
+        .nav-links button:hover, .nav-links button.active { border: 1px solid var(--primary); background: rgba(0,255,136,0.1); }
 
-/* ===== 柔和數位背景 ===== */
+        /* --- 主內容區 --- */
+        .main-view { background: radial-gradient(circle at 50% 50%, #050805 0%, #010201 100%); padding: 50px; }
+        .section { display: none; }
+        .section.active { display: block; animation: scanIn 0.4s ease-out; }
+        @keyframes scanIn { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
 
-body::before{
-    content:"";
-    position:fixed;
-    width:100%;
-    height:100%;
-    background:
-        radial-gradient(circle at 30% 30%, rgba(0,255,136,0.05), transparent 40%),
-        radial-gradient(circle at 70% 70%, rgba(0,200,100,0.05), transparent 40%);
-    z-index:-2;
-}
+        /* --- 視覺組件 --- */
+        .motto-box { border-left: 4px solid var(--primary); padding: 20px; background: rgba(0,255,136,0.03); margin: 30px 0; }
+        .motto-box h2 { font-size: 1.8rem; font-weight: 900; color: #fff; }
 
-/* ===== 導覽 ===== */
+        .stat-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
+        .stat-item { border: 1px solid var(--border); padding: 15px; }
+        .stat-item h4 { font-size: 0.8rem; color: var(--text-dim); text-transform: uppercase; }
+        .stat-item .value { font-size: 1.5rem; font-weight: 900; margin-top: 5px; }
 
-nav{
-    position:fixed;
-    width:100%;
-    padding:15px 8%;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    background:rgba(0,0,0,0.7);
-    border-bottom:1px solid rgba(0,255,136,0.2);
-    z-index:100;
-}
+        .version-list { margin-top: 20px; }
+        .version-item { border-bottom: 1px solid var(--border); padding: 10px 0; font-size: 0.85rem; }
+        .version-tag { color: #fff; font-weight: bold; margin-right: 10px; }
 
-nav img{
-    height:40px;
-}
+        .tech-pill {
+            display: inline-block; border: 1px solid var(--primary); padding: 2px 10px;
+            font-size: 0.75rem; margin: 0 5px 5px 0;
+        }
 
-nav button{
-    background:none;
-    border:none;
-    color:var(--green);
-    margin-left:20px;
-    cursor:pointer;
-    transition:0.3s;
-}
+        /* 隱藏捲軸 */
+        .panel::-webkit-scrollbar { width: 4px; }
+        .panel::-webkit-scrollbar-thumb { background: var(--primary); }
 
-nav button:hover{
-    color:#fff;
-    text-shadow:0 0 8px var(--green);
-}
-
-/* ===== 區塊 ===== */
-
-.section{
-    position:absolute;
-    width:100%;
-    min-height:100vh;
-    padding:120px 10%;
-    left:100%;
-    transition:0.6s ease;
-}
-
-.section.active{
-    left:0;
-}
-
-/* ===== 標題動畫（紅移抖動回復）===== */
-
-.title{
-    font-size:42px;
-    position:relative;
-    display:inline-block;
-    animation:shift 6s infinite;
-}
-
-@keyframes shift{
-    0%{ transform:translate(0); }
-    5%{ transform:translate(-2px,1px); color:#ff4444; }
-    10%{ transform:translate(2px,-1px); color:#00ffff; }
-    15%{ transform:translate(0); color:var(--green); }
-    100%{ transform:translate(0); }
-}
-
-/* ===== 頭像區 ===== */
-
-.profile{
-    display:flex;
-    align-items:center;
-    gap:40px;
-    margin-top:40px;
-}
-
-.profile img{
-    width:160px;
-    border-radius:50%;
-    border:2px solid var(--green);
-    box-shadow:0 0 20px rgba(0,255,136,0.4);
-    animation:float 4s ease-in-out infinite;
-}
-
-@keyframes float{
-    0%,100%{transform:translateY(0);}
-    50%{transform:translateY(-8px);}
-}
-
-/* ===== 卡片 ===== */
-
-.card{
-    margin-top:30px;
-    padding:20px;
-    border:1px solid rgba(0,255,136,0.3);
-    transition:0.3s;
-    cursor:pointer;
-}
-
-.card:hover{
-    box-shadow:0 0 20px rgba(0,255,136,0.4);
-    background:rgba(0,255,136,0.05);
-}
-
-/* ===== 按鈕 ===== */
-
-.btn{
-    display:inline-block;
-    margin-top:20px;
-    padding:8px 18px;
-    border:1px solid var(--green);
-    color:var(--green);
-    text-decoration:none;
-    transition:0.3s;
-}
-
-.btn:hover{
-    background:var(--green);
-    color:#000;
-}
-
-/* ===== 頁面切換 ===== */
-
-</style>
+        footer {
+            grid-column: 1 / -1; height: 30px; background: var(--primary);
+            color: #000; display: flex; justify-content: space-between;
+            align-items: center; padding: 0 20px; font-size: 0.7rem; font-weight: 900;
+        }
+    </style>
 </head>
-
 <body>
 
-<nav>
-    <img src="logo.png" alt="logo">
-    <div>
-        <button onclick="switchPage('home')">首頁</button>
-        <button onclick="switchPage('projects')">專案</button>
-        <button onclick="switchPage('research')">研究</button>
-    </div>
-</nav>
-
-<!-- 首頁 -->
-
-<div id="home" class="section active">
-
-    <div class="title">Design Systems Laboratory</div>
-
-    <div class="profile">
-        <img src="avatar.png" alt="avatar">
-        <div>
-            <h2>光風濟月</h2>
-            <p>系統設計師 / 架構設計研究</p>
-            <p>專注於 3D 架構、控制系統與實驗性數位呈現。</p>
-
-            <a href="YOUR_SCRATCH_LINK" target="_blank" class="btn">Scratch 主頁</a>
-            <a href="YOUR_TEAM_LINK" target="_blank" class="btn">團隊頁</a>
+<div class="wrapper">
+    <nav>
+        <div class="nav-brand">
+            <img src="https://files.catbox.moe/kixhmi.png" alt="logo">
+            <span style="letter-spacing: 2px;">光風濟月工作室 // FUGUANGJIYUE</span>
         </div>
-    </div>
+        <div class="nav-links">
+            <button onclick="showPage('home')" id="b-home" class="active">首頁</button>
+            <button onclick="showPage('engine')" id="b-engine">技術核心</button>
+            <button onclick="showPage('archive')" id="b-archive">專案檔案</button>
+        </div>
+    </nav>
 
-</div>
+    <aside class="panel" style="border-right: 1px solid var(--border);">
+        <div class="panel-header">ARCHITECT_INFO</div>
+        <div style="text-align:center; margin-bottom:30px;">
+            <img src="https://files.catbox.moe/oat85a.png" style="width:140px; border-radius:4px; border:1px solid var(--primary);">
+            <h3 style="margin-top:10px; color:#fff;">fuguangji</h3>
+            <p style="font-size:0.75rem; color:var(--text-dim);">系統設計師 / 架構研究者</p>
+        </div>
 
-<!-- 專案頁 -->
+        <div class="panel-header">CORE_PHILOSOPHY</div>
+        <div style="font-size: 0.85rem; line-height: 1.8;">
+            <p>> 追求「明徹」的境界</p>
+            <p>> 執著於效能技術的極限</p>
+            <p>> 帶著鐐銬跳舞：在限制下發揮</p>
+            <p>> 放棄簡潔，以複雜換取體感</p>
+        </div>
 
-<div id="projects" class="section">
+        <div class="panel-header" style="margin-top:40px;">HISTORY_NODES</div>
+        <div class="version-list">
+            <div class="version-item"><span class="version-tag">v2.0.0</span> 更換 University Alpha 2.0 引擎</div>
+            <div class="version-item"><span class="version-tag">v1.8.0</span> 啟動相容性優化內核</div>
+            <div class="version-item"><span class="version-tag">v1.0.0</span> 核心控制系統架構確立</div>
+        </div>
+    </aside>
 
-    <div class="title">Projects</div>
+    <main class="panel main-view">
+        
+        <section id="home" class="section active">
+            <div class="panel-header">SYSTEM_OVERVIEW</div>
+            <div class="motto-box">
+                <p style="color:var(--primary); font-weight:bold; margin-bottom:10px;">MISSION_STATEMENT</p>
+                <h2>放棄簡潔的程式，<br>以複雜程式彌補效能及體驗。</h2>
+            </div>
+            
+            <p style="color:#ccc; max-width:600px; margin-bottom:30px;">
+                光風濟月工作室致力於在不理想的編程環境下，透過高密度的邏輯運算與客製化參數，
+                為一般使用者提供跨時代的 3D 體驗。我們不追求代碼的簡潔美感，我們追求的是使用者指尖下的極致流暢。
+            </p>
 
-    <div class="card" onclick="switchPage('rust')">
-        Rust Survival 架構實驗
-    </div>
+            <div class="stat-grid">
+                <div class="stat-item">
+                    <h4>Engine Status</h4>
+                    <div class="value">STABLE / 60 FPS</div>
+                </div>
+                <div class="stat-item">
+                    <h4>User Adaptation</h4>
+                    <div class="value">AUTO_DETECT ON</div>
+                </div>
+                <div class="stat-item">
+                    <h4>Core Logic</h4>
+                    <div class="value">NON-LINEAR</div>
+                </div>
+                <div class="stat-item">
+                    <h4>Project Count</h4>
+                    <div class="value">03_ACTIVE</div>
+                </div>
+            </div>
+        </section>
 
-    <div class="card">
-        3D Engine University Alpha
-    </div>
+        <section id="engine" class="section">
+            <div class="panel-header">ENGINE_SPECIFICATION</div>
+            <h2 style="color:#fff; margin-bottom:20px;">University Alpha 引擎架構</h2>
+            
+            <div class="motto-box" style="border-color: #555;">
+                <h4 style="color:var(--primary);">客製化配置系統 (Custom Parameter Matrix)</h4>
+                <p style="font-size:0.9rem; margin-top:10px;">
+                    針對不同硬體環境與使用者習慣，引擎內建上百組微調參數。未來將導入自動偵測功能，實現「千人千面」的效能優化，確保在任何端點都能維持最優輸出。
+                </p>
+            </div>
 
-    <button class="btn" onclick="switchPage('home')">返回</button>
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:30px;">
+                <div>
+                    <h4 style="margin-bottom:10px;">核心系統 A：3D 渲染層</h4>
+                    <p style="font-size:0.85rem; color:var(--text-dim);">
+                        放棄傳統封裝，採用直接記憶體管理與畫筆映射技術，實現高清晰度 3D 視覺。
+                    </p>
+                </div>
+                <div>
+                    <h4 style="margin-bottom:10px;">核心系統 B：控制邏輯層</h4>
+                    <p style="font-size:0.85rem; color:var(--text-dim);">
+                        高頻率取樣控制算法，消除觸控延遲，將「控制感」做到极致。
+                    </p>
+                </div>
+            </div>
+        </section>
 
-</div>
+        <section id="archive" class="section">
+            <div class="panel-header">PROJECT_RECORDS</div>
+            <div style="border:1px solid var(--primary); padding:25px; margin-bottom:20px;">
+                <h3 style="color:#fff;">Rust Survival Architecture</h3>
+                <p style="margin:10px 0; font-size:0.9rem; color:#ccc;">
+                    工作室旗艦專案，完整集成了 University Alpha 的渲染與控制優勢。
+                    將複雜的生存系統模組化，即便內部邏輯龐大，仍能保持極高擴展性。
+                </p>
+                <div class="tech-pill">3D_CORE</div>
+                <div class="tech-pill">MODULE_PLUGIN</div>
+                <div class="tech-pill">PERF_MAX</div>
+                <br>
+                <a href="https://fuguangji.github.io/game/rustsurvival" style="color:var(--primary); text-decoration:none; font-weight:900; display:inline-block; margin-top:15px;">[ 啟動存取連結 ]</a>
+            </div>
+        </section>
+    </main>
 
-<!-- Rust 專案獨立頁 -->
+    <aside class="panel" style="border-left: 1px solid var(--border);">
+        <div class="panel-header">SYSTEM_MONITOR</div>
+        <div id="logs" style="font-size:0.7rem; font-family: 'Share Tech Mono';">
+            </div>
 
-<div id="rust" class="section">
+        <div style="position:absolute; bottom:25px; left:25px; right:25px;">
+            <div class="panel-header">PLUGIN_STATUS</div>
+            <div style="font-size:0.8rem;">
+                <p>3D_RENDERER: <span style="float:right">LINKED</span></p>
+                <p>CTRL_J2.0: <span style="float:right">LINKED</span></p>
+                <p>USER_AUTO_CFG: <span style="float:right; color:#555;">PENDING</span></p>
+            </div>
+        </div>
+    </aside>
 
-    <div class="title">Rust Survival Architecture</div>
-
-    <div class="card">
-        模組化 3D Engine 設計
-    </div>
-
-    <div class="card">
-        控制演算法優化
-    </div>
-
-    <button class="btn" onclick="switchPage('projects')">返回專案列表</button>
-
-</div>
-
-<!-- 研究 -->
-
-<div id="research" class="section">
-
-    <div class="title">Research Directions</div>
-
-    <div class="card">裸眼 3D 呈現實驗</div>
-    <div class="card">飛行模擬器架構研究</div>
-    <div class="card">數位顯示控制優化</div>
-
-    <button class="btn" onclick="switchPage('home')">返回</button>
-
+    <footer>
+        <span>TERMINAL_ID: FUGUANGJI_NODE_01</span>
+        <span>STATUS: OPERATIONAL // USER_FIRST_PRIORITY</span>
+        <span>© 2026 光風濟月工作室</span>
+    </footer>
 </div>
 
 <script>
+    function showPage(id) {
+        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+        document.querySelectorAll('.nav-links button').forEach(b => b.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+        document.getElementById('b-' + id).classList.add('active');
+    }
 
-function switchPage(id){
-    document.querySelectorAll(".section").forEach(sec=>{
-        sec.classList.remove("active");
-    });
-    document.getElementById(id).classList.add("active");
-}
+    // 模擬技術日誌 (符合使用者要求的非專業向但硬核感)
+    const logBox = document.getElementById('logs');
+    const logs = [
+        "> 偵測到使用者硬體環境...",
+        "> 自動調動 University Alpha 參數...",
+        "> 效能補償機制啟動...",
+        "> 3D 控制層協議載入完畢。",
+        "> 正在同步《鏽跡餘生》模組數據...",
+        "> 當前狀態：穩定 60FPS (Locked)",
+        "> 光風濟月系統運行中。"
+    ];
 
+    function addLog() {
+        const p = document.createElement('p');
+        p.style.marginBottom = "5px";
+        p.innerHTML = `<span style="color:#555;">[${new Date().toLocaleTimeString()}]</span> ${logs[Math.floor(Math.random()*logs.length)]}`;
+        logBox.prepend(p);
+        if(logBox.children.length > 15) logBox.lastChild.remove();
+    }
+    setInterval(addLog, 3000);
 </script>
 
 </body>
