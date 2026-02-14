@@ -3,27 +3,32 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>光風濟月 | Architecture Research</title>
+<title>光風濟月 | Architecture Lab</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;500;700&display=swap" rel="stylesheet">
 
 <style>
+
+:root{
+    --main:#00ff88;
+    --soft:#00cc6a;
+    --bg:#050a08;
+}
 
 *{
     margin:0;
     padding:0;
     box-sizing:border-box;
     font-family:'Noto Sans TC', sans-serif;
-    scroll-behavior:smooth;
 }
 
 body{
-    background:#070b14;
-    color:#d6e2ff;
+    background:var(--bg);
+    color:#d8ffe9;
     overflow-x:hidden;
 }
 
-/* ===== 背景掃描線 ===== */
+/* 掃描線背景 */
 
 body::before{
     content:"";
@@ -31,10 +36,10 @@ body::before{
     width:100%;
     height:100%;
     background:linear-gradient(
-        transparent 95%,
-        rgba(0,180,255,0.05) 100%
+        transparent 96%,
+        rgba(0,255,136,0.05) 100%
     );
-    background-size:100% 4px;
+    background-size:100% 5px;
     animation:scan 6s linear infinite;
     pointer-events:none;
     z-index:-1;
@@ -42,116 +47,114 @@ body::before{
 
 @keyframes scan{
     from{background-position:0 0;}
-    to{background-position:0 100px;}
+    to{background-position:0 120px;}
+}
+
+/* ===== 導覽列 ===== */
+
+nav{
+    position:fixed;
+    width:100%;
+    padding:20px 10%;
+    background:rgba(0,0,0,0.6);
+    backdrop-filter:blur(8px);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    border-bottom:1px solid rgba(0,255,136,0.2);
+    z-index:1000;
+}
+
+.logo{
+    color:var(--main);
+    font-weight:700;
+    letter-spacing:2px;
+}
+
+.nav-links button{
+    background:none;
+    border:none;
+    color:#aaffcc;
+    margin-left:20px;
+    cursor:pointer;
+    font-size:14px;
+    transition:0.3s;
+}
+
+.nav-links button:hover{
+    color:var(--main);
 }
 
 /* ===== 區塊 ===== */
 
-section{
-    padding:120px 12%;
-    opacity:0;
-    transform:translateY(40px);
-    transition:all 1s ease;
+.section{
+    display:none;
+    padding:160px 12%;
+    animation:fadeIn 0.8s ease;
 }
 
-section.show{
-    opacity:1;
-    transform:translateY(0);
+.section.active{
+    display:block;
 }
 
-/* ===== Hero ===== */
-
-.hero{
-    padding-top:180px;
+@keyframes fadeIn{
+    from{opacity:0; transform:translateY(30px);}
+    to{opacity:1; transform:translateY(0);}
 }
 
-.hero h1{
-    font-size:46px;
-    font-weight:700;
-    letter-spacing:4px;
-    background:linear-gradient(90deg,#7aa2ff,#00d4ff);
-    -webkit-background-clip:text;
-    -webkit-text-fill-color:transparent;
+h1{
+    font-size:42px;
+    color:var(--main);
+    text-shadow:0 0 15px rgba(0,255,136,0.6);
 }
 
-.subtitle{
-    margin-top:20px;
-    font-size:18px;
-    opacity:0.8;
+h2{
+    margin-bottom:40px;
+    color:var(--main);
+    letter-spacing:2px;
 }
 
-.tagline{
-    margin-top:30px;
-    font-size:16px;
-    color:#7aa2ff;
-    border-left:3px solid #7aa2ff;
-    padding-left:15px;
+.card{
+    border-left:2px solid rgba(0,255,136,0.4);
+    padding:20px;
+    margin-bottom:25px;
+    transition:0.3s;
+}
+
+.card:hover{
+    border-left:2px solid var(--main);
+    transform:translateX(6px);
 }
 
 /* ===== 按鈕 ===== */
 
-.btn-group{
-    margin-top:40px;
-}
-
 .btn{
     display:inline-block;
-    padding:12px 28px;
-    margin:10px 10px 0 0;
-    border:1px solid rgba(122,162,255,0.4);
-    color:#7aa2ff;
+    margin-top:30px;
+    padding:10px 22px;
+    border:1px solid var(--main);
+    color:var(--main);
     text-decoration:none;
-    transition:all 0.4s ease;
-    letter-spacing:1px;
+    transition:0.3s;
 }
 
 .btn:hover{
-    background:#7aa2ff;
+    background:var(--main);
     color:#000;
-    box-shadow:0 0 15px rgba(0,180,255,0.6);
+    box-shadow:0 0 15px var(--main);
 }
 
-/* ===== 標題 ===== */
+/* ===== 打字機 ===== */
 
-h2{
-    font-size:28px;
-    margin-bottom:50px;
-    color:#7aa2ff;
-    letter-spacing:2px;
+#typewriter{
+    margin-top:20px;
+    color:#aaffcc;
 }
-
-/* ===== 研究卡片 ===== */
-
-.card{
-    border-left:2px solid rgba(122,162,255,0.4);
-    padding:20px 25px;
-    margin-bottom:30px;
-    transition:all 0.4s ease;
-}
-
-.card:hover{
-    border-left:2px solid #00d4ff;
-    transform:translateX(8px);
-}
-
-.card h3{
-    margin-bottom:10px;
-    font-weight:500;
-    color:#b3c8ff;
-}
-
-.card p{
-    opacity:0.75;
-    line-height:1.8;
-}
-
-/* ===== Footer ===== */
 
 footer{
     text-align:center;
-    padding:80px 0;
+    padding:60px;
     opacity:0.4;
-    font-size:14px;
 }
 
 </style>
@@ -159,93 +162,92 @@ footer{
 
 <body>
 
-<section class="hero show">
-    <h1>光風濟月</h1>
-    <div class="subtitle">
-        系統架構設計者 / 技術研究者
+<nav>
+    <div class="logo">光風濟月</div>
+    <div class="nav-links">
+        <button onclick="showSection('home')">首頁</button>
+        <button onclick="showSection('philosophy')">理念</button>
+        <button onclick="showSection('system')">系統</button>
+        <button onclick="showSection('research')">研究</button>
     </div>
-    <div class="tagline" id="typewriter">
-        <!-- 打字機文字 -->
-    </div>
+</nav>
 
-    <div class="btn-group">
-        <a href="YOUR_SCRATCH_LINK" target="_blank" class="btn">Scratch 個人主頁</a>
-        <a href="YOUR_TEAM_LINK" target="_blank" class="btn">團隊頁面</a>
-    </div>
-</section>
+<!-- ===== 首頁 ===== -->
 
-<section>
+<div id="home" class="section active">
+    <h1>System Architecture Research</h1>
+    <div id="typewriter"></div>
+
+    <a href="YOUR_SCRATCH_LINK" target="_blank" class="btn">Scratch 個人主頁</a>
+    <a href="YOUR_TEAM_LINK" target="_blank" class="btn">團隊頁面</a>
+</div>
+
+<!-- ===== 理念 ===== -->
+
+<div id="philosophy" class="section">
     <h2>設計哲學</h2>
 
     <div class="card">
-        <h3>Architecture First</h3>
-        <p>功能可以重寫，架構不能混亂。任何專案開始前，必須確立層級與模組關係。</p>
+        <b>Architecture First</b><br>
+        功能可以重寫，架構不能混亂。
     </div>
 
     <div class="card">
-        <h3>Efficiency Above Simplicity</h3>
-        <p>演算法可以複雜，但不能低效。追求的是可計算的最優解。</p>
+        <b>Efficiency Above Simplicity</b><br>
+        演算法可以複雜，但不能低效。
     </div>
 
     <div class="card">
-        <h3>Mobile Priority</h3>
-        <p>在限制環境中取得最佳體驗，才是真正的最佳設計。</p>
+        <b>Mobile Priority</b><br>
+        在限制環境中取得最佳體驗。
     </div>
-</section>
+</div>
 
-<section>
-    <h2>系統實驗</h2>
+<!-- ===== 系統 ===== -->
+
+<div id="system" class="section">
+    <h2>系統實驗場</h2>
 
     <div class="card">
-        <h3>Rust Survival 架構實驗場</h3>
-        <p>整合 3D Engine 層、控制層、UI 模組與邏輯層。每次更新的核心是架構優化，而非功能堆疊。</p>
+        Rust Survival 架構實驗場
     </div>
-</section>
 
-<section>
+    <div class="card">
+        3D Engine 模組化層級設計
+    </div>
+
+    <div class="card">
+        控制系統與 UI 架構整合
+    </div>
+</div>
+
+<!-- ===== 研究 ===== -->
+
+<div id="research" class="section">
     <h2>研究方向</h2>
 
-    <div class="card">
-        <h3>可模組化 3D 引擎</h3>
-        <p>建立可拆解與重組的引擎核心結構。</p>
-    </div>
-
-    <div class="card">
-        <h3>多語系文字渲染系統</h3>
-        <p>支援中 / 英 / 日的高效率顯示架構。</p>
-    </div>
-
-    <div class="card">
-        <h3>裸眼 3D 呈現探索</h3>
-        <p>研究低運算成本的立體視覺呈現方式。</p>
-    </div>
-
-    <div class="card">
-        <h3>飛行模擬架構設計</h3>
-        <p>雙人合作研究計畫，專注控制模型與運算優化。</p>
-    </div>
-</section>
+    <div class="card">可模組化 3D 引擎</div>
+    <div class="card">多語系文字渲染系統</div>
+    <div class="card">裸眼 3D 呈現探索</div>
+    <div class="card">飛行模擬架構設計</div>
+</div>
 
 <footer>
-© 2026 光風濟月 | Architecture Research
+© 2026 光風濟月 | Research Lab
 </footer>
 
 <script>
 
-/* 滾動顯現 */
+/* 假切頁 */
 
-const sections = document.querySelectorAll("section");
-
-window.addEventListener("scroll", () => {
-    sections.forEach(sec => {
-        const top = sec.getBoundingClientRect().top;
-        if(top < window.innerHeight - 120){
-            sec.classList.add("show");
-        }
+function showSection(id){
+    document.querySelectorAll('.section').forEach(sec=>{
+        sec.classList.remove('active');
     });
-});
+    document.getElementById(id).classList.add('active');
+}
 
-/* 打字機效果 */
+/* 打字機 */
 
 const text = "我設計系統，而不是堆疊功能。";
 const target = document.getElementById("typewriter");
@@ -258,7 +260,6 @@ function typeEffect(){
         setTimeout(typeEffect, 60);
     }
 }
-
 typeEffect();
 
 </script>
