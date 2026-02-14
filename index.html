@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>光風濟月 | 個人介紹</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Noto+Sans+TC:wght@400;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --primary: #00ff88;
+  --bg-dark: #111111;
+  --bg-gray: #222222;
+  --text-light: #ddd;
+  --text-muted: #888;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: 'Share Tech Mono','Noto Sans TC',sans-serif; background: var(--bg-dark); color: var(--text-light); line-height:1.6; }
+a { text-decoration:none; color: var(--primary); transition:0.3s; }
+a:hover { color:#0f0; }
+
+.container { max-width:700px; margin:0 auto; padding:20px; }
+header { text-align:center; padding:40px 0; }
+header img { width:100px; border:2px solid var(--primary); border-radius:8px; animation: float 3s ease-in-out infinite alternate; }
+header h1 { margin-top:15px; font-size:2.4rem; color: var(--primary); animation: fadeInDown 1s ease forwards; }
+header p { margin-top:5px; color: var(--text-muted); font-size:0.9rem; }
+
+@keyframes float { 0% { transform: translateY(0px); } 100% { transform: translateY(-10px); } }
+@keyframes fadeInDown { from { opacity:0; transform:translateY(-20px);} to { opacity:1; transform:translateY(0);} }
+
+.section { margin-top:40px; padding:20px; background: var(--bg-gray); border-left:4px solid var(--primary); border-radius:6px;
+  opacity:0; transform:translateY(20px); animation: fadeIn 0.6s forwards; }
+.section:nth-child(1){ animation-delay:0.2s; }
+.section:nth-child(2){ animation-delay:0.4s; }
+.section:nth-child(3){ animation-delay:0.6s; }
+.section:nth-child(4){ animation-delay:0.8s; }
+
+@keyframes fadeIn { to { opacity:1; transform:translateY(0); } }
+
+.card { border:1px solid rgba(0,255,136,0.25); padding:15px; border-radius:6px; margin-bottom:15px; transition:0.3s; }
+.card:hover { background: rgba(0,255,136,0.05); }
+
+.footer { text-align:center; margin:40px 0 20px; font-size:0.75rem; color:var(--text-muted); }
+
+@media (max-width:600px){
+  .container { padding:15px; }
+  header h1 { font-size:1.8rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <img src="assets/img/profile.png" alt="光風濟月">
+    <h1>光風濟月</h1>
+    <p>理工認真腦｜作品導向｜追求極致體驗</p>
+  </header>
+
+  <div class="section">
+    <h2>標語</h2>
+    <div class="card">
+      <p>「放棄簡潔的程式，以複雜程式彌補效能及體驗。」</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>關於我</h2>
+    <div class="card">
+      <p>我是一名理工認真腦，專注於創作具有極致使用者體驗的作品。程式對我而言，不只是工具，而是一種思維與創意的展現方式。</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>作品理念</h2>
+    <div class="card">
+      <p>我的作品，如《Rust Survival》，不為炫耀，而是讓使用者享受最高流暢感。我願意犧牲程式簡潔，運用最複雜演算法換取極致體驗。</p>
+    </div>
+    <div class="card">
+      <p>帶著一點理性侵略性，用極致技術驅動完美體驗，這是我作品的核心態度。</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>個人特質</h2>
+    <div class="card">
+      <p>邏輯清晰、專注細節、追求極致使用者感受。</p>
+    </div>
+    <div class="card">
+      <p>作品導向，重視技術實用性與極致性能。</p>
+    </div>
+    <div class="card">
+      <p>理性思維帶點侵略性，追求卓越而不隨波逐流。</p>
+    </div>
+  </div>
+
+  <div class="footer">
+    © 2026 光風濟月
+  </div>
+</div>
+
+</body>
+</html>
