@@ -21,10 +21,10 @@ body {
   font-family: 'Share Tech Mono', 'Noto Sans TC', monospace;
   background: var(--bg-dark);
   color: var(--primary);
-  line-height: 1.6;
+  overflow-x:hidden;
 }
 
-/* 全屏背景動畫 粒子 + 掃描線 */
+/* 背景動畫 粒子 + 掃描線 */
 body::before {
   content:"";
   position:fixed; inset:0; z-index:-1;
@@ -44,24 +44,25 @@ body::before {
 .header img:hover { transform:scale(1.1); box-shadow:0 0 15px var(--primary);}
 .header span { font-size:1.5rem; font-weight:900; }
 
+/* 假切頁導航 + 外部連結分組 */
+.nav-group { display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; margin-top:10px; }
+.tab-nav { display:flex; gap:10px; flex-wrap:wrap; }
+.tab-nav button { background:none; border:1px solid var(--primary); color:var(--primary); padding:8px 15px; cursor:pointer; font-family:inherit; font-weight:900; border-radius:5px; transition:0.3s; }
+.tab-nav button.active, .tab-nav button:hover { background:var(--primary); color:#000; box-shadow:0 0 10px var(--primary); }
+
+/* 外部連結 */
+.external-links a { display:inline-block; padding:8px 15px; border:1px solid var(--primary); border-radius:5px; text-decoration:none; color:var(--primary); font-weight:900; transition:0.3s; }
+.external-links a:hover { background: var(--primary); color:#000; box-shadow:0 0 10px var(--primary); }
+
 /* 卡片 */
-.card { background: var(--panel-bg); border:1px solid var(--card-border); border-radius:10px; padding:20px; opacity:0; transform:translateY(20px); animation:fadeInUp 0.8s forwards; }
-@keyframes fadeInUp { to {opacity:1; transform:translateY(0);} }
-
-/* 標題 */
-.card h2 { color:#fff; margin-bottom:10px; font-size:1.4rem; }
-.card p { color: var(--text-dim); font-size:0.9rem; }
-
-/* 按鈕 */
-.btn { display:inline-block; padding:10px 18px; margin-top:10px; border:1px solid var(--primary); border-radius:5px; text-decoration:none; color:var(--primary); font-weight:900; transition:0.3s; }
-.btn:hover { background: var(--primary); color:#000; box-shadow:0 0 10px var(--primary); }
+.tab-content { background: var(--panel-bg); border:1px solid var(--card-border); border-radius:10px; padding:20px; min-height:180px; opacity:0; transform:translateY(20px); transition:0.5s ease, opacity 0.5s ease; }
+.tab-content.active { opacity:1; transform:translateY(0); }
 
 /* 打字機效果 */
 .typewriter { overflow:hidden; border-right:.15em solid var(--primary); white-space:nowrap; animation:typing 3s steps(40, end), blink .7s infinite; }
 @keyframes typing { from { width:0; } to { width:100%; } }
 @keyframes blink { 50% { border-color: transparent; } }
 
-/* 響應式直立單行 */
 @media(max-width:768px){ .container { padding:10px; } }
 </style>
 </head>
@@ -76,21 +77,33 @@ body::before {
     <span>光風濟月</span>
   </div>
 
-  <!-- 標語 -->
-  <div class="card" style="animation-delay:0.1s;">
+  <!-- 假切頁按鈕 + 外部連結 -->
+  <div class="nav-group">
+    <div class="tab-nav">
+      <button class="active" onclick="showTab(0)">標語</button>
+      <button onclick="showTab(1)">關於我</button>
+      <button onclick="showTab(2)">特質理念</button>
+    </div>
+    <div class="external-links">
+      <a href="/game" target="_blank">遊戲計劃</a>
+      <a href="https://scratch.mit.edu/users/fuguangji/" target="_blank">Scratch</a>
+      <a href="https://novacircuit-lab.github.io/intro/" target="_blank">我的團隊</a>
+    </div>
+  </div>
+
+  <!-- 假切頁內容 -->
+  <div class="tab-content active">
     <p class="typewriter">用極致技術，驅動完美體驗，構築無限未來</p>
   </div>
 
-  <!-- 自我介紹 -->
-  <div class="card" style="animation-delay:0.3s;">
+  <div class="tab-content">
     <h2>關於我</h2>
-    <p>我是一個以邏輯為底線的理工魂大腦，專注於作品，技術的目的不是炫耀，而是提供極致使用者體驗。</p>
+    <p>我是一個以邏輯為底線的理工魂設計師，專注於作品，技術的目的不是炫耀，而是提供極致使用者體驗。</p>
     <p>帶點絕對的理性感，用極致的技術驅動最完美的體驗。</p>
     <p>我的作品代表作是 <strong>Rust Suvival</strong>，同時我的網站也是我的履歷、計劃展示、團隊入口與遊戲入口。</p>
   </div>
 
-  <!-- 特色特質 -->
-  <div class="card" style="animation-delay:0.5s;">
+  <div class="tab-content">
     <h2>特質與理念</h2>
     <ul>
       <li>為了使用者，我們可以犧牲程式簡潔性，用最複雜的演算法取得最佳效能</li>
@@ -99,20 +112,17 @@ body::before {
     </ul>
   </div>
 
-  <!-- 導向連結 -->
-  <div class="card" style="animation-delay:0.7s;">
-    <h2>快速連結</h2>
-    <a href="https://novacircuit-lab.github.io/intro/" class="btn" target="_blank">我的團隊</a><br>
-    <a href="https://scratch.mit.edu/users/fuguangji/" class="btn" target="_blank">我的 Scratch</a><br>
-    <a href="/game" class="btn">我的遊戲計劃</a>
-  </div>
-
 </div>
 
 <script>
-  // 依序動畫延遲
-  const cards = document.querySelectorAll('.card');
-  cards.forEach((c,i)=>c.style.animationDelay=(i*0.2)+'s');
+const tabs = document.querySelectorAll('.tab-content');
+const buttons = document.querySelectorAll('.tab-nav button');
+function showTab(index){
+  tabs.forEach((t,i)=>t.classList.remove('active'));
+  buttons.forEach((b,i)=>b.classList.remove('active'));
+  tabs[index].classList.add('active');
+  buttons[index].classList.add('active');
+}
 </script>
 
 </body>
