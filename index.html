@@ -3,226 +3,87 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>傅光濟</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
-
+<title>光風濟月 | 個人介紹</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Noto+Sans+TC:wght@400;900&display=swap" rel="stylesheet">
 <style>
-:root{
-  --primary:#00ff88;
-  --bg:#050505;
-  --text:#dcdcdc;
+:root {
+  --primary: #00ff88;
+  --bg-dark: #111111;
+  --bg-gray: #222222;
+  --text-light: #ddd;
 }
 
-*{margin:0;padding:0;box-sizing:border-box}
-body{
-  background:var(--bg);
-  color:var(--text);
-  font-family:'Orbitron','Noto Sans TC',sans-serif;
-  overflow-x:hidden;
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: 'Share Tech Mono','Noto Sans TC',sans-serif; background: var(--bg-dark); color: var(--text-light); line-height:1.5; }
+a { text-decoration:none; color: var(--primary); transition:0.3s; }
+a:hover { color:#0f0; }
+
+.container { max-width: 700px; margin: 0 auto; padding: 20px; }
+header { text-align:center; padding: 40px 0; }
+header img { width:80px; border:2px solid var(--primary); border-radius:8px; }
+header h1 { margin-top:15px; font-size:2.2rem; color: var(--primary); }
+header p { margin-top:5px; color:#aaa; font-size:0.9rem; }
+
+.section { margin-top:40px; padding:20px; background: var(--bg-gray); border-left:4px solid var(--primary); border-radius:6px; opacity:0; transform:translateY(20px); animation: fadeIn 0.6s forwards; }
+.section:nth-child(1){ animation-delay: 0.2s; }
+.section:nth-child(2){ animation-delay: 0.4s; }
+.section:nth-child(3){ animation-delay: 0.6s; }
+.section:nth-child(4){ animation-delay: 0.8s; }
+
+@keyframes fadeIn {
+  to { opacity:1; transform:translateY(0); }
 }
 
-/* ===== 動態背景 ===== */
-.bg{
-  position:fixed;
-  width:100%;
-  height:100%;
-  top:0;
-  left:0;
-  z-index:-1;
-  background:radial-gradient(circle at 20% 30%,rgba(0,255,136,0.15),transparent 40%),
-             radial-gradient(circle at 80% 70%,rgba(0,255,136,0.1),transparent 40%);
-  animation:bgMove 15s linear infinite alternate;
-}
-@keyframes bgMove{
-  0%{transform:translateY(-20px)}
-  100%{transform:translateY(20px)}
-}
+.links { display:flex; flex-direction:column; gap:15px; margin-top:30px; }
+.links a { display:block; padding:12px 20px; border:2px solid var(--primary); border-radius:6px; text-align:center; background:transparent; transition:0.3s; }
+.links a:hover { background: var(--primary); color:#000; }
 
-/* ===== 導覽 ===== */
-nav{
-  position:fixed;
-  width:100%;
-  top:0;
-  display:flex;
-  justify-content:space-between;
-  padding:15px 30px;
-  background:rgba(0,0,0,0.6);
-  backdrop-filter:blur(8px);
-  border-bottom:1px solid rgba(0,255,136,0.2);
-  z-index:100;
-}
-nav span{
-  color:var(--primary);
-  font-weight:700;
-}
-nav a{
-  color:var(--primary);
-  margin-left:20px;
-  text-decoration:none;
-  transition:0.3s;
-}
-nav a:hover{
-  text-shadow:0 0 10px var(--primary);
-}
+.footer { text-align:center; margin:40px 0 20px; font-size:0.75rem; color:#777; }
 
-/* ===== 區塊通用 ===== */
-section{
-  min-height:100vh;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  text-align:center;
-  padding:80px 20px;
-}
-
-/* ===== HERO ===== */
-.hero h1{
-  font-size:2.5rem;
-  color:var(--primary);
-  opacity:0;
-  transform:translateY(30px);
-  animation:fadeUp 1.5s ease forwards;
-}
-.hero p{
-  margin-top:20px;
-  font-size:1rem;
-  opacity:0;
-  animation:fadeUp 1.5s ease 0.5s forwards;
-}
-
-@keyframes fadeUp{
-  to{opacity:1;transform:translateY(0)}
-}
-
-/* ===== 理念 ===== */
-.philosophy h2{
-  margin:20px 0;
-  opacity:0;
-  transform:translateY(40px);
-  transition:0.8s;
-}
-.philosophy.show h2{
-  opacity:1;
-  transform:translateY(0);
-}
-
-/* ===== 旗艦專案 ===== */
-.project{
-  background:rgba(0,255,136,0.03);
-}
-.project h1{
-  font-size:2.2rem;
-  color:var(--primary);
-  margin-bottom:20px;
-}
-.btn{
-  padding:10px 25px;
-  border:1px solid var(--primary);
-  color:var(--primary);
-  text-decoration:none;
-  position:relative;
-  overflow:hidden;
-  transition:0.3s;
-}
-.btn::before{
-  content:"";
-  position:absolute;
-  left:-100%;
-  top:0;
-  width:100%;
-  height:100%;
-  background:linear-gradient(120deg,transparent,rgba(0,255,136,0.4),transparent);
-  transition:0.6s;
-}
-.btn:hover::before{
-  left:100%;
-}
-.btn:hover{
-  box-shadow:0 0 20px rgba(0,255,136,0.6);
-}
-
-/* ===== 入口區 ===== */
-.links{
-  display:flex;
-  flex-direction:column;
-  gap:20px;
-}
-.big-link{
-  padding:20px;
-  border:1px solid rgba(0,255,136,0.3);
-  color:var(--primary);
-  text-decoration:none;
-  transition:0.4s;
-}
-.big-link:hover{
-  background:rgba(0,255,136,0.1);
-  transform:scale(1.05);
-}
-
-/* 手機適配 */
-@media(max-width:600px){
-  nav{flex-direction:column;align-items:flex-start}
+@media (max-width:600px){
+  .container { padding:15px; }
+  header h1 { font-size:1.8rem; }
+  .links a { font-size:0.9rem; padding:10px; }
 }
 </style>
 </head>
-
 <body>
 
-<div class="bg"></div>
+<div class="container">
+  <header>
+    <img src="assets/img/profile.png" alt="光風濟月">
+    <h1>光風濟月</h1>
+    <p>理工認真腦｜作品導向｜追求極致體驗</p>
+  </header>
 
-<nav>
-  <span>FU GUANG JI</span>
-  <div>
-    <a href="https://novacircuit.github.io" target="_blank">TEAM</a>
-    <a href="/game">GAME PLAN</a>
-    <a href="https://scratch.mit.edu/users/fuguangjiyue/" target="_blank">SCRATCH</a>
+  <div class="section">
+    <h2>關於我</h2>
+    <p>我是一名有邏輯的理工腦，專注於創作具有極致使用者體驗的作品。程式對我而言不只是工具，而是一種表達思維與創意的方式。</p>
   </div>
-</nav>
 
-<!-- HERO -->
-<section class="hero">
-  <h1>用極致的技術，驅動最完美的體驗</h1>
-  <p>Controlled. Engineered. Executed.</p>
-</section>
-
-<!-- 理念 -->
-<section class="philosophy" id="philosophy">
-  <h2>技術不是展示。</h2>
-  <h2>它是對體驗的控制。</h2>
-  <h2>每一行程式，都服務於使用者。</h2>
-</section>
-
-<!-- 旗艦專案 -->
-<section class="project">
-  <h1>RUST SURVIVAL</h1>
-  <p>A Controlled Survival System.</p>
-  <br>
-  <a href="/game" class="btn">ENTER GAME PLAN</a>
-</section>
-
-<!-- 入口區 -->
-<section>
-  <div class="links">
-    <a href="https://novacircuit.github.io" target="_blank" class="big-link">TEAM</a>
-    <a href="/game" class="big-link">GAME PLAN</a>
-    <a href="https://scratch.mit.edu/users/fuguangjiyue/" target="_blank" class="big-link">SCRATCH</a>
+  <div class="section">
+    <h2>作品展示</h2>
+    <p>我的主要作品是《Rust Survival》，追求高效能和極致體驗。所有作品都不為炫耀，而是為了讓使用者享受最佳操作感受。</p>
   </div>
-</section>
 
-<script>
-/* 滾動觸發理念動畫 */
-const observer=new IntersectionObserver(entries=>{
-  entries.forEach(entry=>{
-    if(entry.isIntersecting){
-      entry.target.classList.add("show");
-    }
-  });
-},{threshold:0.4});
+  <div class="section">
+    <h2>理念與態度</h2>
+    <p>為了使用者，我們可以犧牲程式簡潔，用最複雜的演算法換取最完美的體驗。帶著理性與一點侵略性，用極致技術驅動完美體驗。</p>
+  </div>
 
-observer.observe(document.querySelector(".philosophy"));
-</script>
+  <div class="section">
+    <h2>快速導覽</h2>
+    <div class="links">
+      <a href="https://novacircuit-lab.github.io/intro/" target="_blank">我的團隊頁面</a>
+      <a href="/game">我的遊戲計劃頁 (/game)</a>
+      <a href="https://scratch.mit.edu/users/fuguangji/" target="_blank">我的 Scratch 個人頁</a>
+    </div>
+  </div>
+
+  <div class="footer">
+    © 2026 光風濟月
+  </div>
+</div>
 
 </body>
 </html>
