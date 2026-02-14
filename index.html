@@ -7,9 +7,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Noto+Sans+TC:wght@400;900&display=swap" rel="stylesheet">
 <style>
 :root {
-  --primary: #00ff88;
-  --bg-dark: #020202;
-  --text-dim: #7a8a7a;
+  --primary:#00ff88;
+  --bg-dark:#020202;
+  --text-dim:#7a8a7a;
 }
 
 /* 全局 */
@@ -22,7 +22,7 @@ body{
   overflow-x:hidden;
 }
 
-/* 背景動畫：粒子 + 星雲 */
+/* 背景動畫 */
 canvas#bgCanvas{
   position:fixed; inset:0; z-index:-1;
 }
@@ -35,31 +35,25 @@ canvas#bgCanvas{
 .header img{width:50px;border:1px solid var(--primary);padding:2px;border-radius:5px;transition:0.3s;animation:logoBounce 2s infinite;}
 .header img:hover{transform:scale(1.1);box-shadow:0 0 15px var(--primary);}
 .header span{font-size:1.5rem;font-weight:900;}
-@keyframes logoBounce{
-  0%,100%{transform:translateY(0);}
-  50%{transform:translateY(-5px);}
-}
+@keyframes logoBounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-5px);}}
 
-/* 假切頁按鈕 */
-.nav-buttons{display:flex;gap:10px;margin-top:10px;}
-.nav-buttons button{
-  background:none;border:1px solid var(--primary);
-  color:var(--primary);padding:8px 12px;font-family:inherit;cursor:pointer;
-  transition:0.3s;border-radius:5px;
+/* 側邊欄列表 */
+.sidebar{display:flex;flex-direction:column;gap:8px;margin-top:15px;}
+.sidebar button{
+  background:none;border:1px solid var(--primary);border-radius:5px;padding:8px 12px;
+  color:var(--primary);cursor:pointer;font-family:inherit;transition:0.3s;text-align:left;
 }
-.nav-buttons button:hover,.nav-buttons button.active{
-  background:rgba(0,255,136,0.1);
-  border-bottom:2px solid var(--primary);
-}
+.sidebar button:hover,.sidebar button.active{background:rgba(0,255,136,0.1);border-left:3px solid var(--primary);}
 
-/* 打字機標語 */
+/* 打字機效果 */
 .typewriter{overflow:hidden;border-right:.15em solid var(--primary);white-space:nowrap;animation:typing 4s steps(50,end),blink .7s infinite;}
 @keyframes typing{from{width:0;}to{width:100%;}}
 @keyframes blink{50%{border-color:transparent;}}
 
-/* 文字區塊動畫 */
-.section{opacity:0;transform:translateY(20px);animation:fadeInUp 0.8s forwards;margin-top:15px;}
-@keyframes fadeInUp{to{opacity:1;transform:translateY(0);}}
+/* 內容區塊動畫 */
+.section{opacity:0;transform:translateY(20px);transition:0.5s;margin-top:15px;}
+.section.active{opacity:1;transform:translateY(0);display:block;}
+.section.hidden{display:none;}
 
 /* 區塊標題 */
 .section h2{color:#fff;margin-bottom:8px;font-size:1.4rem;}
@@ -71,7 +65,7 @@ canvas#bgCanvas{
 .btn{display:inline-block;padding:10px 18px;margin-top:6px;border:1px solid var(--primary);border-radius:5px;text-decoration:none;color:var(--primary);font-weight:900;transition:0.3s;}
 .btn:hover{background:var(--primary);color:#000;box-shadow:0 0 10px var(--primary);}
 
-/* 留白效果 */
+/* 留白 */
 .spacer{height:20px;}
 
 /* 響應式 */
@@ -90,11 +84,11 @@ canvas#bgCanvas{
     <span>光風濟月</span>
   </div>
 
-  <!-- 假切頁按鈕 + 快速連結 -->
-  <div class="nav-buttons">
-    <button onclick="showSection('intro')" class="active">關於我</button>
-    <button onclick="showSection('traits')">特質與理念</button>
-    <button onclick="showSection('projects')">作品與專案</button>
+  <!-- 側邊欄列表 + 快速連結 -->
+  <div class="sidebar">
+    <button class="active" onclick="showSection('intro',this)">關於我</button>
+    <button onclick="showSection('traits',this)">特質與理念</button>
+    <button onclick="showSection('projects',this)">作品與專案</button>
     <a href="https://novacircuit-lab.github.io/intro/" class="btn" target="_blank">團隊主頁</a>
     <a href="https://scratch.mit.edu/users/fuguangji/" class="btn" target="_blank">我的 Scratch</a>
     <a href="/game" class="btn">遊戲計劃</a>
@@ -103,7 +97,7 @@ canvas#bgCanvas{
   <div class="spacer"></div>
 
   <!-- 關於我 -->
-  <div id="intro" class="section" style="animation-delay:0.1s;">
+  <div id="intro" class="section active">
     <h2>關於我</h2>
     <p>我是一個以邏輯為底線的理工魂大腦，專注於作品，技術的目的不是炫耀，而是提供極致使用者體驗。</p>
     <p>帶點理性感，用極致技術驅動最完美的體驗。</p>
@@ -111,7 +105,7 @@ canvas#bgCanvas{
   </div>
 
   <!-- 特質與理念 -->
-  <div id="traits" class="section" style="animation-delay:0.3s;">
+  <div id="traits" class="section hidden">
     <h2>特質與理念</h2>
     <ul>
       <li>為了使用者，我們可以犧牲程式簡潔性，用最複雜的演算法取得最佳效能</li>
@@ -121,7 +115,7 @@ canvas#bgCanvas{
   </div>
 
   <!-- 作品與專案 -->
-  <div id="projects" class="section" style="animation-delay:0.5s;">
+  <div id="projects" class="section hidden">
     <h2>代表作與專案</h2>
     <ul>
       <li><strong>Rust Suvival</strong></li>
@@ -132,41 +126,43 @@ canvas#bgCanvas{
 </div>
 
 <script>
-  // 假切頁切換
-  function showSection(id){
-    document.querySelectorAll('.section').forEach(s=>s.style.display='none');
-    document.getElementById(id).style.display='block';
-    document.querySelectorAll('.nav-buttons button').forEach(b=>b.classList.remove('active'));
-    const btns=document.querySelectorAll('.nav-buttons button');
-    btns.forEach(b=>{if(b.textContent.includes(id==='intro'?'關於我':id==='traits'?'特質':'作品')) b.classList.add('active');});
-  }
-  showSection('intro'); // 預設顯示關於我
+function showSection(id,btn){
+  document.querySelectorAll('.section').forEach(s=>{
+    s.classList.remove('active');
+    s.classList.add('hidden');
+  });
+  document.getElementById(id).classList.add('active');
+  document.getElementById(id).classList.remove('hidden');
 
-  // 背景粒子動畫
-  const canvas=document.getElementById('bgCanvas');
-  const ctx=canvas.getContext('2d');
-  let w,h,particles=[];
-  function resize(){w=canvas.width=window.innerWidth;h=canvas.height=window.innerHeight;}
-  window.addEventListener('resize',resize);resize();
-  for(let i=0;i<80;i++){
-    particles.push({x:Math.random()*w,y:Math.random()*h,r:Math.random()*2+1,vx:(Math.random()-0.5)*0.5,vy:(Math.random()-0.5)*0.5});
+  document.querySelectorAll('.sidebar button').forEach(b=>b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+}
+
+// 背景粒子動畫
+const canvas=document.getElementById('bgCanvas');
+const ctx=canvas.getContext('2d');
+let w,h,particles=[];
+function resize(){w=canvas.width=window.innerWidth;h=canvas.height=window.innerHeight;}
+window.addEventListener('resize',resize);resize();
+for(let i=0;i<80;i++){
+  particles.push({x:Math.random()*w,y:Math.random()*h,r:Math.random()*2+1,vx:(Math.random()-0.5)*0.5,vy:(Math.random()-0.5)*0.5});
+}
+function animate(){
+  ctx.fillStyle='rgba(2,2,2,0.3)';
+  ctx.fillRect(0,0,w,h);
+  ctx.strokeStyle='rgba(0,255,136,0.4)';
+  ctx.beginPath();
+  for(let p of particles){
+    p.x+=p.vx;p.y+=p.vy;
+    if(p.x<0||p.x>w)p.vx*=-1;
+    if(p.y<0||p.y>h)p.vy*=-1;
+    ctx.moveTo(p.x,p.y);
+    ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
   }
-  function animate(){
-    ctx.fillStyle='rgba(2,2,2,0.3)';
-    ctx.fillRect(0,0,w,h);
-    ctx.strokeStyle='rgba(0,255,136,0.4)';
-    ctx.beginPath();
-    for(let p of particles){
-      p.x+=p.vx;p.y+=p.vy;
-      if(p.x<0||p.x>w)p.vx*=-1;
-      if(p.y<0||p.y>h)p.vy*=-1;
-      ctx.moveTo(p.x,p.y);
-      ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-    }
-    ctx.stroke();
-    requestAnimationFrame(animate);
-  }
-  animate();
+  ctx.stroke();
+  requestAnimationFrame(animate);
+}
+animate();
 </script>
 
 </body>
