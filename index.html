@@ -28,92 +28,56 @@ canvas#bgCanvas{
 }
 
 /* 容器 */
-.container{display:flex;max-width:1000px;margin:0 auto;padding:20px;gap:20px;}
+.container{max-width:1000px;margin:0 auto;padding:20px;display:flex;flex-direction:column;gap:20px;}
 
-/* 左側欄 */
-.sidebar{
-  flex:0 0 180px;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:20px;
-}
-
-/* LOGO */
+/* 第一行: LOGO + 標題 + 快速連結 */
+.top-row{display:flex;align-items:center;justify-content:space-between;gap:20px;}
 .header img{width:60px;border:1px solid var(--primary);padding:2px;border-radius:5px;cursor:pointer;transition:0.3s;animation:logoBounce 2s infinite;}
 .header img:hover{transform:scale(1.1);box-shadow:0 0 15px var(--primary);}
-.header span{margin-top:10px;font-weight:900;font-size:1.2rem;text-align:center;}
+.header span{font-weight:900;font-size:1.2rem;text-align:center;}
 @keyframes logoBounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-5px);}}
 
-/* 外部連結選單 */
-.menu-btn{
-  display:inline-block;
-  border:1px solid var(--primary);
-  padding:6px 10px;
-  border-radius:5px;
-  cursor:pointer;
-  font-weight:900;
-  background:rgba(0,0,0,0.5);
-  transition:0.3s;
-  text-align:center;
-}
+/* 快速連結選單 */
+.menu-btn{display:inline-block;border:1px solid var(--primary);padding:6px 10px;border-radius:5px;cursor:pointer;font-weight:900;background:rgba(0,0,0,0.5);transition:0.3s;}
 .menu-btn:hover{background:var(--primary);color:#000;}
-.menu-content{
-  display:none;
-  flex-direction:column;
-  border:1px solid var(--primary);
-  border-radius:5px;
-  background:var(--bg-dark);
-  width:160px;
-  z-index:100;
-}
-.menu-content a{
-  color:var(--primary);
-  text-decoration:none;
-  padding:8px 12px;
-  border-bottom:1px solid rgba(0,255,136,0.2);
-  transition:0.2s;
-}
+.menu-content{display:none;flex-direction:column;border:1px solid var(--primary);border-radius:5px;background:var(--bg-dark);width:160px;z-index:100;}
+.menu-content a{color:var(--primary);text-decoration:none;padding:8px 12px;border-bottom:1px solid rgba(0,255,136,0.2);transition:0.2s;}
 .menu-content a:hover{background:rgba(0,255,136,0.1);color:#000;}
 .menu-content a:last-child{border-bottom:none;}
 
-/* 左側選單按鈕 */
-.sidebar button{
-  background:none;border:1px solid var(--primary);border-radius:5px;padding:8px 12px;
-  color:var(--primary);cursor:pointer;font-family:inherit;transition:0.3s;width:100%;
-}
-.sidebar button:hover,.sidebar button.active{background:rgba(0,255,136,0.1);border-left:3px solid var(--primary);text-align:left;}
+/* 第二行: 左頭像 + 右側按鈕 + 內容 */
+.bottom-row{display:flex;gap:20px;flex-wrap:wrap;}
 
-/* 頭像 */
-.avatar{width:80px;height:80px;border:1px solid var(--primary);border-radius:50%;}
+/* 左側頭像 */
+.avatar{width:80px;height:80px;border:1px solid var(--primary);border-radius:50%;flex-shrink:0;}
+
+/* 右側選單 + 內容 */
+.right-panel{flex:1;display:flex;flex-direction:column;gap:10px;}
+.button-row{display:flex;flex-direction:column;gap:10px;}
+.button-row button{
+  background:none;border:1px solid var(--primary);border-radius:5px;padding:8px 12px;
+  color:var(--primary);cursor:pointer;font-family:inherit;transition:0.3s;width:200px;text-align:left;
+}
+.button-row button:hover,.button-row button.active{background:rgba(0,255,136,0.1);border-left:3px solid var(--primary);}
 
 /* 右側內容 */
-.content{flex:1;display:flex;flex-direction:column;gap:20px;}
+.section{opacity:0;transform:translateY(20px);transition:0.5s;}
+.section.active{opacity:1;transform:translateY(0);display:block;}
+.section.hidden{display:none;}
 
 /* 打字機效果 */
 .typewriter{overflow:hidden;border-right:.15em solid var(--primary);white-space:nowrap;animation:typing 4s steps(50,end),blink .7s infinite;}
 @keyframes typing{from{width:0;}to{width:100%;}}
 @keyframes blink{50%{border-color:transparent;}}
 
-/* 區塊動畫 */
-.section{opacity:0;transform:translateY(20px);transition:0.5s;}
-.section.active{opacity:1;transform:translateY(0);display:block;}
-.section.hidden{display:none;}
-
 /* 標題 */
 .section h2{color:#fff;margin-bottom:8px;font-size:1.4rem;}
-
-/* 文字 */
 .section p, .section li{color:var(--text-dim);font-size:0.9rem;}
-
-/* 留白 */
-.spacer{height:20px;}
 
 /* 響應式 */
 @media(max-width:768px){
-  .container{flex-direction:column;align-items:center;}
-  .sidebar{flex-direction:row;justify-content:center;width:100%;gap:10px;}
-  .sidebar button{width:auto;}
+  .bottom-row{flex-direction:column;align-items:center;}
+  .button-row button{width:100%;}
 }
 </style>
 </head>
@@ -123,15 +87,13 @@ canvas#bgCanvas{
 
 <div class="container">
 
-  <!-- 左側欄 -->
-  <div class="sidebar">
-    <!-- LOGO -->
+  <!-- 第一行 -->
+  <div class="top-row">
     <div class="header">
       <img src="assets/logo.png" alt="logo" onclick="location.href='index.html'">
       <span>光風濟月</span>
     </div>
 
-    <!-- 外部連結選單 -->
     <div style="position:relative;">
       <div class="menu-btn" onclick="toggleMenu()">快速連結 ▼</div>
       <div class="menu-content" id="menuContent">
@@ -140,44 +102,44 @@ canvas#bgCanvas{
         <a href="/game">遊戲計劃</a>
       </div>
     </div>
-
-    <!-- 側邊按鈕 -->
-    <button class="active" onclick="showSection('intro',this)">關於我</button>
-    <button onclick="showSection('traits',this)">特質與理念</button>
-    <button onclick="showSection('tech',this)">我的技術</button>
-
-    <!-- 頭像 -->
-    <img class="avatar" src="assets/avatar.png" alt="我的頭像">
   </div>
 
-  <!-- 右側內容 -->
-  <div class="content">
-    <!-- 關於我 -->
-    <div id="intro" class="section active">
-      <h2>關於我</h2>
-      <p>我是一個以邏輯為底線的理工魂大腦，專注於作品，技術的目的不是炫耀，而是提供極致使用者體驗。</p>
-      <p>帶點理性感，用極致技術驅動最完美的體驗。</p>
-      <p>我的作品代表作是 <strong>Rust Suvival</strong>，網站同時也是我的履歷、計劃展示、團隊入口與遊戲入口。</p>
-    </div>
+  <!-- 第二行 -->
+  <div class="bottom-row">
+    <img class="avatar" src="assets/avatar.png" alt="頭像">
 
-    <!-- 特質與理念 -->
-    <div id="traits" class="section hidden">
-      <h2>特質與理念</h2>
-      <ul>
-        <li>為了使用者，我們可以犧牲程式簡潔性，用最複雜的演算法取得最佳效能</li>
-        <li>極致技術帶來極致體驗</li>
-        <li>不特別強調身份，專注作品與能力</li>
-      </ul>
-    </div>
+    <div class="right-panel">
+      <div class="button-row">
+        <button class="active" onclick="showSection('intro',this)">關於我</button>
+        <button onclick="showSection('traits',this)">特質與理念</button>
+        <button onclick="showSection('tech',this)">能力</button>
+      </div>
 
-    <!-- 我的技術 -->
-    <div id="tech" class="section hidden">
-      <h2>我的技術</h2>
-      <ul>
-        <li>Scratch</li>
-        <li>TurboWarp</li>
-        <li>Bloxd.io 指令師</li>
-      </ul>
+      <div id="intro" class="section active">
+        <h2>關於我</h2>
+        <p>我是一個以邏輯為底線的理工魂大腦，專注於作品，技術的目的不是炫耀，而是提供極致使用者體驗。</p>
+        <p>帶點理性感，用極致技術驅動最完美的體驗。</p>
+        <p>我的作品代表作是 <strong>Rust Suvival</strong>，網站同時也是我的履歷、計劃展示、團隊入口與遊戲入口。</p>
+      </div>
+
+      <div id="traits" class="section hidden">
+        <h2>特質與理念</h2>
+        <ul>
+          <li>為了使用者，我們可以犧牲程式簡潔性，用最複雜的演算法取得最佳效能</li>
+          <li>極致技術帶來極致體驗</li>
+          <li>不特別強調身份，專注作品與能力</li>
+        </ul>
+      </div>
+
+      <div id="tech" class="section hidden">
+        <h2>我的技術</h2>
+        <ul>
+          <li>Scratch</li>
+          <li>TurboWarp</li>
+          <li>Bloxd.io 指令師</li>
+        </ul>
+      </div>
+
     </div>
   </div>
 
@@ -192,7 +154,7 @@ function showSection(id,btn){
   document.getElementById(id).classList.add('active');
   document.getElementById(id).classList.remove('hidden');
 
-  document.querySelectorAll('.sidebar button').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.button-row button').forEach(b=>b.classList.remove('active'));
   if(btn) btn.classList.add('active');
 }
 
