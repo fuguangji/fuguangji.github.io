@@ -30,7 +30,7 @@ canvas#bgCanvas{
 /* 容器 */
 .container{max-width:700px;margin:0 auto;padding:20px;display:flex;flex-direction:column;gap:20px;}
 
-/* LOGO + 名稱 */
+/* LOGO + 名稱 + 選單 */
 .header{display:flex;align-items:center;gap:15px;cursor:pointer;position:relative;}
 .header img{width:50px;border:1px solid var(--primary);padding:2px;border-radius:5px;transition:0.3s;animation:logoBounce 2s infinite;}
 .header img:hover{transform:scale(1.1);box-shadow:0 0 15px var(--primary);}
@@ -49,7 +49,6 @@ canvas#bgCanvas{
   transition:0.3s;
 }
 .menu-btn:hover{background:var(--primary);color:#000;}
-
 .menu-content{
   position:absolute;
   top:60px; /* Logo下方 */
@@ -72,13 +71,14 @@ canvas#bgCanvas{
 .menu-content a:hover{background:rgba(0,255,136,0.1);color:#000;}
 .menu-content a:last-child{border-bottom:none;}
 
-/* 側邊欄列表 */
-.sidebar{display:flex;flex-direction:column;gap:8px;margin-top:15px;}
+/* 側邊欄列表 + 頭像 */
+.sidebar{display:flex;flex-direction:row;gap:8px;align-items:center;margin-top:15px;}
 .sidebar button{
   background:none;border:1px solid var(--primary);border-radius:5px;padding:8px 12px;
   color:var(--primary);cursor:pointer;font-family:inherit;transition:0.3s;text-align:left;
 }
 .sidebar button:hover,.sidebar button.active{background:rgba(0,255,136,0.1);border-left:3px solid var(--primary);}
+.sidebar img{width:40px;height:40px;border:1px solid var(--primary);border-radius:50%;margin-left:15px;}
 
 /* 打字機效果 */
 .typewriter{overflow:hidden;border-right:.15em solid var(--primary);white-space:nowrap;animation:typing 4s steps(50,end),blink .7s infinite;}
@@ -100,7 +100,7 @@ canvas#bgCanvas{
 .spacer{height:20px;}
 
 /* 響應式 */
-@media(max-width:768px){.container{padding:10px;}}
+@media(max-width:768px){.container{padding:10px;}.sidebar{flex-direction:column;align-items:flex-start;}.sidebar img{margin-left:0;}}
 </style>
 </head>
 <body>
@@ -116,7 +116,7 @@ canvas#bgCanvas{
     
     <!-- 外部連結選單 -->
     <div style="margin-left:15px;position:relative;">
-      <div class="menu-btn" onclick="toggleMenu()">更多 ▼</div>
+      <div class="menu-btn" onclick="toggleMenu()">快速連結 ▼</div>
       <div class="menu-content" id="menuContent">
         <a href="https://novacircuit-lab.github.io/intro/" target="_blank">我的團隊</a>
         <a href="https://scratch.mit.edu/users/fuguangji/" target="_blank">我的 Scratch</a>
@@ -125,11 +125,12 @@ canvas#bgCanvas{
     </div>
   </div>
 
-  <!-- 側邊欄切換 -->
+  <!-- 側邊欄切換 + 頭像 -->
   <div class="sidebar">
     <button class="active" onclick="showSection('intro',this)">關於我</button>
     <button onclick="showSection('traits',this)">特質與理念</button>
-    <button onclick="showSection('projects',this)">作品與專案</button>
+    <button onclick="showSection('tech',this)">我的技術</button>
+    <img src="assets/avatar.png" alt="我的頭像">
   </div>
 
   <div class="spacer"></div>
@@ -152,12 +153,13 @@ canvas#bgCanvas{
     </ul>
   </div>
 
-  <!-- 作品與專案 -->
-  <div id="projects" class="section hidden">
-    <h2>代表作與專案</h2>
+  <!-- 我的技術 -->
+  <div id="tech" class="section hidden">
+    <h2>我的技術</h2>
     <ul>
-      <li><strong>Rust Suvival</strong></li>
-      <li>其他專案可拓展</li>
+      <li>Scratch</li>
+      <li>TurboWarp</li>
+      <li>Bloxd.io 指令師</li>
     </ul>
   </div>
 
