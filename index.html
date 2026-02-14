@@ -1,274 +1,121 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>光風濟月 | FUGUANGJIYUE TERMINAL</title>
-    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Noto+Sans+TC:wght@400;900&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary: #00ff88;
-            --bg: #010201;
-            --border: rgba(0, 255, 136, 0.25);
-            --text-dim: #7a8a7a;
-            --danger: #ff4444;
-        }
-
-        * { margin:0; padding:0; box-sizing:border-box; }
-        body { 
-            background: var(--bg); color: var(--primary); 
-            font-family: 'Share Tech Mono', 'Noto Sans TC', sans-serif;
-            overflow: hidden;
-        }
-
-        /* --- 背景掃描線與顆粒 --- */
-        .overlay {
-            position: fixed; inset: 0; pointer-events: none; z-index: 2000;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%),
-                        linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
-            background-size: 100% 3px, 3px 100%;
-        }
-
-        /* --- 虛擬切頁加載動畫 --- */
-        #fake-loader {
-            position: fixed; inset: 0; background: var(--bg); z-index: 1500;
-            display: none; justify-content: center; align-items: center;
-            flex-direction: column;
-        }
-        .load-bar { width: 200px; height: 2px; background: #111; margin-top: 10px; position: relative; }
-        .load-progress { position: absolute; height: 100%; background: var(--primary); width: 0; transition: 0.3s; }
-
-        /* --- 框架佈局 --- */
-        .wrapper {
-            display: grid; grid-template-columns: 320px 1fr 280px;
-            height: 100vh; gap: 1px; background: var(--border);
-        }
-
-        .panel { background: var(--bg); padding: 25px; overflow-y: auto; position: relative; }
-        .panel-header {
-            font-size: 0.75rem; background: var(--primary); color: #000;
-            padding: 2px 8px; font-weight: 900; margin-bottom: 20px; display: inline-block;
-        }
-
-        /* --- 導覽列 --- */
-        nav {
-            grid-column: 1 / -1; height: 60px; background: #000;
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 0 30px; border-bottom: 1px solid var(--primary); z-index: 1001;
-        }
-        .nav-brand { display: flex; align-items: center; gap: 15px; }
-        .nav-brand img { height: 35px; border: 1px solid var(--primary); }
-        .nav-links button {
-            background: none; border: 1px solid transparent; color: var(--primary);
-            padding: 6px 12px; cursor: pointer; font-family: inherit; transition: 0.2s; font-size: 0.9rem;
-        }
-        .nav-links button:hover, .nav-links button.active { background: rgba(0,255,136,0.1); border-bottom: 2px solid var(--primary); }
-
-        /* --- 主內容區 --- */
-        .section { display: none; padding: 40px; }
-        .section.active { display: block; animation: fadeIn 0.5s forwards; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-        /* --- 視覺組件 --- */
-        .motto-box { border-left: 4px solid var(--primary); padding: 20px; background: rgba(0,255,136,0.03); margin: 25px 0; }
-        .motto-box h2 { font-size: 1.8rem; font-weight: 900; color: #fff; line-height: 1.3; }
-
-        .stat-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-bottom: 20px;}
-        .stat-item { border: 1px solid var(--border); padding: 15px; }
-        .stat-item h4 { font-size: 0.75rem; color: var(--text-dim); margin-bottom: 5px; }
-        .stat-item .value { font-size: 1.2rem; font-weight: 900; }
-
-        .card { border: 1px solid var(--border); padding: 20px; margin-bottom: 20px; transition: 0.3s; }
-        .card:hover { background: rgba(0,255,136,0.05); border-color: var(--primary); }
-
-        /* 按鈕設計 */
-        .btn-ext {
-            display: inline-block; padding: 10px 20px; border: 1px solid var(--primary);
-            color: var(--primary); text-decoration: none; font-size: 0.8rem; font-weight: 900;
-            margin-right: 10px; transition: 0.3s; background: rgba(0,0,0,0.5);
-        }
-        .btn-ext:hover { background: var(--primary); color: #000; box-shadow: 0 0 15px var(--primary); }
-        .btn-ext.scratch { border-color: #ffab19; color: #ffab19; }
-        .btn-ext.scratch:hover { background: #ffab19; color: #fff; box-shadow: 0 0 15px #ffab19; }
-
-        footer {
-            grid-column: 1 / -1; height: 30px; background: var(--primary);
-            color: #000; display: flex; justify-content: space-between;
-            align-items: center; padding: 0 20px; font-size: 0.7rem; font-weight: 900;
-        }
-
-        /* 內容隱藏捲軸 */
-        .panel::-webkit-scrollbar { width: 0; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>光風濟月 | FUGUANGJIYUE TERMINAL</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Noto+Sans+TC:wght@400;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --primary: #00ff88;
+  --bg: #010201;
+  --border: rgba(0,255,136,0.25);
+  --text-dim: #7a8a7a;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Share Tech Mono','Noto Sans TC',sans-serif;background:var(--bg);color:var(--primary);overflow:hidden;}
+.wrapper{display:grid;grid-template-columns:320px 1fr 280px;grid-template-rows:60px 1fr 30px;height:100vh;gap:1px;background:var(--border);}
+nav{grid-column:1/-1;grid-row:1;background:#000;display:flex;align-items:center;justify-content:space-between;padding:0 20px;border-bottom:1px solid var(--primary);z-index:1000;}
+.nav-brand{display:flex;align-items:center;gap:10px;cursor:pointer;}
+.nav-brand img{height:35px;border:1px solid var(--primary);}
+.nav-links button{background:none;border:1px solid transparent;color:var(--primary);padding:6px 12px;font-family:inherit;cursor:pointer;transition:0.2s;}
+.nav-links button.active, .nav-links button:hover{background:rgba(0,255,136,0.1);border-bottom:2px solid var(--primary);}
+.panel{background:var(--bg);padding:20px;overflow-y:auto;position:relative;}
+.panel-header{font-size:0.75rem;background:var(--primary);color:#000;padding:2px 8px;font-weight:900;margin-bottom:15px;display:inline-block;}
+.section{display:none;}
+.section.active{display:block;animation:fadeIn 0.5s forwards;}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+.motto-box{border-left:4px solid var(--primary);padding:15px;background:rgba(0,255,136,0.03);margin:20px 0;}
+.stat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:15px;margin-bottom:20px;}
+.stat-item{border:1px solid var(--border);padding:10px;}
+.stat-item h4{font-size:0.75rem;color:var(--text-dim);margin-bottom:5px;}
+.stat-item .value{font-size:1.2rem;font-weight:900;}
+.card{border:1px solid var(--border);padding:15px;margin-bottom:15px;transition:0.3s;border-radius:6px;}
+.card:hover{background:rgba(0,255,136,0.05);border-color:var(--primary);}
+.btn-ext{display:inline-block;padding:8px 16px;border:1px solid var(--primary);color:var(--primary);text-decoration:none;font-size:0.8rem;font-weight:900;margin-right:8px;transition:0.3s;background:rgba(0,0,0,0.5);}
+.btn-ext:hover{background:var(--primary);color:#000;box-shadow:0 0 10px var(--primary);}
+footer{grid-column:1/-1;grid-row:3;background:var(--primary);color:#000;display:flex;justify-content:space-between;align-items:center;padding:0 15px;font-size:0.7rem;font-weight:900;}
+</style>
 </head>
 <body>
 
-<div class="overlay"></div>
-
-<div id="fake-loader">
-    <p style="letter-spacing: 5px;">ACCESSING_DATA...</p>
-    <div class="load-bar"><div class="load-progress" id="load-p"></div></div>
-</div>
-
 <div class="wrapper">
-    <nav>
-        <div class="nav-brand">
-            <img src="https://files.catbox.moe/kixhmi.png" alt="logo">
-            <span>光風濟月工作室 // v2.8.0</span>
-        </div>
-        <div class="nav-links">
-            <button onclick="changePage('home')" id="n-home" class="active">系統概覽</button>
-            <button onclick="changePage('tech')" id="n-tech">技術核心</button>
-            <button onclick="changePage('art')" id="n-art">視覺與人文</button>
-            <button onclick="changePage('extra')" id="n-extra">生活碎片</button>
-        </div>
-    </nav>
+<nav>
+  <div class="nav-brand" onclick="location.href='index.html'">
+    <img src="https://files.catbox.moe/kixhmi.png" alt="logo">
+    <span>光風濟月工作室 // v2.8.0</span>
+  </div>
+  <div class="nav-links">
+    <button onclick="changePage('home')" id="n-home" class="active">個人資訊</button>
+    <button onclick="changePage('projects')" id="n-projects">專案</button>
+  </div>
+</nav>
 
-    <aside class="panel" style="border-right: 1px solid var(--border);">
-        <div class="panel-header">IDENTITY_FILE</div>
-        <div style="text-align:center; margin-bottom:20px;">
-            <img src="https://files.catbox.moe/oat85a.png" style="width:130px; border:1px solid var(--primary); padding:3px;">
-            <h2 style="margin-top:10px;">fuguangji</h2>
-            <p style="font-size:0.7rem; opacity:0.6;">光風濟月工作室 創辦人</p>
-        </div>
-        
-        <div class="panel-header">QUICK_LINKS</div>
-        <div style="display:flex; flex-direction:column; gap:10px;">
-            <a href="https://fuguangji.github.io/game" class="btn-ext">> 遊戲計劃區 (/game)</a>
-            <a href="https://scratch.mit.edu/" class="btn-ext scratch">> Scratch 主頁連結</a>
-        </div>
+<aside class="panel left">
+  <div class="panel-header">QUICK LINKS</div>
+  <div style="display:flex; flex-direction:column; gap:10px;">
+    <a href="https://scratch.mit.edu/users/fuguangji/" class="btn-ext scratch">Scratch 帳號</a>
+    <a href="https://fuguangji.github.io" class="btn-ext">個人網頁</a>
+  </div>
+</aside>
 
-        <div class="panel-header" style="margin-top:40px;">HISTORY</div>
-        <div style="font-size:0.75rem; color:var(--text-dim);">
-            <p>[2026] 相容性引擎啟動</p>
-            <p>[2025] University Alpha 2.0 發布</p>
-            <p>[2024] 《鏽跡餘生》架構確立</p>
-        </div>
-    </aside>
+<main class="panel">
+  <section id="home" class="section active">
+    <div class="panel-header">PROFILE</div>
+    <div style="text-align:center; margin-bottom:20px;">
+      <img src="https://files.catbox.moe/oat85a.png" class="avatar" style="width:130px;border:1px solid var(--primary);padding:3px;border-radius:5px;">
+      <h2 style="margin-top:10px;">fuguangji</h2>
+      <p style="font-size:0.8rem;color:var(--text-dim);">光風濟月工作室 創辦人</p>
+    </div>
+    <div class="motto-box">
+      <h3>個人理念</h3>
+      <p>放棄簡單的程式，追求最優邏輯與視覺體驗。</p>
+    </div>
+  </section>
 
-    <main class="panel" style="background: radial-gradient(circle at center, #050805, #010201);">
-        
-        <section id="home" class="section active">
-            <div class="panel-header">STATUS: OPERATIONAL</div>
-            <div class="motto-box">
-                <p style="color:var(--primary); font-size:0.8rem;">[ CORE_DECLARATION ]</p>
-                <h2>放棄簡潔的程式，<br>以複雜程式彌補效能及體驗。</h2>
-            </div>
-            <p style="color:#ccc; margin-bottom:20px;">
-                這裡不只是代碼的堆砌地，而是一個試圖在技術鐐銬中跳出最優雅舞步的實驗室。我們堅信，使用者的流暢感值得開發者付出最高昂的邏輯代價。
-            </p>
-            <div class="stat-grid">
-                <div class="stat-item"><h4>引擎狀態</h4><div class="value">ACTIVE (v2.8)</div></div>
-                <div class="stat-item"><h4>當前頻率</h4><div class="value">60 FPS LOCKED</div></div>
-            </div>
-        </section>
+  <section id="projects" class="section">
+    <div class="panel-header">PROJECTS</div>
+    
+    <div class="card">
+      <h4>Rust Survival - Galaxy 版本</h4>
+      <p>生日專屬版本</p>
+      <a href="game/rust-survival/galaxy" class="btn-ext">前往</a>
+    </div>
+    <div class="card">
+      <h4>Rust Survival - Star 版本</h4>
+      <p>特殊版本</p>
+      <a href="game/rust-survival/star" class="btn-ext">前往</a>
+    </div>
+    <div class="card">
+      <h4>Rust Survival - For You 版本</h4>
+      <p>生日驚喜版</p>
+      <a href="game/rust-survival/for_you" class="btn-ext">前往</a>
+    </div>
+  </section>
+</main>
 
-        <section id="tech" class="section">
-            <div class="panel-header">TECHNICAL_VAULT</div>
-            <h2 style="color:#fff;">University Alpha 引擎</h2>
-            <div class="card">
-                <h4 style="color:var(--primary);">3D 渲染與控制層隔離</h4>
-                <p style="font-size:0.85rem; margin-top:10px;">
-                    客製化參數配置系統，能針對不同設備進行最優化調動。放棄封裝，直達底層映射，實現 HD 級別的 3D 體驗。
-                </p>
-            </div>
-            <div class="card">
-                <h4 style="color:var(--primary);">插件化架構 (Plug-in Ready)</h4>
-                <p style="font-size:0.85rem; margin-top:10px;">
-                    將複雜系統簡單化，這也是我們的目標。不使用通用協議，而是將整套系統插件化，讓極致效能能快速移植到各類項目中。
-                </p>
-            </div>
-            <a href="https://fuguangji.github.io/game/rustsurvival" class="btn-ext" style="width:100%; text-align:center;">查看《鏽跡餘生》技術展示</a>
-        </section>
-
-        <section id="art" class="section">
-            <div class="panel-header">AESTHETIC_PHILOSOPHY</div>
-            <h2 style="color:#fff;">光風濟月：視覺之美</h2>
-            <div class="motto-box" style="border-color: #555;">
-                <p>「明徹」不僅僅是代碼運作的透明，更是視覺上的清爽與空靈。我希望有一天，這套引擎能完美模擬出光風霽月的自然景象——那種極致的、不帶雜質的 3D 美感。</p>
-            </div>
-            <p style="color:var(--text-dim); font-size:0.9rem;">
-                我們不僅在乎 60 幀的數字，我們更在乎每一處像素的明度。光影與明徹，是我們除了技術外唯一的偏執。
-            </p>
-        </section>
-
-        <section id="extra" class="section">
-            <div class="panel-header">FRAGMENT_LOG</div>
-            <h2 style="color:#fff;">開發者碎碎念</h2>
-            <div class="card">
-                <p>> 關於「鐐銬」：有些人覺得 Scratch 或限制環境是阻礙，我覺得那是催化劑。</p>
-            </div>
-            <div class="card">
-                <p>> 關於未來：自動偵測配置系統正在開發中，希望能讓更多人用舊設備看見新世界。</p>
-            </div>
-            <div class="card">
-                <p>> 工作室日常：日常就是在複雜與效能之間尋找平衡點，然後點上一杯咖啡，看著 60 幀的曲線不掉下來，那就是最爽的時刻。</p>
-            </div>
-        </section>
-
-    </main>
-
-    <aside class="panel" style="border-left: 1px solid var(--border);">
-        <div class="panel-header">LIVE_CONSOLE</div>
-        <div id="logs" style="font-size:0.7rem; font-family:'Share Tech Mono';"></div>
-        <div style="position:absolute; bottom:25px; left:25px; right:25px;">
-            <div class="panel-header">PROJECT_HUB</div>
-            <a href="https://fuguangji.github.io/game" class="btn-ext" style="width:100%; text-align:center; margin-bottom:10px;">進入 遊戲計劃區</a>
-            <p style="font-size:0.6rem; color:var(--text-dim);">SYSTEM ACCESS GRANTED.</p>
-        </div>
-    </aside>
-</div>
+<aside class="panel right">
+  <div class="panel-header">HISTORY</div>
+  <p style="font-size:0.75rem;color:var(--text-dim);">
+    [2026] 系統穩定運行<br>
+    [2025] Rust Survival 計畫啟動<br>
+    [2024] 工作室成立
+  </p>
+</aside>
 
 <footer>
-    <span>TERMINAL_ID: FUGUANGJI_NODE_2.8</span>
-    <span>USER_FIRST // PERFORMANCE_CENTERED</span>
-    <span>© 2026 光風濟月工作室</span>
+  <span>TERMINAL_ID: FUGUANGJI_NODE_2.8</span>
+  <span>© 2026 光風濟月工作室</span>
 </footer>
+</div>
 
 <script>
-    // 虛擬切頁加載邏輯
-    function changePage(id) {
-        const loader = document.getElementById('fake-loader');
-        const progress = document.getElementById('load-p');
-        
-        loader.style.display = 'flex';
-        progress.style.width = '0%';
-
-        // 模擬數據讀取進度
-        setTimeout(() => progress.style.width = '40%', 100);
-        setTimeout(() => progress.style.width = '100%', 400);
-
-        setTimeout(() => {
-            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-            document.querySelectorAll('.nav-links button').forEach(b => b.classList.remove('active'));
-            
-            document.getElementById(id).classList.add('active');
-            document.getElementById('n-' + id).classList.add('active');
-            
-            loader.style.display = 'none';
-        }, 600);
-    }
-
-    // 模擬技術日誌
-    const logBox = document.getElementById('logs');
-    const logs = [
-        "> 系統權限：核心級別",
-        "> 載入 University Alpha 引擎資源...",
-        "> 偵測到外接遊戲計劃區連結 (/game)",
-        "> 正在同步 Scratch API 通訊協定...",
-        "> 效能指標穩定，未偵測到幀率抖動。",
-        "> 「光風濟月」視覺模組載入中...",
-        "> 使用者優先模式：啟動。"
-    ];
-
-    function addLog() {
-        const p = document.createElement('p');
-        p.style.marginBottom = "8px";
-        p.innerHTML = `<span style="color:#555;">[${new Date().toLocaleTimeString()}]</span> ${logs[Math.floor(Math.random()*logs.length)]}`;
-        logBox.prepend(p);
-        if(logBox.children.length > 15) logBox.lastChild.remove();
-    }
-    setInterval(addLog, 2500);
+function changePage(id){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.nav-links button').forEach(b=>b.classList.remove('active'));
+  document.getElementById('n-'+id).classList.add('active');
+}
 </script>
 
 </body>
