@@ -28,13 +28,21 @@ canvas#bgCanvas{
 }
 
 /* 容器 */
-.container{max-width:700px;margin:0 auto;padding:20px;display:flex;flex-direction:column;gap:20px;}
+.container{display:flex;max-width:1000px;margin:0 auto;padding:20px;gap:20px;}
 
-/* LOGO + 名稱 + 選單 */
-.header{display:flex;align-items:center;gap:15px;cursor:pointer;position:relative;}
-.header img{width:50px;border:1px solid var(--primary);padding:2px;border-radius:5px;transition:0.3s;animation:logoBounce 2s infinite;}
+/* 左側欄 */
+.sidebar{
+  flex:0 0 180px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:20px;
+}
+
+/* LOGO */
+.header img{width:60px;border:1px solid var(--primary);padding:2px;border-radius:5px;cursor:pointer;transition:0.3s;animation:logoBounce 2s infinite;}
 .header img:hover{transform:scale(1.1);box-shadow:0 0 15px var(--primary);}
-.header span{font-size:1.5rem;font-weight:900;}
+.header span{margin-top:10px;font-weight:900;font-size:1.2rem;text-align:center;}
 @keyframes logoBounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-5px);}}
 
 /* 外部連結選單 */
@@ -47,18 +55,16 @@ canvas#bgCanvas{
   font-weight:900;
   background:rgba(0,0,0,0.5);
   transition:0.3s;
+  text-align:center;
 }
 .menu-btn:hover{background:var(--primary);color:#000;}
 .menu-content{
-  position:absolute;
-  top:60px; /* Logo下方 */
-  left:0;
-  background:var(--bg-dark);
-  border:1px solid var(--primary);
-  border-radius:5px;
   display:none;
   flex-direction:column;
-  min-width:160px;
+  border:1px solid var(--primary);
+  border-radius:5px;
+  background:var(--bg-dark);
+  width:160px;
   z-index:100;
 }
 .menu-content a{
@@ -71,36 +77,44 @@ canvas#bgCanvas{
 .menu-content a:hover{background:rgba(0,255,136,0.1);color:#000;}
 .menu-content a:last-child{border-bottom:none;}
 
-/* 側邊欄列表 + 頭像 */
-.sidebar{display:flex;flex-direction:row;gap:8px;align-items:center;margin-top:15px;}
+/* 左側選單按鈕 */
 .sidebar button{
   background:none;border:1px solid var(--primary);border-radius:5px;padding:8px 12px;
-  color:var(--primary);cursor:pointer;font-family:inherit;transition:0.3s;text-align:left;
+  color:var(--primary);cursor:pointer;font-family:inherit;transition:0.3s;width:100%;
 }
-.sidebar button:hover,.sidebar button.active{background:rgba(0,255,136,0.1);border-left:3px solid var(--primary);}
-.sidebar img{width:40px;height:40px;border:1px solid var(--primary);border-radius:50%;margin-left:15px;}
+.sidebar button:hover,.sidebar button.active{background:rgba(0,255,136,0.1);border-left:3px solid var(--primary);text-align:left;}
+
+/* 頭像 */
+.avatar{width:80px;height:80px;border:1px solid var(--primary);border-radius:50%;}
+
+/* 右側內容 */
+.content{flex:1;display:flex;flex-direction:column;gap:20px;}
 
 /* 打字機效果 */
 .typewriter{overflow:hidden;border-right:.15em solid var(--primary);white-space:nowrap;animation:typing 4s steps(50,end),blink .7s infinite;}
 @keyframes typing{from{width:0;}to{width:100%;}}
 @keyframes blink{50%{border-color:transparent;}}
 
-/* 內容區塊動畫 */
-.section{opacity:0;transform:translateY(20px);transition:0.5s;margin-top:15px;}
+/* 區塊動畫 */
+.section{opacity:0;transform:translateY(20px);transition:0.5s;}
 .section.active{opacity:1;transform:translateY(0);display:block;}
 .section.hidden{display:none;}
 
-/* 區塊標題 */
+/* 標題 */
 .section h2{color:#fff;margin-bottom:8px;font-size:1.4rem;}
 
-/* 區塊文字 */
+/* 文字 */
 .section p, .section li{color:var(--text-dim);font-size:0.9rem;}
 
 /* 留白 */
 .spacer{height:20px;}
 
 /* 響應式 */
-@media(max-width:768px){.container{padding:10px;}.sidebar{flex-direction:column;align-items:flex-start;}.sidebar img{margin-left:0;}}
+@media(max-width:768px){
+  .container{flex-direction:column;align-items:center;}
+  .sidebar{flex-direction:row;justify-content:center;width:100%;gap:10px;}
+  .sidebar button{width:auto;}
+}
 </style>
 </head>
 <body>
@@ -109,13 +123,16 @@ canvas#bgCanvas{
 
 <div class="container">
 
-  <!-- LOGO + 名稱 + 選單 -->
-  <div class="header">
-    <img src="assets/logo.png" alt="logo" onclick="location.href='index.html'">
-    <span>光風濟月</span>
-    
+  <!-- 左側欄 -->
+  <div class="sidebar">
+    <!-- LOGO -->
+    <div class="header">
+      <img src="assets/logo.png" alt="logo" onclick="location.href='index.html'">
+      <span>光風濟月</span>
+    </div>
+
     <!-- 外部連結選單 -->
-    <div style="margin-left:15px;position:relative;">
+    <div style="position:relative;">
       <div class="menu-btn" onclick="toggleMenu()">快速連結 ▼</div>
       <div class="menu-content" id="menuContent">
         <a href="https://novacircuit-lab.github.io/intro/" target="_blank">我的團隊</a>
@@ -123,44 +140,45 @@ canvas#bgCanvas{
         <a href="/game">遊戲計劃</a>
       </div>
     </div>
-  </div>
 
-  <!-- 側邊欄切換 + 頭像 -->
-  <div class="sidebar">
+    <!-- 側邊按鈕 -->
     <button class="active" onclick="showSection('intro',this)">關於我</button>
     <button onclick="showSection('traits',this)">特質與理念</button>
     <button onclick="showSection('tech',this)">我的技術</button>
-    <img src="assets/avatar.png" alt="我的頭像">
+
+    <!-- 頭像 -->
+    <img class="avatar" src="assets/avatar.png" alt="我的頭像">
   </div>
 
-  <div class="spacer"></div>
+  <!-- 右側內容 -->
+  <div class="content">
+    <!-- 關於我 -->
+    <div id="intro" class="section active">
+      <h2>關於我</h2>
+      <p>我是一個以邏輯為底線的理工魂大腦，專注於作品，技術的目的不是炫耀，而是提供極致使用者體驗。</p>
+      <p>帶點理性感，用極致技術驅動最完美的體驗。</p>
+      <p>我的作品代表作是 <strong>Rust Suvival</strong>，網站同時也是我的履歷、計劃展示、團隊入口與遊戲入口。</p>
+    </div>
 
-  <!-- 關於我 -->
-  <div id="intro" class="section active">
-    <h2>關於我</h2>
-    <p>我是一個以邏輯為底線的理工魂大腦，專注於作品，技術的目的不是炫耀，而是提供極致使用者體驗。</p>
-    <p>帶點理性感，用極致技術驅動最完美的體驗。</p>
-    <p>我的作品代表作是 <strong>Rust Suvival</strong>，網站同時也是我的履歷、計劃展示、團隊入口與遊戲入口。</p>
-  </div>
+    <!-- 特質與理念 -->
+    <div id="traits" class="section hidden">
+      <h2>特質與理念</h2>
+      <ul>
+        <li>為了使用者，我們可以犧牲程式簡潔性，用最複雜的演算法取得最佳效能</li>
+        <li>極致技術帶來極致體驗</li>
+        <li>不特別強調身份，專注作品與能力</li>
+      </ul>
+    </div>
 
-  <!-- 特質與理念 -->
-  <div id="traits" class="section hidden">
-    <h2>特質與理念</h2>
-    <ul>
-      <li>為了使用者，我們可以犧牲程式簡潔性，用最複雜的演算法取得最佳效能</li>
-      <li>極致技術帶來極致體驗</li>
-      <li>不特別強調身份，專注作品與能力</li>
-    </ul>
-  </div>
-
-  <!-- 我的技術 -->
-  <div id="tech" class="section hidden">
-    <h2>我的技術</h2>
-    <ul>
-      <li>Scratch</li>
-      <li>TurboWarp</li>
-      <li>Bloxd.io 指令師</li>
-    </ul>
+    <!-- 我的技術 -->
+    <div id="tech" class="section hidden">
+      <h2>我的技術</h2>
+      <ul>
+        <li>Scratch</li>
+        <li>TurboWarp</li>
+        <li>Bloxd.io 指令師</li>
+      </ul>
+    </div>
   </div>
 
 </div>
