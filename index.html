@@ -101,6 +101,7 @@ canvas#bgCanvas{
 /* 右側 */
 .right-panel{
   flex:1;
+  min-width:0; /* 🔥 關鍵修正：避免被內容寬度影響 */
   display:flex;
   flex-direction:column;
   gap:15px;
@@ -111,7 +112,7 @@ canvas#bgCanvas{
   display:flex;
   flex-direction:column;
   gap:12px;
-  max-width:260px;
+  width:100%;
 }
 
 .button-row button{
@@ -123,7 +124,8 @@ canvas#bgCanvas{
   cursor:pointer;
   font-family:inherit;
   transition:0.3s;
-  text-align:left;
+  text-align:center;
+  width:100%; /* 永遠撐滿 */
 }
 
 .button-row button:hover,
@@ -178,7 +180,6 @@ canvas#bgCanvas{
 
 <div class="container">
 
-  <!-- 上排 -->
   <div class="top-row">
     <div class="header">
       <img src="assets/logo.png" onclick="location.href='index.html'">
@@ -186,7 +187,6 @@ canvas#bgCanvas{
     </div>
   </div>
 
-  <!-- 下排 -->
   <div class="bottom-row">
 
     <img class="avatar" src="assets/avatar.png" alt="頭像">
