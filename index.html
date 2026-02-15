@@ -33,6 +33,12 @@ canvas#bgCanvas{
 
 /* 上半部：LOGO + 標題 + 選單 */
 .top-row{display:flex;align-items:center;justify-content:space-between;gap:20px;}
+.header{display:flex;align-items:center;gap:10px;}
+.header img{
+  width:50px;border:1px solid var(--primary);padding:2px;border-radius:5px;cursor:pointer;transition:0.3s;
+  animation:logoGlow 2s infinite;
+}
+.header img:hover{transform:scale(1.1);box-shadow:0 0 15px var(--primary);}
 .header span{
   font-weight:900;font-size:1.3rem;color:var(--primary);
   animation:logoGlow 2s infinite;
@@ -110,7 +116,10 @@ canvas#bgCanvas{
 
   <!-- 上半部 -->
   <div class="top-row">
-    <div class="header"><span>光風濟月</span></div>
+    <div class="header">
+      <img src="assets/logo.png" alt="logo" onclick="location.href='index.html'">
+      <span>光風濟月</span>
+    </div>
     <div style="position:relative;">
       <div class="menu-btn" onclick="toggleMenu()">快速連結 ▼</div>
       <div class="menu-content" id="menuContent">
