@@ -45,68 +45,63 @@ canvas#bgCanvas{
 .menu-content a:hover{background:rgba(0,255,136,0.1);color:#000;}
 .menu-content a:last-child{border-bottom:none;}
 
-/* 第二行: 外框包住頭像+右側 */
-.bottom-row{
-  display:flex;
-  gap:20px;
-  flex-wrap:wrap;
-  border:2px solid var(--primary); /* 🔑 外框 */
-  border-radius:12px;
-  padding:20px; /* 內距讓按鈕不貼邊 */
-  background:rgba(0,0,0,0.3);
-}
+/* 第二行: 左頭像 + 右側按鈕 + 內容 */
+.bottom-row{display:flex;gap:20px;flex-wrap:wrap;}
 
 /* 左側頭像 */
 .avatar{width:80px;height:80px;border:1px solid var(--primary);border-radius:50%;flex-shrink:0;}
 
-/* 右側 */
-.right-panel{
-  flex:1;
-  min-width:0;
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-}
-
-/* 按鈕列 */
-.button-row{
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-  width:100%;
-}
-
+/* 右側選單 + 內容 */
+.right-panel{flex:1;display:flex;flex-direction:column;gap:10px;}
+.button-row{display:flex;flex-direction:column;gap:10px;}
 .button-row button{
-  background:none;
-  border:1px solid var(--primary);
-  border-radius:5px;
-  padding:10px;
-  color:var(--primary);
-  cursor:pointer;
-  font-family:inherit;
-  transition:0.3s;
-  width:100%;  /* 撐滿右側 */
-  text-align:center; /* 文字置中 */
+  background:none;border:1px solid var(--primary);border-radius:5px;padding:8px 12px;
+  color:var(--primary);cursor:pointer;font-family:inherit;transition:0.3s;width:200px;text-align:left;
 }
-
-.button-row button:hover,
-.button-row button.active{
-  background:rgba(0,255,136,0.1);
-  border-left:3px solid var(--primary);
-}
+.button-row button:hover,.button-row button.active{background:rgba(0,255,136,0.1);border-left:3px solid var(--primary);}
 
 /* 右側內容 */
 .section{opacity:0;transform:translateY(20px);transition:0.5s;}
 .section.active{opacity:1;transform:translateY(0);display:block;}
 .section.hidden{display:none;}
 
+/* 打字機效果 */
+.typewriter{overflow:hidden;border-right:.15em solid var(--primary);white-space:nowrap;animation:typing 4s steps(50,end),blink .7s infinite;}
+@keyframes typing{from{width:0;}to{width:100%;}}
+@keyframes blink{50%{border-color:transparent;}}
+
+/* 標題 */
 .section h2{color:#fff;margin-bottom:8px;font-size:1.4rem;}
 .section p, .section li{color:var(--text-dim);font-size:0.9rem;}
+
+/* 下半部文章卡片 */
+.bottom-half{
+  display:flex;
+  flex-direction:column;
+  gap:25px;
+  margin-top:40px;
+}
+.section-card{
+  border:1px solid var(--primary);
+  border-radius:12px;
+  padding:20px;
+  background:rgba(0,0,0,0.4);
+  backdrop-filter:blur(4px);
+  opacity:0;
+  transform:translateY(20px);
+  transition:0.6s;
+}
+.section-card h2{color:#fff;margin-bottom:12px;}
+.section-card p{color:var(--text-dim);font-size:0.95rem;line-height:1.5;}
+.section-card.show{opacity:1;transform:translateY(0);}
+.section-card:hover{box-shadow:0 0 25px rgba(0,255,136,0.25);}
 
 /* 響應式 */
 @media(max-width:768px){
   .bottom-row{flex-direction:column;align-items:center;}
   .button-row button{width:100%;}
+  .bottom-half{gap:20px;}
+  .section-card{width:100%;}
 }
 </style>
 </head>
@@ -141,33 +136,65 @@ canvas#bgCanvas{
       <div class="button-row">
         <button class="active" onclick="showSection('intro',this)">關於我</button>
         <button onclick="showSection('traits',this)">特質與理念</button>
-        <button onclick="showSection('tech',this)">能力</button>
+        <button onclick="showSection('tech',this)">目前程式能力</button>
       </div>
 
       <div id="intro" class="section active">
-        <h2>關於我</h2>
-        <p>我是一個以邏輯為底線的理工魂大腦，專注於作品，技術的目的不是炫耀，而是提供極致使用者體驗。</p>
+        <h2>簡介</h2>
+        <p>我是一個以邏輯為重的理工魂設計師，專注於作品。<br>技術，目的不是炫耀，而是提供極致使用者體驗。</p>
+        <p>帶這最好的演算法，用極致技術驅動最完美的體驗。</p>
+        <p>我的作品代表作是 <strong>Rust Suvival</strong>，這個計劃是從2023時啟用的。</p>
       </div>
 
       <div id="traits" class="section hidden">
-        <h2>特質與理念</h2>
+        <h2>編程理念</h2>
         <ul>
-          <li>為了使用者，我們可以犧牲程式簡潔性，用最複雜的演算法取得最佳效能</li>
-          <li>極致技術帶來極致體驗</li>
-          <li>不特別強調身份，專注作品與能力</li>
+          <li>為了使用者即使是一點點的畫面流暢，我們可以犧牲無論多少的程式簡潔性，用最複雜的演算法取得最佳效能</li>
+          <li>用極致技術帶來極致體驗</li>
+          <li>不特別強調什麼，專注作品與能力</li>
         </ul>
       </div>
 
       <div id="tech" class="section hidden">
-        <h2>我的技術</h2>
+        <h2>我的程式能力</h2>
         <ul>
           <li>Scratch</li>
           <li>TurboWarp</li>
-          <li>Bloxd.io 指令師</li>
+          <li>Bloxd.io API指令師</li>
         </ul>
       </div>
 
     </div>
+  </div>
+
+  <!-- 下半部 -->
+  <div class="bottom-half">
+
+    <div class="section-card show" id="about-me">
+      <h2>關於我</h2>
+      <p class="typewriter">我是專注於程式演算法架構的設計師，致力於打造即使在有限資源下也能讓使用者享受極致體驗的程式作品。我相信，即便面臨效能限制，也能用複雜演算法實現完美使用者體驗——為了讓每一幀的FPS提升，每一個細節都值得精雕細琢。</p>
+    </div>
+
+    <div class="section-card" id="philosophy">
+      <h2>設計理念</h2>
+      <p>我的設計理念是 <strong>「體驗為先，效能並重」</strong>。在我的世界裡，複雜的演算法並不算什麼，只要它能帶來任何一點使用者體驗和效能，就值得投入心力。</p>
+    </div>
+
+    <div class="section-card" id="projects">
+      <h2>代表作品</h2>
+      <p>這個花了近三年的時間從零開始構築《Rust Survival》的引擎，歷經專案中斷與重啟，最終完成第一版的發佈。這段經歷讓我深刻理解：技術的極致追求，才是創造可能的關鍵。</p>
+    </div>
+
+    <div class="section-card" id="inspiration">
+      <h2>關於我的靈感來源</h2>
+      <p>靈感來源意外簡單——我喜歡聽日文歌放鬆，也許正是這種音樂的節奏，幫助我在複雜的程式中找到平衡。我的作品，希望像戴著沉重鐐銬跳舞一樣，雖然不完美，但仍能和世界一較高下。</p>
+    </div>
+
+    <div class="section-card" id="future">
+      <h2>感謝與未來</h2>
+      <p>感謝我的團隊NovaCircuit，尤其是測試員和硬體支持，讓我的想法能實際落地。未來，我希望能在裸眼3D和3D飛行模擬上探索更多可能。對我來說，設計不只是編程，而是用極致技術驅動完美體驗，構築無限未來。</p>
+    </div>
+
   </div>
 
 </div>
@@ -185,6 +212,7 @@ function showSection(id,btn){
   if(btn) btn.classList.add('active');
 }
 
+// 選單開關
 function toggleMenu(){
   const menu=document.getElementById('menuContent');
   if(menu.style.display==='flex'){menu.style.display='none';}
@@ -216,6 +244,18 @@ function animate(){
   requestAnimationFrame(animate);
 }
 animate();
+
+// 下半部滾動淡入動畫
+const cards = document.querySelectorAll('.section-card');
+function checkCards(){
+  const triggerBottom = window.innerHeight * 0.9;
+  cards.forEach(card=>{
+    const cardTop = card.getBoundingClientRect().top;
+    if(cardTop < triggerBottom){card.classList.add('show');}
+  });
+}
+window.addEventListener('scroll',checkCards);
+window.addEventListener('load',checkCards);
 </script>
 
 </body>
