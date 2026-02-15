@@ -100,7 +100,46 @@ canvas#bgCanvas{
 .section-card p{color:var(--text-dim);font-size:0.95rem;line-height:1.5;}
 .section-card.show{opacity:1;transform:translateY(0);}
 .section-card:hover{box-shadow:0 0 25px rgba(0,255,136,0.25);}
+.footer-link {
+  color: #00ff88;
+  text-decoration: none;
+  position: relative;
+  transition: color 0.3s ease;
+}
 
+/* 底線動畫 */
+.footer-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 0%;
+  height: 1px;
+  background: #00ff88;
+  transition: width 0.3s ease;
+}
+
+/* hover 效果 */
+.footer-link:hover {
+  color: #66ffbb;
+  text-shadow: 0 0 6px rgba(0,255,136,0.6);
+}
+
+.footer-link:hover::after {
+  width: 100%;
+}
+.footer {
+  text-align: center;
+  margin-top: 60px;
+  padding: 15px 0;
+  font-size: 0.75rem;
+  color: #00ff88;
+  letter-spacing: 2px;
+  opacity: 0.8;
+  text-shadow: 0 0 5px rgba(0,255,136,0.5);
+  border-top: 1px solid rgba(0,255,136,0.2);
+}
+  
 /* 響應式 */
 @media(max-width:768px){
   .button-row{flex-direction:column;}
@@ -125,6 +164,7 @@ canvas#bgCanvas{
       <div class="menu-content" id="menuContent">
         <a href="https://novacircuit-lab.github.io/intro/" target="_blank">我的團隊</a>
         <a href="https://scratch.mit.edu/users/fuguangji/" target="_blank">我的 Scratch</a>
+        <a href="/game" target="_blank">進行中的遊戲計劃</a>
       </div>
     </div>
   </div>
@@ -163,7 +203,6 @@ canvas#bgCanvas{
     </div>
   </div>
   <h2>用極致技術，<br>&nbsp;&nbsp;&nbsp;&nbsp;驅動完美體驗，<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;構築無限未來</h2>
-  <a href="/game" class="menu-content">正在進行的遊戲計劃</a>
   <!-- 下半部文章卡片 -->
   <div class="bottom-half">
     <div class="section-card show" id="about-me">
@@ -183,7 +222,7 @@ canvas#bgCanvas{
 
     <div class="section-card" id=project_plan>
       <h2>專案計劃</h2>
-      <a href="/game">目前正在啟用的遊戲計劃</a>
+      <a href="/game" class="footer-link">目前正在啟用的遊戲計劃</a>
     </div>
     
     <div class="section-card" id="inspiration">
@@ -198,7 +237,9 @@ canvas#bgCanvas{
   </div>
 
 </div>
-
+<div class="footer">
+   © 2026 光風濟月
+</div>
 <script>
 // 按鈕切換
 function showSection(id,btn){
