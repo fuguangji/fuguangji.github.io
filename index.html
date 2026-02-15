@@ -49,11 +49,8 @@ canvas#bgCanvas{
 .menu-content a:hover{background:rgba(0,255,136,0.1);color:#000;}
 .menu-content a:last-child{border-bottom:none;}
 
-/* 第二行: 左頭像 + 右側按鈕 + 內容 */
-.bottom-row{display:flex;gap:20px;flex-wrap:wrap;align-items:flex-start;}
-
-/* 左側頭像 */
-.avatar{width:80px;height:80px;border:1px solid var(--primary);border-radius:50%;flex-shrink:0;}
+/* 第二行: 右側按鈕 + 內容 */
+.bottom-row{display:flex;gap:20px;flex-wrap:wrap;}
 
 /* 右側選單 + 內容 */
 .right-panel{flex:1;display:flex;flex-direction:column;gap:10px;}
@@ -106,12 +103,10 @@ canvas#bgCanvas{
 }
 .section-card:hover::after{left:100%;}
 
-/* 響應式 */
-@media(max-width:768px){
-  .bottom-row{flex-direction:column;align-items:center;}
-  .button-row button{width:100%;}
-  .bottom-half{gap:20px;}
-  .section-card{width:100%;}
+/* 動態網格線裝飾 */
+.grid-line{
+  position:absolute;
+  background:var(--accent-light);
 }
 </style>
 </head>
@@ -140,8 +135,6 @@ canvas#bgCanvas{
 
   <!-- 第二行 -->
   <div class="bottom-row">
-    <img class="avatar" src="assets/avatar.png" alt="頭像">
-
     <div class="right-panel">
       <div class="button-row">
         <button class="active" onclick="showSection('intro',this)">簡介</button>
@@ -228,7 +221,7 @@ function toggleMenu(){
   else{menu.style.display='flex';menu.style.flexDirection='column';}
 }
 
-// 背景粒子 + 動態網格
+// 背景粒子 + 網格
 const canvas=document.getElementById('bgCanvas');
 const ctx=canvas.getContext('2d');
 let w,h,particles=[],gridLines=[];
