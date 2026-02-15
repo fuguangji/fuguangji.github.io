@@ -12,6 +12,7 @@
   --text-dim:#7a8a7a;
 }
 
+/* 全局 */
 *{margin:0;padding:0;box-sizing:border-box;}
 body{
   font-family:'Share Tech Mono','Noto Sans TC',monospace;
@@ -21,17 +22,22 @@ body{
   overflow-x:hidden;
 }
 
+/* 背景動畫 */
 canvas#bgCanvas{
   position:fixed; inset:0; z-index:-1;
 }
 
+/* 容器 */
 .container{max-width:1000px;margin:0 auto;padding:20px;display:flex;flex-direction:column;gap:20px;}
+
+/* 第一行: LOGO + 標題 + 快速連結 */
 .top-row{display:flex;align-items:center;justify-content:space-between;gap:20px;}
 .header img{width:60px;border:1px solid var(--primary);padding:2px;border-radius:5px;cursor:pointer;transition:0.3s;animation:logoBounce 2s infinite;}
 .header img:hover{transform:scale(1.1);box-shadow:0 0 15px var(--primary);}
 .header span{font-weight:900;font-size:1.2rem;text-align:center;}
 @keyframes logoBounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-5px);}}
 
+/* 快速連結選單 */
 .menu-btn{display:inline-block;border:1px solid var(--primary);padding:6px 10px;border-radius:5px;cursor:pointer;font-weight:900;background:rgba(0,0,0,0.5);transition:0.3s;}
 .menu-btn:hover{background:var(--primary);color:#000;}
 .menu-content{display:none;flex-direction:column;border:1px solid var(--primary);border-radius:5px;background:var(--bg-dark);width:160px;z-index:100;}
@@ -39,18 +45,30 @@ canvas#bgCanvas{
 .menu-content a:hover{background:rgba(0,255,136,0.1);color:#000;}
 .menu-content a:last-child{border-bottom:none;}
 
-.bottom-row{display:flex;gap:20px;flex-wrap:wrap;}
+/* 第二行: 外框包住頭像+右側 */
+.bottom-row{
+  display:flex;
+  gap:20px;
+  flex-wrap:wrap;
+  border:2px solid var(--primary); /* 🔑 外框 */
+  border-radius:12px;
+  padding:20px; /* 內距讓按鈕不貼邊 */
+  background:rgba(0,0,0,0.3);
+}
+
+/* 左側頭像 */
 .avatar{width:80px;height:80px;border:1px solid var(--primary);border-radius:50%;flex-shrink:0;}
 
 /* 右側 */
 .right-panel{
   flex:1;
-  min-width:0; /* 🔑 關鍵修正 */
+  min-width:0;
   display:flex;
   flex-direction:column;
   gap:10px;
 }
 
+/* 按鈕列 */
 .button-row{
   display:flex;
   flex-direction:column;
@@ -62,18 +80,22 @@ canvas#bgCanvas{
   background:none;
   border:1px solid var(--primary);
   border-radius:5px;
-  padding:8px 12px;
+  padding:10px;
   color:var(--primary);
   cursor:pointer;
   font-family:inherit;
   transition:0.3s;
-  width:100%; /* 🔑 撐滿容器 */
-  text-align:center; /* 🔑 文字置中 */
+  width:100%;  /* 撐滿右側 */
+  text-align:center; /* 文字置中 */
 }
 
 .button-row button:hover,
-.button-row button.active{background:rgba(0,255,136,0.1);border-left:3px solid var(--primary);}
+.button-row button.active{
+  background:rgba(0,255,136,0.1);
+  border-left:3px solid var(--primary);
+}
 
+/* 右側內容 */
 .section{opacity:0;transform:translateY(20px);transition:0.5s;}
 .section.active{opacity:1;transform:translateY(0);display:block;}
 .section.hidden{display:none;}
@@ -81,6 +103,7 @@ canvas#bgCanvas{
 .section h2{color:#fff;margin-bottom:8px;font-size:1.4rem;}
 .section p, .section li{color:var(--text-dim);font-size:0.9rem;}
 
+/* 響應式 */
 @media(max-width:768px){
   .bottom-row{flex-direction:column;align-items:center;}
   .button-row button{width:100%;}
@@ -92,11 +115,14 @@ canvas#bgCanvas{
 <canvas id="bgCanvas"></canvas>
 
 <div class="container">
+
+  <!-- 第一行 -->
   <div class="top-row">
     <div class="header">
       <img src="assets/logo.png" alt="logo" onclick="location.href='index.html'">
       <span>光風濟月</span>
     </div>
+
     <div style="position:relative;">
       <div class="menu-btn" onclick="toggleMenu()">快速連結 ▼</div>
       <div class="menu-content" id="menuContent">
@@ -107,6 +133,7 @@ canvas#bgCanvas{
     </div>
   </div>
 
+  <!-- 第二行 -->
   <div class="bottom-row">
     <img class="avatar" src="assets/avatar.png" alt="頭像">
 
@@ -139,8 +166,10 @@ canvas#bgCanvas{
           <li>Bloxd.io 指令師</li>
         </ul>
       </div>
+
     </div>
   </div>
+
 </div>
 
 <script>
@@ -162,7 +191,7 @@ function toggleMenu(){
   else{menu.style.display='flex';menu.style.flexDirection='column';}
 }
 
-// 背景粒子
+// 背景粒子動畫
 const canvas=document.getElementById('bgCanvas');
 const ctx=canvas.getContext('2d');
 let w,h,particles=[];
