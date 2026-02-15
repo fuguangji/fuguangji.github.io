@@ -6,10 +6,11 @@
 <title>光風濟月 | 個人介紹</title>
 <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Noto+Sans+TC:wght@400;900&display=swap" rel="stylesheet">
 <style>
-:root{
+:root {
   --primary:#00ff88;
   --bg-dark:#020202;
   --text-dim:#7a8a7a;
+  --accent-light:rgba(0,255,136,0.3);
 }
 
 /* 全局 */
@@ -30,9 +31,17 @@ canvas#bgCanvas{
 /* 容器 */
 .container{max-width:1000px;margin:0 auto;padding:20px;display:flex;flex-direction:column;gap:20px;}
 
-/* 上排 */
+/* 第一行: LOGO + 標題 + 快速連結 */
 .top-row{display:flex;align-items:center;justify-content:space-between;gap:20px;}
-.header span{font-weight:900;font-size:1.3rem;color:#00ff88;}
+.header img{width:60px;border:1px solid var(--primary);padding:2px;border-radius:5px;cursor:pointer;transition:0.3s;animation:logoGlow 2s infinite;}
+.header img:hover{transform:scale(1.1);box-shadow:0 0 15px var(--primary);}
+.header span{font-weight:900;font-size:1.2rem;text-align:center;}
+@keyframes logoGlow{
+  0%,100%{box-shadow:0 0 5px var(--primary);}
+  50%{box-shadow:0 0 20px var(--primary);}
+}
+
+/* 快速連結選單 */
 .menu-btn{display:inline-block;border:1px solid var(--primary);padding:6px 10px;border-radius:5px;cursor:pointer;font-weight:900;background:rgba(0,0,0,0.5);transition:0.3s;}
 .menu-btn:hover{background:var(--primary);color:#000;}
 .menu-content{display:none;flex-direction:column;border:1px solid var(--primary);border-radius:5px;background:var(--bg-dark);width:160px;z-index:100;}
@@ -40,28 +49,24 @@ canvas#bgCanvas{
 .menu-content a:hover{background:rgba(0,255,136,0.1);color:#000;}
 .menu-content a:last-child{border-bottom:none;}
 
-/* 第二排按鈕區 */
-.right-panel{display:flex;flex-direction:column;gap:10px;}
-.button-row{display:flex;gap:10px;}
+/* 第二行: 右側按鈕 + 內容 */
+.bottom-row{display:flex;gap:20px;flex-wrap:wrap;}
+
+/* 右側選單 + 內容 */
+.right-panel{flex:1;display:flex;flex-direction:column;gap:10px;}
+.button-row{display:flex;flex-direction:column;gap:10px;}
 .button-row button{
-  flex:1;
-  background:none;border:1px solid var(--primary);border-radius:5px;padding:10px 0;
-  color:var(--primary);cursor:pointer;font-family:inherit;transition:0.3s;
-  text-align:center;
-  position:relative;
-  overflow:hidden;
+  background:none;border:1px solid var(--primary);border-radius:5px;padding:8px 12px;
+  color:var(--primary);cursor:pointer;font-family:inherit;transition:0.3s;width:200px;text-align:left;
 }
-.button-row button::after{
-  content:"";position:absolute;top:0;left:-100%;width:100%;height:100%;
-  background:rgba(0,255,136,0.2);transition:0.4s;
-}
-.button-row button:hover::after{left:0;}
-.button-row button.active{background:rgba(0,255,136,0.1);border-left:3px solid var(--primary);}
+.button-row button:hover,.button-row button.active{background:rgba(0,255,136,0.1);border-left:3px solid var(--primary);}
 
 /* 右側內容 */
 .section{opacity:0;transform:translateY(20px);transition:0.5s;}
 .section.active{opacity:1;transform:translateY(0);display:block;}
 .section.hidden{display:none;}
+
+/* 標題 */
 .section h2{color:#fff;margin-bottom:8px;font-size:1.4rem;}
 .section p, .section li{color:var(--text-dim);font-size:0.9rem;}
 
@@ -84,23 +89,24 @@ canvas#bgCanvas{
   position:relative;
   overflow:hidden;
 }
-.section-card::before{
-  content:"";
-  position:absolute;top:0;left:0;width:100%;height:100%;
-  background:linear-gradient(120deg, rgba(0,255,136,0.05), rgba(0,255,255,0.05), rgba(0,255,136,0.05));
-  pointer-events:none;
-  animation:shine 3s linear infinite;
-}
-@keyframes shine{0%{transform:translateX(-100%);}100%{transform:translateX(100%);}}
 .section-card h2{color:#fff;margin-bottom:12px;}
 .section-card p{color:var(--text-dim);font-size:0.95rem;line-height:1.5;}
 .section-card.show{opacity:1;transform:translateY(0);}
-.section-card:hover{box-shadow:0 0 25px rgba(0,255,136,0.25);transform:translateY(-3px);}
+.section-card:hover{box-shadow:0 0 25px rgba(0,255,136,0.25);}
 
-/* 響應式 */
-@media(max-width:768px){
-  .button-row{flex-direction:column;}
-  .bottom-half{gap:20px;}
+/* 卡片動態光線 */
+.section-card::after{
+  content:"";position:absolute;top:0;left:-50%;width:50%;height:100%;
+  background:linear-gradient(120deg, transparent, rgba(0,255,136,0.2), transparent);
+  transform:skewX(-25deg);
+  transition:0.5s;
+}
+.section-card:hover::after{left:100%;}
+
+/* 動態網格線裝飾 */
+.grid-line{
+  position:absolute;
+  background:var(--accent-light);
 }
 </style>
 </head>
@@ -110,9 +116,13 @@ canvas#bgCanvas{
 
 <div class="container">
 
-  <!-- 上半部 -->
+  <!-- 第一行 -->
   <div class="top-row">
-    <div class="header"><span>光風濟月</span></div>
+    <div class="header">
+      <img src="assets/logo.png" alt="logo" onclick="location.href='index.html'">
+      <span>光風濟月</span>
+    </div>
+
     <div style="position:relative;">
       <div class="menu-btn" onclick="toggleMenu()">快速連結 ▼</div>
       <div class="menu-content" id="menuContent">
@@ -123,65 +133,70 @@ canvas#bgCanvas{
     </div>
   </div>
 
-  <!-- 按鈕區 -->
-  <div class="right-panel">
-    <div class="button-row">
-      <button class="active" onclick="showSection('intro',this)">關於我</button>
-      <button onclick="showSection('traits',this)">編程理念</button>
-      <button onclick="showSection('tech',this)">程式能力</button>
-    </div>
+  <!-- 第二行 -->
+  <div class="bottom-row">
+    <div class="right-panel">
+      <div class="button-row">
+        <button class="active" onclick="showSection('intro',this)">簡介</button>
+        <button onclick="showSection('traits',this)">編程理念</button>
+        <button onclick="showSection('tech',this)">程式能力</button>
+      </div>
 
-    <div id="intro" class="section active">
-      <h2>簡介</h2>
-      <p>我是一個以邏輯為重的理工魂設計師，專注於作品。技術，目的不是炫耀，而是提供極致使用者體驗。</p>
-      <p>我的作品代表作是 <strong>Rust Survival</strong>，這個計劃自2023啟用。</p>
-    </div>
+      <div id="intro" class="section active">
+        <h2>簡介</h2>
+        <p>我是一個以邏輯為重的理工魂設計師，專注於作品。</p>
+        <p>技術，目的不是炫耀，而是提供極致使用者體驗。</p>
+        <p>我的作品代表作是 <strong>Rust Suvival</strong>，計劃從2023啟用。</p>
+      </div>
 
-    <div id="traits" class="section hidden">
-      <h2>編程理念</h2>
-      <ul>
-        <li>為了使用者即使是一點畫面流暢，也可以犧牲程式簡潔性，用複雜演算法取得最佳效能</li>
-        <li>極致技術帶來極致體驗</li>
-        <li>專注作品與能力</li>
-      </ul>
-    </div>
+      <div id="traits" class="section hidden">
+        <h2>編程理念</h2>
+        <ul>
+          <li>為了使用者畫面流暢，我們可以犧牲程式簡潔性，用最複雜的演算法取得最佳效能</li>
+          <li>用極致技術帶來極致體驗</li>
+          <li>專注作品與能力</li>
+        </ul>
+      </div>
 
-    <div id="tech" class="section hidden">
-      <h2>程式能力</h2>
-      <ul>
-        <li>Scratch</li>
-        <li>TurboWarp</li>
-        <li>Bloxd.io API指令師</li>
-      </ul>
+      <div id="tech" class="section hidden">
+        <h2>程式能力</h2>
+        <ul>
+          <li>Scratch</li>
+          <li>TurboWarp</li>
+          <li>Bloxd.io API指令師</li>
+        </ul>
+      </div>
     </div>
   </div>
 
-  <!-- 下半部文章 -->
+  <!-- 下半部 -->
   <div class="bottom-half">
+
     <div class="section-card show" id="about-me">
       <h2>關於我</h2>
-      <p>我是專注於程式演算法架構的設計師，致力於打造即使在有限資源下也能讓使用者享受極致體驗的程式作品。我相信，即便面臨效能限制，也能用複雜演算法實現完美使用者體驗——為了每一幀的FPS，每個細節都值得精雕細琢。</p>
+      <p>我是專注於程式演算法架構的設計師，致力於打造即使在有限資源下也能讓使用者享受極致體驗的程式作品。即便面臨效能限制，也能用複雜演算法實現完美使用者體驗，每一個細節都值得精雕細琢。</p>
     </div>
 
     <div class="section-card" id="philosophy">
       <h2>設計理念</h2>
-      <p>我的設計理念是 <strong>「體驗為先，效能並重」</strong>。複雜演算法只要能提升使用者體驗，就值得投入心力。</p>
+      <p>我的設計理念是 <strong>「體驗為先，效能並重」</strong>。複雜的演算法只要能帶來最佳使用者體驗，就值得投入心力。</p>
     </div>
 
     <div class="section-card" id="projects">
       <h2>代表作品</h2>
-      <p>花了近三年的時間從零開始構築《Rust Survival》引擎，歷經中斷與重啟，最終完成第一版發佈。技術極致追求是創造可能的關鍵。</p>
+      <p>我花了近三年從零構築《Rust Survival》引擎，歷經專案中斷與重啟，最終完成第一版發佈。技術極致追求是創造可能的關鍵。</p>
     </div>
 
     <div class="section-card" id="inspiration">
       <h2>靈感來源</h2>
-      <p>靈感來自日文音樂，幫助我在複雜程式中找到平衡。作品像戴著沉重鐐銬跳舞，雖不完美，但仍能與世界一較高下。</p>
+      <p>靈感來源簡單——我喜歡聽日文歌，節奏幫助我在複雜程式中找到平衡。我的作品希望像戴著鐐銬跳舞，雖不完美，但仍能和世界一較高下。</p>
     </div>
 
     <div class="section-card" id="future">
       <h2>感謝與未來</h2>
-      <p>感謝團隊 NovaCircuit 的測試員與硬體支持，未來希望在裸眼3D與3D飛行模擬上探索更多可能。設計不只是編程，而是用極致技術驅動完美體驗。</p>
+      <p>感謝我的團隊NovaCircuit，尤其是測試員和硬體支持。未來，我希望在裸眼3D和3D飛行模擬上探索更多可能。設計不只是編程，而是用極致技術驅動完美體驗，構築無限未來。</p>
     </div>
+
   </div>
 
 </div>
@@ -194,6 +209,7 @@ function showSection(id,btn){
   });
   document.getElementById(id).classList.add('active');
   document.getElementById(id).classList.remove('hidden');
+
   document.querySelectorAll('.button-row button').forEach(b=>b.classList.remove('active'));
   if(btn) btn.classList.add('active');
 }
@@ -201,56 +217,65 @@ function showSection(id,btn){
 // 選單開關
 function toggleMenu(){
   const menu=document.getElementById('menuContent');
-  menu.style.display=(menu.style.display==='flex')?'none':'flex';
-  menu.style.flexDirection='column';
+  if(menu.style.display==='flex'){menu.style.display='none';}
+  else{menu.style.display='flex';menu.style.flexDirection='column';}
 }
 
-// 背景粒子 + 網格動畫
+// 背景粒子 + 網格
 const canvas=document.getElementById('bgCanvas');
 const ctx=canvas.getContext('2d');
-let w,h,particles=[];
+let w,h,particles=[],gridLines=[];
 function resize(){w=canvas.width=window.innerWidth;h=canvas.height=window.innerHeight;}
 window.addEventListener('resize',resize);resize();
+
+// 粒子
 for(let i=0;i<80;i++){
   particles.push({x:Math.random()*w,y:Math.random()*h,r:Math.random()*2+1,vx:(Math.random()-0.5)*0.5,vy:(Math.random()-0.5)*0.5});
 }
+
+// 動態網格線
+for(let i=0;i<50;i++){
+  gridLines.push({x:Math.random()*w,y:Math.random()*h,length:Math.random()*30+20,dir:Math.random()<0.5?'h':'v',opacity:Math.random()*0.3});
+}
+
 function animate(){
-  ctx.fillStyle='rgba(2,2,2,0.3)';
+  ctx.fillStyle='rgba(2,2,2,0.2)';
   ctx.fillRect(0,0,w,h);
+
+  // 粒子
   ctx.strokeStyle='rgba(0,255,136,0.4)';
   ctx.beginPath();
-  for(let i=0;i<particles.length;i++){
-    let p=particles[i];
+  for(let p of particles){
     p.x+=p.vx;p.y+=p.vy;
     if(p.x<0||p.x>w)p.vx*=-1;
     if(p.y<0||p.y>h)p.vy*=-1;
     ctx.moveTo(p.x,p.y);
     ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-    // 網格連線
-    for(let j=i+1;j<particles.length;j++){
-      let p2=particles[j];
-      let dx=p.x-p2.x,dy=p.y-p2.y;
-      let dist=Math.sqrt(dx*dx+dy*dy);
-      if(dist<120){
-        ctx.strokeStyle='rgba(0,255,136,'+(0.2-(dist/120)*0.2)+')';
-        ctx.beginPath();
-        ctx.moveTo(p.x,p.y);
-        ctx.lineTo(p2.x,p2.y);
-        ctx.stroke();
-      }
-    }
   }
+  ctx.stroke();
+
+  // 網格線
+  ctx.strokeStyle='rgba(0,255,136,0.15)';
+  ctx.beginPath();
+  gridLines.forEach(g=>{
+    ctx.globalAlpha=g.opacity;
+    if(g.dir==='h') ctx.moveTo(g.x,g.y), ctx.lineTo(g.x+g.length,g.y);
+    else ctx.moveTo(g.x,g.y), ctx.lineTo(g.x,g.y+g.length);
+  });
+  ctx.globalAlpha=1;
+  ctx.stroke();
+
   requestAnimationFrame(animate);
 }
 animate();
 
-// 下半部滾動淡入動畫
-const cards = document.querySelectorAll('.section-card');
+// 下半部滾動淡入
+const cards=document.querySelectorAll('.section-card');
 function checkCards(){
-  const triggerBottom = window.innerHeight * 0.9;
+  const triggerBottom=window.innerHeight*0.9;
   cards.forEach(card=>{
-    const cardTop = card.getBoundingClientRect().top;
-    if(cardTop < triggerBottom){card.classList.add('show');}
+    const cardTop=card.getBoundingClientRect().top;
+    if(cardTop<triggerBottom){card.classList.add('show');}
   });
 }
 window.addEventListener('scroll',checkCards);
