@@ -21,7 +21,8 @@
         <button id="menu" onclick="toggleMenu()">☰</button>
         <div class="menu-content" id="menuContent">
           <a href="#about-me">關於我</a>
-          <a href="#projects">程式專案</a>
+          <a href="./novels/">小說理念</a>
+          <a href="./game">程式專案</a>
           <a href="javascript:void(0)" onclick="switchTheme()">切換主題</a>
         </div>
       </div>
@@ -108,48 +109,6 @@
 
     <div class="footer">© 2026 光風濟月</div>
 
-    <script>
-      const savedTheme = localStorage.getItem("theme");
-      if (savedTheme) {
-        document.documentElement.setAttribute("data-theme", savedTheme);
-        currentThemeIndex = themes.indexOf(savedTheme);
-      }
-
-      function toggleMenu() {
-        document.getElementById("menuContent").classList.toggle("show");
-      }
-
-      // 點擊選單外部自動關閉
-      window.onclick = function (event) {
-        if (!event.target.matches("#menu")) {
-          var dropdowns = document.getElementsByClassName("menu-content");
-          for (var i = 0; i < dropdowns.length; i++) {
-            var openDropdown = dropdowns[i];
-            if (openDropdown.classList.contains("show")) {
-              openDropdown.classList.remove("show");
-            }
-          }
-        }
-      };
-
-      const themes = [
-        "midnight-lamp",
-        "ice-fog",
-        "night-pine",
-        "almond-pen",
-        "fantasy-starry-night",
-        "morning-mist",
-        "pine-almond",
-      ];
-      let currentThemeIndex = 0;
-
-      function switchTheme() {
-        currentThemeIndex = (currentThemeIndex + 1) % themes.length;
-        const nextTheme = themes[currentThemeIndex];
-
-        localStorage.setItem("theme", nextTheme);
-        document.documentElement.setAttribute("data-theme", nextTheme);
-      }
-    </script>
+    <script src="neccessary.js"></script>
   </body>
 </html>
