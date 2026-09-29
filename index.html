@@ -11,85 +11,180 @@
     <style>
       :root {
         --bg: #f4f7f8;
+
         --secondary: #e9eff2;
+
         --card: #ffffff;
+
         --text: #20282d;
+
         --text-secondary: #65747d;
+
         --accent: #4d8296;
+
         --light-accent: #76afc2;
+
         --border: #d5e0e5;
       }
 
+      /* 深夜檯燈 */
+
       html[data-theme="midnight-lamp"] {
         --bg: #0f1115;
+
         --secondary: #171a21;
+
         --card: #1e222b;
+
         --text: #e8e6e1;
+
         --text-secondary: #9da3ae;
+
         --accent: #c9a96e;
+
         --light-accent: #e3c98a;
+
         --border: #303541;
       }
+
+      /* 冰霧極夜 */
+
       html[data-theme="ice-fog"] {
         --bg: #0b1117;
+
         --secondary: #111a23;
+
         --card: #12232e;
+
         --text: #e5edf3;
+
         --text-secondary: #93a6b5;
+
         --accent: #7eb6d8;
+
         --light-accent: #b9e1f5;
+
         --border: #293744;
       }
+
+      /* 夜幕松樹 */
+
       html[data-theme="night-pine"] {
         --bg: #0d1110;
+
         --secondary: #151b18;
+
         --card: #1b2420;
+
         --text: #e5e9e5;
+
         --text-secondary: #99a49d;
+
         --accent: #72b59a;
+
         --light-accent: #a5d6be;
+
         --border: #303b35;
       }
+
+      /* 杏仁鋼筆 */
+
       html[data-theme="almond-pen"] {
         --bg: #f5f1e8;
+
         --secondary: #e8e5d8;
+
         --card: #fffdf7;
+
         --text: #292722;
+
         --text-secondary: #706b61;
+
         --accent: #8a5a44;
+
         --light-accent: #b47a5a;
+
         --border: #d8d0c1;
       }
+
+      /* 奇幻星夜 */
+
       html[data-theme="fantasy-starry-night"] {
         --bg: #0d0c12;
+
         --secondary: #15131c;
+
         --card: #1d1a27;
+
         --text: #ece9f2;
+
         --text-secondary: #a6a0b3;
+
         --accent: #9b82c4;
+
         --light-accent: #c3ade8;
+
         --border: #322d3d;
       }
+
+      /* 清晨嵐霧 */
+
+      html[data-theme="morning-mist"] {
+        --bg: #f4f7f8;
+
+        --secondary: #e9eff2;
+
+        --card: #ffffff;
+
+        --text: #20282d;
+
+        --text-secondary: #65747d;
+
+        --accent: #4d8296;
+
+        --light-accent: #76afc2;
+
+        --border: #d5e0e5;
+      }
+
+      /* 松枝與杏 */
+
       html[data-theme="pine-almond"] {
         --bg: #f7f4ec;
+
         --secondary: #ede9dd;
+
         --card: #fffdf8;
+
         --text: #29312c;
+
         --text-secondary: #73796f;
+
         --accent: #55745f;
+
         --light-accent: #78947f;
+
         --border: #d9d5c8;
       }
+
+      /* 使用者裝置偏好深色 */
 
       @media (prefers-color-scheme: dark) {
         :root {
           --bg: #0b1117;
+
           --secondary: #111a23;
+
           --card: #18232e;
+
           --text: #e5edf3;
+
           --text-secondary: #93a6b5;
+
           --accent: #7eb6d8;
+
           --light-accent: #b9e1f5;
+
           --border: #293744;
         }
       }
@@ -166,6 +261,13 @@
         overflow: hidden;
       }
 
+      .latest {
+        padding: 12px 16px;
+        color: var(--light-accent);
+        font-size: 0.9rem;
+        border-bottom: 1px solid var(--border);
+      }
+
       .menu-content.show {
         display: block;
       }
@@ -186,7 +288,7 @@
 
       /* 區塊排版 */
       .main-content {
-        margin-top: 70px; 
+        margin-top: 70px;
         padding: 40px 20px;
         display: flex;
         flex-direction: column;
@@ -324,10 +426,13 @@
           <div class="section-card full-width">
             <h2>小說</h2>
             <p>有些故事還在繼續，有些故事已經走到了終點。</p>
-            <div id="latest"></div>
+
             <div class="btn-group">
+              <div id="latest"><h3>好像還沒有新的章節?</h3></div>
               <button class="btn">閱讀最新章節</button>
-              <button class="btn">查看全部小說</button>
+              <button class="btn" onclick="location.href = './novels'">
+                查看全部小說
+              </button>
             </div>
           </div>
 
@@ -390,7 +495,6 @@
     <div class="footer">© 2026 光風濟月</div>
 
     <script>
-      // 漢堡選單切換
       function toggleMenu() {
         document.getElementById("menuContent").classList.toggle("show");
       }
@@ -408,15 +512,14 @@
         }
       };
 
-      // 簡單的主題切換器 (展示你的 CSS variables 成果)
       const themes = [
-        "",
         "midnight-lamp",
         "ice-fog",
         "night-pine",
         "almond-pen",
         "fantasy-starry-night",
-        "pine-almond",
+        "morning-mist",
+        "pine-almond"
       ];
       let currentThemeIndex = 0;
 
