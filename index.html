@@ -1,0 +1,435 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>光風濟月 | 首頁</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Noto+Sans+TC:wght@400;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #f4f7f8;
+        --secondary: #e9eff2;
+        --card: #ffffff;
+        --text: #20282d;
+        --text-secondary: #65747d;
+        --accent: #4d8296;
+        --light-accent: #76afc2;
+        --border: #d5e0e5;
+      }
+
+      html[data-theme="midnight-lamp"] {
+        --bg: #0f1115;
+        --secondary: #171a21;
+        --card: #1e222b;
+        --text: #e8e6e1;
+        --text-secondary: #9da3ae;
+        --accent: #c9a96e;
+        --light-accent: #e3c98a;
+        --border: #303541;
+      }
+      html[data-theme="ice-fog"] {
+        --bg: #0b1117;
+        --secondary: #111a23;
+        --card: #12232e;
+        --text: #e5edf3;
+        --text-secondary: #93a6b5;
+        --accent: #7eb6d8;
+        --light-accent: #b9e1f5;
+        --border: #293744;
+      }
+      html[data-theme="night-pine"] {
+        --bg: #0d1110;
+        --secondary: #151b18;
+        --card: #1b2420;
+        --text: #e5e9e5;
+        --text-secondary: #99a49d;
+        --accent: #72b59a;
+        --light-accent: #a5d6be;
+        --border: #303b35;
+      }
+      html[data-theme="almond-pen"] {
+        --bg: #f5f1e8;
+        --secondary: #e8e5d8;
+        --card: #fffdf7;
+        --text: #292722;
+        --text-secondary: #706b61;
+        --accent: #8a5a44;
+        --light-accent: #b47a5a;
+        --border: #d8d0c1;
+      }
+      html[data-theme="fantasy-starry-night"] {
+        --bg: #0d0c12;
+        --secondary: #15131c;
+        --card: #1d1a27;
+        --text: #ece9f2;
+        --text-secondary: #a6a0b3;
+        --accent: #9b82c4;
+        --light-accent: #c3ade8;
+        --border: #322d3d;
+      }
+      html[data-theme="pine-almond"] {
+        --bg: #f7f4ec;
+        --secondary: #ede9dd;
+        --card: #fffdf8;
+        --text: #29312c;
+        --text-secondary: #73796f;
+        --accent: #55745f;
+        --light-accent: #78947f;
+        --border: #d9d5c8;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #0b1117;
+          --secondary: #111a23;
+          --card: #18232e;
+          --text: #e5edf3;
+          --text-secondary: #93a6b5;
+          --accent: #7eb6d8;
+          --light-accent: #b9e1f5;
+          --border: #293744;
+        }
+      }
+
+      /* 全局設定 */
+      body {
+        margin: 0;
+        font-family: "Noto Sans TC", sans-serif;
+        background-color: var(--bg);
+        color: var(--text);
+        line-height: 1.6;
+        transition:
+          background-color 0.3s,
+          color 0.3s;
+      }
+
+      /* 導航列 */
+      #navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: fixed;
+        top: 0;
+        width: 100%;
+        height: 70px;
+        padding: 0 20px;
+        box-sizing: border-box;
+        background-color: var(--secondary);
+        border-bottom: 1px solid var(--border);
+        z-index: 1000;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .nav-brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-weight: 700;
+        font-size: 1.2rem;
+        cursor: pointer;
+      }
+
+      #navbar img {
+        width: 40px;
+        height: 40px;
+        border-radius: 10%;
+        border: 2px solid var(--border);
+        object-fit: cover;
+      }
+
+      /* 選單按鈕與內容 */
+      .menu_container {
+        position: relative;
+      }
+
+      #menu {
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        color: var(--text);
+        cursor: pointer;
+      }
+
+      .menu-content {
+        display: none;
+        position: absolute;
+        top: 150%;
+        right: 0;
+        background-color: var(--card);
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        overflow: hidden;
+      }
+
+      .menu-content.show {
+        display: block;
+      }
+
+      .menu-content a {
+        color: var(--text);
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+        border-bottom: 1px solid var(--border);
+      }
+      .menu-content a:hover {
+        background-color: var(--secondary);
+      }
+      .menu-content a:last-child {
+        border-bottom: none;
+      }
+
+      /* 區塊排版 */
+      .main-content {
+        margin-top: 70px; 
+        padding: 40px 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
+      }
+
+      .hero-section {
+        background-color: var(--secondary);
+        border: 1px solid var(--border);
+        text-align: center;
+        width: 100%;
+        max-width: 900px;
+        padding: 40px 0;
+      }
+
+      .hero-section img {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        border: 3px solid var(--accent);
+        margin-bottom: 20px;
+      }
+
+      .hero-section p {
+        color: var(--text-secondary);
+      }
+
+      /* 卡片設計 */
+      .card-grid {
+        background-color: var(--secondary);
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 20px;
+        width: 100%;
+        max-width: 900px;
+      }
+
+      .section-card {
+        background-color: var(--card);
+        border: 2px solid var(--border);
+        border-radius: 12px;
+        padding: 30px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
+        transition: transform 0.2s;
+        margin: 20px;
+      }
+
+      .section-card:hover {
+        transform: translateY(-3px);
+      }
+
+      .section-card h2 {
+        color: var(--accent);
+        margin-top: 0;
+        border-bottom: 2px solid var(--secondary);
+        padding-bottom: 10px;
+      }
+
+      /* 按鈕與連結 */
+      button.btn,
+      a.btn {
+        background-color: var(--accent);
+        color: var(--text);
+        border: none;
+        padding: 10px 20px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 1rem;
+        text-decoration: none;
+        display: inline-block;
+        margin-top: 10px;
+        transition: background-color 0.2s;
+      }
+
+      button.btn:hover,
+      a.btn:hover {
+        background-color: var(--light-accent);
+      }
+      .btn-group {
+        display: grid;
+        background-color: var(--secondary);
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      /* 頁尾 */
+      .footer {
+        text-align: center;
+        padding: 30px;
+        background-color: var(--secondary);
+        color: var(--text-secondary);
+        border-top: 1px solid var(--border);
+        margin-top: 40px;
+      }
+
+      /* 響應式 */
+      @media (min-width: 768px) {
+        .card-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .section-card.full-width {
+          grid-column: 1 / -1;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 導航列 -->
+    <header id="navbar">
+      <div class="nav-brand" onclick="location.href = 'index.html'">
+        <img src="assets/logo.png" alt="logo" />
+        <span>光風濟月</span>
+      </div>
+      <div class="menu_container">
+        <button id="menu" onclick="toggleMenu()">☰</button>
+        <div class="menu-content" id="menuContent">
+          <a href="#about-me">關於我</a>
+          <a href="#projects">程式專案</a>
+          <a href="javascript:void(0)" onclick="switchTheme()">切換主題</a>
+        </div>
+      </div>
+    </header>
+
+    <div class="main-content">
+      <!-- 介紹區塊 (Hero Section) -->
+      <div class="hero-section">
+        <img src="assets/logo.png" alt="Avatar" />
+        <h2>光風濟月</h2>
+        <h5>你好，我是光風濟月</h5>
+        <p>
+          寫小說，也做一些奇奇怪怪的東西。<br />這裡收錄故事、作品，以及那些還沒被我分類的想法。
+        </p>
+        <div class="card-grid">
+          <div class="section-card full-width">
+            <h2>小說</h2>
+            <p>有些故事還在繼續，有些故事已經走到了終點。</p>
+            <div id="latest"></div>
+            <div class="btn-group">
+              <button class="btn">閱讀最新章節</button>
+              <button class="btn">查看全部小說</button>
+            </div>
+          </div>
+
+          <div class="section-card full-width">
+            <h2>程式專案</h2>
+            <p>
+              不一定實用，也不一定偉大。<br />只是覺得有趣，所以就做了。<br />讓想像化為現實吧！
+            </p>
+            <a href="/game" class="btn">查看專案們</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 內容卡片網格 -->
+      <div class="card-grid">
+        <div class="section-card" id="about-me">
+          <h2>關於我</h2>
+          <p>一個喜歡寫故事、做程式，偶爾研究一些奇怪東西的高中生。</p>
+          <p>比起定義自己是什麼，我更想看看自己接下來能做出什麼。</p>
+        </div>
+
+        <div class="section-card" id="philosophy">
+          <h2>小說理念</h2>
+          <p>把不存在的世界，寫成存在過的樣子。</p>
+          <p>也把那些壓抑於腦海的故事，重新喚醒。</p>
+        </div>
+
+        <div class="section-card" id="projects">
+          <h2>黑歷史？</h2>
+          <p>我曾花了許多時間製作《Rust Survival》。</p>
+          <p>它也許看起來十分簡陋——但實際上，它就真的很簡陋。</p>
+        </div>
+
+        <div class="section-card" id="project_plan">
+          <h2>專案計劃</h2>
+          <p>有些想法已經開始，但大部分還停留在腦海裡。</p>
+          <a href="/game" target="_blank" style="color: var(--accent)"
+            >查看目前正在進行的計劃</a
+          >
+        </div>
+
+        <div class="section-card" id="inspiration">
+          <h2>聯絡我</h2>
+          <p>
+            如果你發現網站中的問題，或有任何想與我分享的事情，歡迎寄信給我。
+          </p>
+          <p style="color: var(--accent); font-family: monospace">
+            fuguangji19@gmail.com
+          </p>
+        </div>
+
+        <div class="section-card" id="future">
+          <h2>感謝與未來</h2>
+          <p>謝謝每一位曾經讀過我的故事、使用過我的作品的人。</p>
+          <p>故事未完，作品仍在增加。</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">© 2026 光風濟月</div>
+
+    <script>
+      // 漢堡選單切換
+      function toggleMenu() {
+        document.getElementById("menuContent").classList.toggle("show");
+      }
+
+      // 點擊選單外部自動關閉
+      window.onclick = function (event) {
+        if (!event.target.matches("#menu")) {
+          var dropdowns = document.getElementsByClassName("menu-content");
+          for (var i = 0; i < dropdowns.length; i++) {
+            var openDropdown = dropdowns[i];
+            if (openDropdown.classList.contains("show")) {
+              openDropdown.classList.remove("show");
+            }
+          }
+        }
+      };
+
+      // 簡單的主題切換器 (展示你的 CSS variables 成果)
+      const themes = [
+        "",
+        "midnight-lamp",
+        "ice-fog",
+        "night-pine",
+        "almond-pen",
+        "fantasy-starry-night",
+        "pine-almond",
+      ];
+      let currentThemeIndex = 0;
+
+      function switchTheme() {
+        currentThemeIndex = (currentThemeIndex + 1) % themes.length;
+        const nextTheme = themes[currentThemeIndex];
+
+        if (nextTheme === "") {
+          document.documentElement.removeAttribute("data-theme");
+        } else {
+          document.documentElement.setAttribute("data-theme", nextTheme);
+        }
+      }
+    </script>
+  </body>
+</html>
