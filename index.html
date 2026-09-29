@@ -495,6 +495,12 @@
     <div class="footer">© 2026 光風濟月</div>
 
     <script>
+      const savedTheme = localStorage.getItem("theme");
+      if (savedTheme) {
+        document.documentElement.setAttribute("data-theme", savedTheme);
+        currentThemeIndex = themes.indexOf(savedTheme);
+      }
+      
       function toggleMenu() {
         document.getElementById("menuContent").classList.toggle("show");
       }
@@ -519,7 +525,7 @@
         "almond-pen",
         "fantasy-starry-night",
         "morning-mist",
-        "pine-almond"
+        "pine-almond",
       ];
       let currentThemeIndex = 0;
 
@@ -527,11 +533,8 @@
         currentThemeIndex = (currentThemeIndex + 1) % themes.length;
         const nextTheme = themes[currentThemeIndex];
 
-        if (nextTheme === "") {
-          document.documentElement.removeAttribute("data-theme");
-        } else {
-          document.documentElement.setAttribute("data-theme", nextTheme);
-        }
+        localStorage.setItem("theme", nextTheme);
+        document.documentElement.setAttribute("data-theme", nextTheme);
       }
     </script>
   </body>
