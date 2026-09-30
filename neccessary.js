@@ -1,3 +1,4 @@
+let currentThemeIndex = 0;
 const savedTheme = localStorage.getItem("theme");
 if (savedTheme) {
   document.documentElement.setAttribute("data-theme", savedTheme);
@@ -30,7 +31,7 @@ const themes = [
   "morning-mist",
   "pine-almond",
 ];
-let currentThemeIndex = 0;
+
 
 function switchTheme() {
   currentThemeIndex = (currentThemeIndex + 1) % themes.length;
