@@ -68,9 +68,9 @@ function renderNovels(novels) {
 
                 </div>
 
-                <a
-                    class="button"
-                    href="novel.html?id=${encodeURIComponent(novel.id)}"
+                <button
+                    class="btn"
+                    onclick="this.href='novel.html?id=${encodeURIComponent(novel.id)}'"
                 >
                     閱讀小說 →
                 </a>
@@ -94,7 +94,7 @@ function getStatusText(status) {
       return "暫停連載";
 
     default:
-      return "作品";
+      return "狀態未知";
   }
 }
 
