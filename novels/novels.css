@@ -1,0 +1,277 @@
+/* =========================================================
+   小說系統專屬樣式
+   全站色彩、卡片、按鈕、navbar 等優先沿用 main.css
+   ========================================================= */
+
+.section-heading {
+  margin-bottom: 1.5rem;
+}
+
+.section-heading h2,
+.section-heading h3 {
+  margin: 0.2rem 0 0.6rem;
+}
+
+.section-heading p {
+  color: var(--text-secondary);
+}
+
+.section-kicker {
+  margin: 0;
+  color: var(--accent);
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  font-weight: 700;
+}
+
+/* 小說列表 */
+
+.novel-grid {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.novel-card {
+  display: grid;
+  grid-template-columns: minmax(180px, 260px) 1fr;
+  overflow: hidden;
+}
+
+.novel-cover {
+  min-height: 260px;
+  background: var(--secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.novel-cover img,
+.novel-detail-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.novel-info {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.novel-status {
+  margin: 0 0 0.4rem;
+  color: var(--accent);
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.novel-info h2,
+.novel-detail-info h1 {
+  margin: 0;
+}
+
+.novel-author {
+  color: var(--text-secondary);
+}
+
+.novel-description {
+  color: var(--text-secondary);
+  line-height: 1.8;
+}
+
+.novel-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem 1.5rem;
+  margin: 1rem 0 1.5rem;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.novel-button {
+  align-self: flex-start;
+}
+
+/* 歡迎回來 / 最新 */
+
+.novel-feature {
+  min-height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.novel-feature h3 {
+  margin: 0.2rem 0;
+}
+
+/* 小說詳細頁 */
+
+.novel-detail-card {
+  display: grid;
+  grid-template-columns: minmax(220px, 340px) 1fr;
+  overflow: hidden;
+}
+
+.novel-detail-cover {
+  min-height: 420px;
+  background: var(--secondary);
+}
+
+.novel-detail-info {
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.novel-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+}
+
+.secondary-button {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+/* 章節列表 */
+
+.chapter-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.chapter-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 0;
+  color: var(--text);
+  text-decoration: none;
+  border-bottom: 1px solid var(--border);
+  transition: padding 0.2s ease, color 0.2s ease;
+}
+
+.chapter-item:hover {
+  padding-left: 0.5rem;
+  color: var(--accent);
+}
+
+.chapter-item span:last-child {
+  color: var(--text-secondary);
+}
+
+/* 閱讀器 */
+
+.reader {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: clamp(1.5rem, 5vw, 4rem);
+}
+
+.reader-header {
+  padding-bottom: 2rem;
+  margin-bottom: 3rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.reader-header a {
+  color: var(--text-secondary);
+  text-decoration: none;
+}
+
+.reader-header p {
+  margin: 2rem 0 0.5rem;
+  color: var(--accent);
+  font-size: 0.9rem;
+}
+
+.reader-header h1 {
+  margin: 0;
+}
+
+.reader-content {
+  font-size: 1.08rem;
+  line-height: 2.05;
+  letter-spacing: 0.025em;
+}
+
+.reader-content p {
+  margin: 0 0 1.6em;
+}
+
+.reader-content h1,
+.reader-content h2,
+.reader-content h3 {
+  line-height: 1.4;
+  margin: 2em 0 1em;
+}
+
+.reader-navigation {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-top: 4rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border);
+}
+
+.reader-navigation > :last-child {
+  justify-self: end;
+}
+
+.reader-empty,
+.reader-loading {
+  color: var(--text-secondary);
+  text-align: center;
+  padding: 4rem 1rem;
+}
+
+/* 手機 */
+
+@media (max-width: 700px) {
+  .novel-card,
+  .novel-detail-card {
+    grid-template-columns: 1fr;
+  }
+
+  .novel-cover {
+    min-height: 240px;
+  }
+
+  .novel-detail-cover {
+    min-height: 300px;
+  }
+
+  .novel-info,
+  .novel-detail-info {
+    padding: 1.5rem;
+  }
+
+  .novel-feature {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .chapter-item {
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  .reader {
+    padding: 1.5rem;
+  }
+
+  .reader-navigation {
+    grid-template-columns: 1fr;
+  }
+
+  .reader-navigation > :last-child {
+    justify-self: stretch;
+  }
+}
