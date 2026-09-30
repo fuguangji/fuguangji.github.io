@@ -30,7 +30,7 @@ function renderNovels(novels) {
   novels.forEach((novel) => {
     const card = document.createElement("article");
 
-    card.className = "novel-card";
+    card.className = "section-card";
 
     card.innerHTML = `
             <div class="novel-cover">
@@ -69,7 +69,7 @@ function renderNovels(novels) {
                 </div>
 
                 <a
-                    class="novel-button"
+                    class="button"
                     href="novel.html?id=${encodeURIComponent(novel.id)}"
                 >
                     閱讀小說 →
