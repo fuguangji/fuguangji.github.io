@@ -1,3 +1,13 @@
+const themes = [
+  "midnight-lamp",
+  "ice-fog",
+  "night-pine",
+  "almond-pen",
+  "fantasy-starry-night",
+  "morning-mist",
+  "pine-almond",
+];
+
 let currentThemeIndex = 0;
 const savedTheme = localStorage.getItem("theme");
 if (savedTheme) {
@@ -22,15 +32,7 @@ window.onclick = function (event) {
   }
 };
 
-const themes = [
-  "midnight-lamp",
-  "ice-fog",
-  "night-pine",
-  "almond-pen",
-  "fantasy-starry-night",
-  "morning-mist",
-  "pine-almond",
-];
+
 
 
 function switchTheme() {
