@@ -5,6 +5,7 @@ on:
     paths:
       - "data/**/*.md"
       - ".github/workflows/update-novels.yml"
+      - ".github/workflows/update_novels.py"
   workflow_dispatch:
 
 permissions:
