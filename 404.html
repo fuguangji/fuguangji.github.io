@@ -32,6 +32,30 @@
         min-width: 2.5em;
         text-align: left;
       }
+      .debug-panel {
+        margin-top: 1.5rem;
+        text-align: left;
+        padding: 1rem;
+        background: var(--secondary);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        font-family: monospace;
+        font-size: 0.82rem;
+        color: var(--text-secondary);
+        word-break: break-word;
+      }
+      .debug-panel[hidden] {
+        display: none;
+      }
+      .debug-button {
+        margin-top: 1rem;
+        border: 1px solid var(--border);
+        background: transparent;
+        color: var(--text-secondary);
+        border-radius: 6px;
+        padding: 0.45rem 0.7rem;
+        cursor: pointer;
+      }
       @keyframes loader-spin {
         from {
           transform: rotate(0deg);
@@ -62,11 +86,65 @@
           <div class="loading-spinner" aria-hidden="true"></div>
           <h1>載入中<span class="loading-dots" id="loading-dots">…</span></h1>
           <p>正在準備你的頁面。</p>
+          <button class="debug-button" id="debug-button" type="button">
+            顯示簡易偵錯
+          </button>
+          <div class="debug-panel" id="debug-panel" hidden>
+            <div>PATH: <span id="debug-path"></span></div>
+            <div>USER AGENT: <span id="debug-agent"></span></div>
+            <div>MARKED: <span id="debug-marked">等待檢查</span></div>
+            <div>NOVELS.JSON: <span id="debug-novels">等待載入</span></div>
+            <div>APP: <span id="debug-app">等待載入</span></div>
+          </div>
         </div>
       </section>
     </main>
     <script src="/neccessary.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script>
+      document.querySelector("#debug-path").textContent = location.pathname;
+      document.querySelector("#debug-agent").textContent = navigator.userAgent;
+      document
+        .querySelector("#debug-button")
+        .addEventListener(
+          "click",
+          () =>
+            (document.querySelector("#debug-panel").hidden =
+              !document.querySelector("#debug-panel").hidden),
+        );
+      fetch("/data/novels.json", { cache: "no-cache" })
+        .then((r) => {
+          document.querySelector("#debug-novels").textContent = r.ok
+            ? "OK"
+            : "HTTP " + r.status;
+        })
+        .catch(
+          (e) =>
+            (document.querySelector("#debug-novels").textContent =
+              "失敗: " + e.message),
+        );
+      window.addEventListener("error", (e) => {
+        document.querySelector("#debug-app").textContent =
+          "JS錯誤: " + e.message;
+      });
+      setTimeout(() => {
+        document.querySelector("#debug-marked").textContent =
+          typeof marked === "undefined" ? "未載入" : "OK";
+      }, 500);
+    </script>
     <script src="/novels/novels.js"></script>
+    <script>
+      setTimeout(() => {
+        const loading = document.querySelector("#loading-page");
+        if (
+          loading &&
+          document.querySelector(".reader") === null &&
+          document.querySelector("#novel-list") === null
+        ) {
+          document.querySelector("#debug-app").textContent =
+            "頁面程式未完成初始化，請查看 PATH / NOVELS.JSON / MARKED。";
+        }
+      }, 5000);
+    </script>
   </body>
 </html>
