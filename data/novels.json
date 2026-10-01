@@ -1,25 +1,36 @@
 [
   {
-    "id": "dao-xiang-s2",
-    "title": "稻香方程式第二季",
-    "author": "光風濟月",
-    "status": "ongoing",
-    "description": "一段仍在進行中的故事",
-    "cover": "https://iili.io/naelyqx.png",
-    "latestChapter": {"chapter": 23, "title": "癒"},
-    "chapterCount": 23,
-    "updateTime": "2026-09-29T10:00:00Z"
-  },
-  {
     "id": "稻香方程式",
     "title": "稻香方程式",
     "author": "光風濟月",
     "status": "ongoing",
     "description": "",
     "cover": "",
-    "latestChapter": {"chapter": 1, "title": "啟程"},
+    "latestChapter": {
+      "chapter": 1,
+      "title": "稻香方程式 第一章 啟程"
+    },
     "chapterCount": 1,
-    "chapters": [{"chapter": 1, "title": "啟程"}],
+    "chapters": [
+      {
+        "chapter": 1,
+        "title": "稻香方程式 第一章 啟程"
+      }
+    ],
     "updateTime": "2026-10-01T10:46:32+08:00"
+  },
+  {
+    "id": "dao-xiang-s2",
+    "title": "稻香方程式第二季",
+    "author": "光風濟月",
+    "status": "ongoing",
+    "description": "一段仍在進行中的故事",
+    "cover": "https://iili.io/naelyqx.png",
+    "latestChapter": {
+      "chapter": 23,
+      "title": "癒"
+    },
+    "chapterCount": 23,
+    "updateTime": "2026-09-29T10:00:00Z"
   }
 ]
