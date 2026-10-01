@@ -1,66 +1,159 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-Hant">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>載入中…… | 光風濟月</title>
-<link href="/main.css" rel="stylesheet">
-<link href="/novels/novels.css" rel="stylesheet">
-<style>
-.loading-page{min-height:calc(100vh - 70px);display:flex;align-items:center;justify-content:center;text-align:center}
-.loading-card{min-width:min(560px,90vw);padding:3rem 2rem}
-.loading-spinner{width:44px;height:44px;margin:0 auto 1.2rem;border:4px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:loader-spin .8s linear infinite}
-.loading-dots{display:inline-block;min-width:2.5em;text-align:left}
-.debug-panel{margin-top:1.5rem;text-align:left;padding:1rem;background:var(--secondary);border:1px solid var(--border);border-radius:8px;font-family:monospace;font-size:.82rem;color:var(--text-secondary);word-break:break-word}
-.debug-panel[hidden]{display:none}
-.debug-button{margin-top:1rem;border:1px solid var(--border);background:transparent;color:var(--text-secondary);border-radius:6px;padding:.45rem .7rem;cursor:pointer}
-@keyframes loader-spin{to{transform:rotate(360deg)}}
-</style>
-</head>
-<body>
-<header id="navbar">
-<div class="nav-brand" onclick="location.href='/'"><img src="/assets/logo.png" alt="logo"><span>光風濟月</span></div>
-<div class="menu_container"><button id="menu" onclick="toggleMenu()">☰</button><div class="menu-content" id="menuContent">
-<a href="/#about-me">關於我</a><a href="/novels/">小說</a><a href="/submit/">投稿</a><a href="/game">程式專案</a><a href="javascript:void(0)" onclick="switchTheme()">切換主題</a>
-</div></div>
-</header>
-<main class="main-content">
-<section class="hero-section loading-page" id="loading-page">
-<div class="loading-card">
-<div class="loading-spinner" aria-hidden="true"></div>
-<h1>載入中<span class="loading-dots" id="loading-dots">…</span></h1>
-<p>正在準備你的頁面。</p>
-<button class="debug-button" id="debug-button" type="button">顯示簡易偵錯</button>
-<div class="debug-panel" id="debug-panel" hidden>
-<div>PATH: <span id="debug-path"></span></div>
-<div>USER AGENT: <span id="debug-agent"></span></div>
-<div>MARKED: <span id="debug-marked">等待檢查</span></div>
-<div>NOVELS.JSON: <span id="debug-novels">等待載入</span></div>
-<div>APP: <span id="debug-app">等待載入</span></div>
-</div>
-</div>
-</section>
-</main>
-<script src="/neccessary.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-<script>
-document.querySelector("#debug-path").textContent=location.pathname;
-document.querySelector("#debug-agent").textContent=navigator.userAgent;
-document.querySelector("#debug-button").addEventListener("click",()=>document.querySelector("#debug-panel").hidden=!document.querySelector("#debug-panel").hidden);
-let dots=0;
-setInterval(()=>{dots=(dots+1)%4;document.querySelector("#loading-dots").textContent=".".repeat(dots||1)},450);
-fetch("/data/novels.json",{cache:"no-cache"}).then(r=>{document.querySelector("#debug-novels").textContent=r.ok?"OK":"HTTP "+r.status}).catch(e=>document.querySelector("#debug-novels").textContent="失敗: "+e.message);
-window.addEventListener("error",e=>{document.querySelector("#debug-app").textContent="JS錯誤: "+e.message});
-setTimeout(()=>{document.querySelector("#debug-marked").textContent=typeof marked==="undefined"?"未載入":"OK";},500);
-</script>
-<script src="/novels/novels.js"></script>
-<script>
-setTimeout(()=>{
-  const loading=document.querySelector("#loading-page");
-  if(loading && document.querySelector(".reader")===null && document.querySelector("#novel-list")===null){
-    document.querySelector("#debug-app").textContent="頁面程式未完成初始化，請查看 PATH / NOVELS.JSON / MARKED。";
-  }
-},5000);
-</script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>載入中…… | 光風濟月</title>
+    <link href="/main.css" rel="stylesheet" />
+    <link href="/novels/novels.css" rel="stylesheet" />
+    <style>
+      .loading-page {
+        min-height: calc(100vh - 70px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+      }
+      .loading-card {
+        min-width: min(560px, 90vw);
+        padding: 3rem 2rem;
+      }
+      .loading-spinner {
+        width: 44px;
+        height: 44px;
+        margin: 0 auto 1.2rem;
+        border: 4px solid var(--border);
+        border-top-color: var(--accent);
+        border-radius: 50%;
+        animation: loader-spin 0.8s linear infinite;
+      }
+      .loading-dots {
+        display: inline-block;
+        min-width: 2.5em;
+        text-align: left;
+      }
+      .debug-panel {
+        margin-top: 1.5rem;
+        text-align: left;
+        padding: 1rem;
+        background: var(--secondary);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        font-family: monospace;
+        font-size: 0.82rem;
+        color: var(--text-secondary);
+        word-break: break-word;
+      }
+      .debug-panel[hidden] {
+        display: none;
+      }
+      .debug-button {
+        margin-top: 1rem;
+        border: 1px solid var(--border);
+        background: transparent;
+        color: var(--text-secondary);
+        border-radius: 6px;
+        padding: 0.45rem 0.7rem;
+        cursor: pointer;
+      }
+      @keyframes loader-spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header id="navbar">
+      <div class="nav-brand" onclick="location.href = '/'">
+        <img src="/assets/logo.png" alt="logo" /><span>光風濟月</span>
+      </div>
+      <div class="menu_container">
+        <button id="menu" onclick="toggleMenu()">☰</button>
+        <div class="menu-content" id="menuContent">
+          <a href="/#about-me">關於我</a><a href="/novels/">小說</a
+          ><a href="/submit/">投稿</a><a href="/game">程式專案</a
+          ><a href="javascript:void(0)" onclick="switchTheme()">切換主題</a>
+        </div>
+      </div>
+    </header>
+    <main class="main-content">
+      <section class="hero-section loading-page" id="loading-page">
+        <div class="loading-card">
+          <div class="loading-spinner" aria-hidden="true"></div>
+          <h1>載入中<span class="loading-dots" id="loading-dots">…</span></h1>
+          <p>正在準備你的頁面。</p>
+          <button class="debug-button" id="debug-button" type="button">
+            顯示簡易偵錯
+          </button>
+          <div class="debug-panel" id="debug-panel" hidden>
+            <div>PATH: <span id="debug-path"></span></div>
+            <div>USER AGENT: <span id="debug-agent"></span></div>
+            <div>MARKED: <span id="debug-marked">等待檢查</span></div>
+            <div>NOVELS.JSON: <span id="debug-novels">等待載入</span></div>
+            <div>APP: <span id="debug-app">等待載入</span></div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <script src="/neccessary.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script>
+      document.querySelector("#debug-path").textContent = location.pathname;
+      document.querySelector("#debug-agent").textContent = navigator.userAgent;
+      document
+        .querySelector("#debug-button")
+        .addEventListener(
+          "click",
+          () =>
+            (document.querySelector("#debug-panel").hidden =
+              !document.querySelector("#debug-panel").hidden),
+        );
+      let dots = 0;
+      const loadingDotsInterval = setInterval(() => {
+        const loadingDotsElement = document.querySelector("#loading-dots");
+        if (!loadingDotsElement) {
+          clearInterval(loadingDotsInterval);
+          return;
+        }
+        dots = (dots + 1) % 4;
+        loadingDotsElement.textContent = ".".repeat(
+          dots || 1,
+        );
+      }, 450);
+      fetch("/data/novels.json", { cache: "no-cache" })
+        .then((r) => {
+          document.querySelector("#debug-novels").textContent = r.ok
+            ? "OK"
+            : "HTTP " + r.status;
+        })
+        .catch(
+          (e) =>
+            (document.querySelector("#debug-novels").textContent =
+              "失敗: " + e.message),
+        );
+      window.addEventListener("error", (e) => {
+        document.querySelector("#debug-app").textContent =
+          "JS錯誤: " + e.message;
+      });
+      setTimeout(() => {
+        document.querySelector("#debug-marked").textContent =
+          typeof marked === "undefined" ? "未載入" : "OK";
+      }, 500);
+    </script>
+    <script src="/novels/novels.js"></script>
+    <script>
+      setTimeout(() => {
+        const loading = document.querySelector("#loading-page");
+        if (
+          loading &&
+          document.querySelector(".reader") === null &&
+          document.querySelector("#novel-list") === null
+        ) {
+          document.querySelector("#debug-app").textContent =
+            "頁面程式未完成初始化，請查看 PATH / NOVELS.JSON / MARKED。";
+        }
+      }, 5000);
+    </script>
+  </body>
 </html>
