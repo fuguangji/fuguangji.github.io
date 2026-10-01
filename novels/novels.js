@@ -349,8 +349,8 @@ async function loadChapter(novel, chapter) {
   const content = document.querySelector("#reader-content");
   if (!content) return;
 
-  // 小說正文：/data/<小說名稱>/<章節>.txt
-  const path = `/data/${encodeURIComponent(novel.title)}/${chapter}.txt`;
+  // 小說正文：/data/<小說名稱>/<章節>.md
+  const path = `/data/${encodeURIComponent(novel.title)}/${chapter}.md`;
 
   try {
     const response = await fetch(path, { cache: "no-cache" });
@@ -359,9 +359,18 @@ async function loadChapter(novel, chapter) {
       throw new Error(`HTTP ${response.status}`);
     }
 
-    const text = await response.text();
+    const markdown = await response.text();
 
-    content.innerHTML = textToHtml(text);
+    if (typeof marked === "undefined") {
+      throw new Error("Markdown parser 尚未載入");
+    }
+
+    content.innerHTML = marked.parse(markdown, {
+      gfm: true,
+      breaks: false,
+      headerIds: false,
+      mangle: false
+    });
 
     restoreReaderProgress(novel, chapter);
     setupReaderProgress(novel, chapter);
@@ -377,21 +386,6 @@ async function loadChapter(novel, chapter) {
   }
 }
 
-function textToHtml(text) {
-  const escaped = text
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;");
-
-  return escaped
-    .split(/\n\s*\n/)
-    .map((paragraph) => {
-      const value = paragraph.trim();
-      if (!value) return "";
-      return `<p>${value.replace(/\n/g, "<br>")}</p>`;
-    })
-    .join("");
-}
 
 function setupReaderProgress(novel, chapter) {
   let ticking = false;
