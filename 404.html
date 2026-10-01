@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>光風濟月</title>
+  <link href="/main.css" rel="stylesheet">
+  <link href="/novels/novels.css" rel="stylesheet">
+</head>
+
+<body>
+  <header id="navbar">
+    <div class="nav-brand" onclick="location.href = '/'">
+      <img src="/assets/logo.png" alt="logo">
+      <span>光風濟月</span>
+    </div>
+
+    <div class="menu_container">
+      <button id="menu" onclick="toggleMenu()">☰</button>
+
+      <div class="menu-content" id="menuContent">
+        <a href="/#about-me">關於我</a>
+        <a href="/game">程式專案</a>
+        <a href="javascript:void(0)" onclick="switchTheme()">切換主題</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <div class="hero-section">
+      <div class="section-card">
+        <h2>載入中……</h2>
+        <p>正在準備頁面。</p>
+      </div>
+    </div>
+
+    <div id="last-novel" hidden></div>
+    <div id="latest-novel" hidden></div>
+    <div id="novel-list" hidden></div>
+  </main>
+
+  <script src="/neccessary.js"></script>
+  <script src="/novels/novels.js"></script>
+</body>
+</html>
