@@ -57,6 +57,9 @@
         cursor: pointer;
       }
       @keyframes loader-spin {
+        from {
+          transform: rotate(0deg);
+        }
         to {
           transform: rotate(360deg);
         }
@@ -109,18 +112,6 @@
             (document.querySelector("#debug-panel").hidden =
               !document.querySelector("#debug-panel").hidden),
         );
-      let dots = 0;
-      const loadingDotsInterval = setInterval(() => {
-        const loadingDotsElement = document.querySelector("#loading-dots");
-        if (!loadingDotsElement) {
-          clearInterval(loadingDotsInterval);
-          return;
-        }
-        dots = (dots + 1) % 4;
-        loadingDotsElement.textContent = ".".repeat(
-          dots || 1,
-        );
-      }, 450);
       fetch("/data/novels.json", { cache: "no-cache" })
         .then((r) => {
           document.querySelector("#debug-novels").textContent = r.ok
