@@ -6,7 +6,7 @@ let novels = [];
 
 function normalizePath() {
   return decodeURIComponent(location.pathname)
-    .replace(/^\\/+|\\/+$/g, "")
+    .replace(/^\/+|\/+$/g, "")
     .split("/")
     .filter(Boolean);
 }
@@ -14,9 +14,7 @@ function normalizePath() {
 function getNovelByPath() {
   const parts = normalizePath();
 
-  // GitHub Pages 的實際網站根路徑
-  // /novels/
-  if (parts.length <= 1 || parts[0] !== "novels") {
+  if (parts.length === 0 || parts[0] !== "novels") {
     return null;
   }
 
@@ -40,11 +38,11 @@ function getChapterNumber() {
 }
 
 function novelUrl(novel) {
-  return `../novels/${encodeURIComponent(novel.id || novel.title)}/`;
+  return `../novels/${encodeURIComponent(novel.title)}/`;
 }
 
 function chapterUrl(novel, chapter) {
-  return `../novels/${encodeURIComponent(novel.id || novel.title)}/${chapter}/`;
+  return `../novels/${encodeURIComponent(novel.title)}/${chapter}/`;
 }
 
 function getStatusText(status) {
@@ -289,7 +287,7 @@ function createChapterList(novel) {
   const count = Number(novel.chapterCount || 0);
 
   if (!count) {
-    return '<p>目前還沒有章節。</p>';
+    return "<p>目前還沒有章節。</p>";
   }
 
   return Array.from({ length: count }, (_, index) => {
@@ -377,8 +375,6 @@ async function loadChapter(novel, chapter) {
 }
 
 function markdownToHtml(markdown) {
-  // 目前先支援小說所需的基本 Markdown。
-  // 未來若格式需求增加，再擴充這裡即可。
   return markdown
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
@@ -386,11 +382,11 @@ function markdownToHtml(markdown) {
     .replace(/^### (.+)$/gm, "<h3>$1</h3>")
     .replace(/^## (.+)$/gm, "<h2>$1</h2>")
     .replace(/^# (.+)$/gm, "<h1>$1</h1>")
-    .replace(/\\*\\*(.+?)\\*\\*/g, "<strong>$1</strong>")
-    .split(/\\n\\s*\\n/)
+    .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
+    .split(/\n\s*\n/)
     .map((paragraph) => {
       if (/^<h[1-3]>/.test(paragraph.trim())) return paragraph;
-      return `<p>${paragraph.replace(/\\n/g, "<br>")}</p>`;
+      return `<p>${paragraph.replace(/\n/g, "<br>")}</p>`;
     })
     .join("");
 }
