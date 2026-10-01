@@ -384,3 +384,7 @@ a.btn:hover {
   }
 }
 \n\n/* 首頁比例調整 */\n.homepage{gap:24px}.homepage-hero{max-width:1040px;padding:34px 0}.homepage-hero .card-grid{max-width:940px}.homepage-cards{max-width:1040px}.homepage .section-card{margin:12px}.homepage .btn-group{padding:12px}\n@media(max-width:767px){.main-content{padding:24px 10px;gap:20px}.homepage-hero{padding:26px 0}.homepage-hero img{width:84px;height:84px;margin-bottom:14px}.homepage-hero h2{margin:0 0 4px}.homepage-hero h5{margin:0 0 10px}.homepage-hero .card-grid,.homepage-cards{gap:12px}.homepage .section-card{margin:7px;padding:20px}.homepage .btn-group{gap:8px}.homepage .btn-group .btn{width:100%;box-sizing:border-box;text-align:center}}\n
+
+/* 首頁置中與最新篇章 */
+.homepage .card-grid{margin-left:auto;margin-right:auto}
+.homepage-hero .card-grid{margin-left:auto;margin-right:auto}

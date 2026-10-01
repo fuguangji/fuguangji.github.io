@@ -18,9 +18,9 @@
 <img src="assets/logo.png" alt="Avatar"><h2>光風濟月</h2><h5>你好，我是光風濟月</h5>
 <p>寫小說，也做一些奇奇怪怪的東西。<br>這裡收錄故事、作品，以及那些還沒被我分類的想法。</p>
 <div class="card-grid">
-<div class="section-card full-width"><h2>小說</h2><p>有些故事還在繼續，有些故事已經走到了終點。</p><div class="btn-group"><div id="latest"><h3>好像還沒有新的章節?</h3></div><a class="btn" href="./novels/">閱讀小說</a><a class="btn" href="./novels/">查看全部小說</a></div></div>
-<div class="section-card full-width"><h2>投稿</h2><p>有作品、建議，或想留下什麼？目前可以先填寫投稿資料。</p><a class="btn" href="./submit/">前往投稿頁</a></div>
+<div class="section-card full-width"><h2>小說</h2><p>有些故事還在繼續，有些故事已經走到了終點。</p><div class="btn-group"><div id="latest"><h3>載入最新篇章……</h3></div><a class="btn" id="latest-read-button" href="./novels/">閱讀最新篇章</a><a class="btn" href="./novels/">查看全部小說</a></div></div>
 <div class="section-card full-width"><h2>程式專案</h2><p>不一定實用，也不一定偉大。<br>只是覺得有趣，所以就做了。<br>讓想像化為現實吧！</p><a href="/game" class="btn">查看專案們</a></div>
+<div class="section-card full-width"><h2>投稿</h2><p>有作品、建議，或想留下什麼？目前可以先填寫投稿資料。</p><a class="btn" href="./submit/">前往投稿頁</a></div>
 </div>
 </section>
 <section class="card-grid homepage-cards">
@@ -34,5 +34,25 @@
 </main>
 <div class="footer">© 2026 光風濟月</div>
 <script src="neccessary.js"></script>
+<script>
+(async function loadLatestNovel(){
+  const latest=document.querySelector("#latest");
+  const button=document.querySelector("#latest-read-button");
+  try{
+    const response=await fetch("/data/novels.json",{cache:"no-cache"});
+    if(!response.ok) throw new Error("HTTP "+response.status);
+    const novels=await response.json();
+    const available=novels.filter(n=>n.latestChapter&&n.latestChapter.chapter);
+    if(!available.length){ latest.innerHTML="<h3>目前還沒有新的章節。</h3>"; return; }
+    const novel=available.sort((a,b)=>new Date(b.updateTime||0)-new Date(a.updateTime||0))[0];
+    const chapter=novel.latestChapter;
+    latest.innerHTML="<h3>"+novel.title+"</h3><p>第 "+chapter.chapter+" 章・"+(chapter.title||"")+"</p>";
+    button.href="/novels/"+encodeURIComponent(novel.title)+"/"+chapter.chapter+"/";
+  }catch(error){
+    console.error("首頁最新篇章載入失敗：",error);
+    latest.innerHTML="<h3>最新篇章載入失敗</h3><p>請稍後重新整理。</p>";
+  }
+})();
+</script>
 </body>
 </html>

@@ -20,20 +20,42 @@ const READER_FONTS = {
 };
 
 const BUILTIN_READER_THEMES = {
-  site: {},
+  site: null,
+  "midnight-lamp": {
+    "--reader-bg": "#0f1115", "--reader-text": "#e8e6e1", "--reader-muted": "#9da3ae",
+    "--reader-accent": "#c9a96e", "--reader-border": "#303541"
+  },
+  "ice-fog": {
+    "--reader-bg": "#0b1117", "--reader-text": "#e5edf3", "--reader-muted": "#93a6b5",
+    "--reader-accent": "#7eb6d8", "--reader-border": "#293744"
+  },
+  "night-pine": {
+    "--reader-bg": "#0d1110", "--reader-text": "#e5e9e5", "--reader-muted": "#99a49d",
+    "--reader-accent": "#72b59a", "--reader-border": "#303b35"
+  },
+  "almond-pen": {
+    "--reader-bg": "#f5f1e8", "--reader-text": "#292722", "--reader-muted": "#706b61",
+    "--reader-accent": "#8a5a44", "--reader-border": "#d8d0c1"
+  },
+  "fantasy-starry-night": {
+    "--reader-bg": "#0d0c12", "--reader-text": "#ece9f2", "--reader-muted": "#a6a0b3",
+    "--reader-accent": "#9b82c4", "--reader-border": "#322d3d"
+  },
+  "morning-mist": {
+    "--reader-bg": "#f4f7f8", "--reader-text": "#20282d", "--reader-muted": "#65747d",
+    "--reader-accent": "#4d8296", "--reader-border": "#d5e0e5"
+  },
+  "pine-almond": {
+    "--reader-bg": "#f7f4ec", "--reader-text": "#29312c", "--reader-muted": "#73796f",
+    "--reader-accent": "#55745f", "--reader-border": "#d9d5c8"
+  },
   paper: {
-    "--reader-bg": "#fffdf7",
-    "--reader-text": "#292722",
-    "--reader-muted": "#706b61",
-    "--reader-accent": "#8a5a44",
-    "--reader-border": "#d8d0c1"
+    "--reader-bg": "#fffdf7", "--reader-text": "#292722", "--reader-muted": "#706b61",
+    "--reader-accent": "#8a5a44", "--reader-border": "#d8d0c1"
   },
   night: {
-    "--reader-bg": "#101419",
-    "--reader-text": "#e5edf3",
-    "--reader-muted": "#93a6b5",
-    "--reader-accent": "#7eb6d8",
-    "--reader-border": "#293744"
+    "--reader-bg": "#101419", "--reader-text": "#e5edf3", "--reader-muted": "#93a6b5",
+    "--reader-accent": "#7eb6d8", "--reader-border": "#293744"
   }
 };
 
@@ -124,10 +146,18 @@ function saveCustomTheme(theme) {
 }
 
 function getReaderThemeVars(themeName) {
-  if (themeName === "custom") {
-    return getCustomTheme() || BUILTIN_READER_THEMES.paper;
+  if (themeName === "custom") return getCustomTheme() || BUILTIN_READER_THEMES.paper;
+  if (themeName === "site") {
+    const root = getComputedStyle(document.documentElement);
+    return {
+      "--reader-bg": root.getPropertyValue("--card").trim(),
+      "--reader-text": root.getPropertyValue("--text").trim(),
+      "--reader-muted": root.getPropertyValue("--text-secondary").trim(),
+      "--reader-accent": root.getPropertyValue("--accent").trim(),
+      "--reader-border": root.getPropertyValue("--border").trim()
+    };
   }
-  return BUILTIN_READER_THEMES[themeName] || {};
+  return BUILTIN_READER_THEMES[themeName] || BUILTIN_READER_THEMES["morning-mist"];
 }
 
 function applyReaderSettings() {
@@ -202,8 +232,15 @@ function bindReaderSettings() {
     readerState.settings.theme = "custom";
     saveReaderSettings();
     applyReaderSettings();
-    document.querySelector("#reader-theme").value = "custom";
-    closeReaderSettings();
+
+    const themeSelect = document.querySelector("#reader-theme");
+    if (themeSelect) themeSelect.value = "custom";
+
+    const status = document.querySelector("#custom-theme-status");
+    if (status) {
+      status.hidden = false;
+      status.textContent = "自訂主題已儲存並套用。下次開啟閱讀器也會保留。";
+    }
   });
 
   document.querySelector("#reader-settings")?.addEventListener("click", (event) => {
@@ -213,22 +250,16 @@ function bindReaderSettings() {
 
 function readerSettingsMarkup() {
   const custom = getCustomTheme() || {
-    "--reader-bg": "#fffdf7",
-    "--reader-text": "#292722",
-    "--reader-muted": "#706b61",
-    "--reader-accent": "#8a5a44",
-    "--reader-border": "#d8d0c1"
+    "--reader-bg": "#fffdf7", "--reader-text": "#292722", "--reader-muted": "#706b61",
+    "--reader-accent": "#8a5a44", "--reader-border": "#d8d0c1"
   };
 
   return `
     <div class="reader-settings-modal" id="reader-settings" hidden>
       <div class="reader-settings-panel" role="dialog" aria-modal="true" aria-labelledby="reader-settings-title">
         <div class="reader-settings-heading">
-          <div>
-            <p class="section-kicker">READER</p>
-            <h2 id="reader-settings-title">閱讀器設定</h2>
-          </div>
-          <button class="reader-settings-close" id="reader-settings-close" type="button">×</button>
+          <div><p class="section-kicker">READER</p><h2 id="reader-settings-title">閱讀器設定</h2></div>
+          <button class="reader-settings-close" id="reader-settings-close" type="button" aria-label="關閉">×</button>
         </div>
 
         <label>字型
@@ -245,7 +276,14 @@ function readerSettingsMarkup() {
 
         <label>閱讀主題
           <select id="reader-theme">
-            <option value="site">跟隨網站</option>
+            <option value="site">跟隨網站目前主題</option>
+            <option value="midnight-lamp">深夜檯燈</option>
+            <option value="ice-fog">冰霧極夜</option>
+            <option value="night-pine">夜幕松樹</option>
+            <option value="almond-pen">杏仁鋼筆</option>
+            <option value="fantasy-starry-night">奇幻星夜</option>
+            <option value="morning-mist">清晨嵐霧</option>
+            <option value="pine-almond">松枝與杏</option>
             <option value="paper">紙張</option>
             <option value="night">夜讀</option>
             <option value="custom" id="reader-theme-custom">自訂主題</option>
@@ -254,6 +292,7 @@ function readerSettingsMarkup() {
 
         <form id="custom-theme-form" class="custom-theme-form">
           <h3>自訂主題</h3>
+          <p class="reader-settings-hint">選擇下列顏色後按「儲存並套用」，設定會保存在本機。</p>
           <div class="color-grid">
             <label>背景 <input id="custom-bg" type="color" value="${custom["--reader-bg"]}"></label>
             <label>文字 <input id="custom-text" type="color" value="${custom["--reader-text"]}"></label>
@@ -261,7 +300,8 @@ function readerSettingsMarkup() {
             <label>強調色 <input id="custom-accent" type="color" value="${custom["--reader-accent"]}"></label>
             <label>分隔線 <input id="custom-border" type="color" value="${custom["--reader-border"]}"></label>
           </div>
-          <button class="btn" type="submit">套用自訂主題</button>
+          <button class="btn" type="submit">儲存並套用</button>
+          <p id="custom-theme-status" class="custom-theme-status" hidden></p>
         </form>
       </div>
     </div>
@@ -391,9 +431,12 @@ async function renderReader(novel, chapter) {
   readerState.chapter = chapter;
   document.title = `第${chapter}章｜${novel.title} | 光風濟月`;
 
+  document.querySelector("#reader-settings")?.remove();
+
   const main = document.querySelector(".main-content");
   const data = Array.isArray(novel.chapters) ? novel.chapters.find((item) => Number(item.chapter) === chapter) : null;
   const chapterTitle = data?.title || (chapter === Number(novel.latestChapter?.chapter) ? novel.latestChapter.title : `第${chapter}章`);
+  const maxChapter = Number(novel.latestChapter?.chapter || novel.chapterCount || 0);
 
   main.innerHTML = `
     <div class="hero-section reader-page">
@@ -407,12 +450,15 @@ async function renderReader(novel, chapter) {
         <div class="reader-content" id="reader-content"><p class="reader-loading">正在讀取章節……</p></div>
         <nav class="reader-navigation">
           ${chapter > 1 ? `<a class="btn secondary-button" href="${chapterUrl(novel, chapter - 1)}">← 上一章</a>` : "<span></span>"}
-          ${chapter < Number(novel.chapterCount || 0) ? `<a class="btn" href="${chapterUrl(novel, chapter + 1)}">下一章 →</a>` : "<span></span>"}
+          ${chapter < maxChapter ? `<a class="btn" href="${chapterUrl(novel, chapter + 1)}">下一章 →</a>` : "<span></span>"}
         </nav>
         ${readerSettingsMarkup()}
       </article>
     </div>
   `;
+
+  const settingsModal = document.querySelector("#reader-settings");
+  if (settingsModal) document.body.appendChild(settingsModal);
 
   bindReaderSettings();
   applyReaderSettings();

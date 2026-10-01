@@ -4,6 +4,25 @@
 <body>
 <header id="navbar"><div class="nav-brand" onclick="location.href='../'"><img src="../assets/logo.png" alt="logo"><span>光風濟月</span></div><div class="menu_container"><button id="menu" onclick="toggleMenu()">☰</button><div class="menu-content" id="menuContent"><a href="../">首頁</a><a href="../novels/">小說</a><a href="../game">程式專案</a><a href="javascript:void(0)" onclick="switchTheme()">切換主題</a></div></div></header>
 <main class="main-content"><section class="hero-section submit-page"><div class="section-card"><div class="section-heading"><p class="section-kicker">SUBMISSION</p><h1>投稿</h1><p>目前是第一版表單，尚未串接實際投稿系統。</p></div>
+<section class="markdown-guide">
+<h2>Markdown 文字格式說明</h2>
+<p>投稿或小說章節若需要自行編輯 .md，可參考以下常用格式。</p>
+<div class="markdown-guide-grid">
+<div><code># 標題一</code><span>最大標題</span></div>
+<div><code>## 標題二</code><span>章節／小標題</span></div>
+<div><code>**粗體**</code><span><strong>粗體</strong></span></div>
+<div><code>*斜體*</code><span><em>斜體</em></span></div>
+<div><code>~~刪除線~~</code><span><s>刪除線</s></span></div>
+<div><code>&gt; 引用</code><span>引用區塊</span></div>
+<div><code>- 項目</code><span>項目清單</span></div>
+<div><code>[文字](https://example.com)</code><span>超連結</span></div>
+<div><code>![圖片](圖片網址)</code><span>圖片</span></div>
+<div><code>`程式碼`</code><span>行內程式碼</span></div>
+<div><code>---</code><span>分隔線</span></div>
+<div><code>空一行</code><span>分段；目前閱讀器也會保留單行換行</span></div>
+</div>
+<p class="markdown-note">章節開頭建議固定寫成：<code>第X章 標題名</code>，下一行開始正文。系統會自動解析篇名。</p>
+</section>
 <form class="submit-form" onsubmit="event.preventDefault();document.querySelector('#submit-notice').hidden=false;">
 <label>稱呼<input type="text" name="name" placeholder="怎麼稱呼你？" required></label>
 <label>電子郵件<input type="email" name="email" placeholder="方便聯絡的信箱"></label>
