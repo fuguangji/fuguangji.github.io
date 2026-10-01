@@ -14,47 +14,38 @@ function normalizePath() {
 function getNovelByPath() {
   const parts = normalizePath();
 
-  if (parts.length === 0 || parts[0] !== "novels") {
-    return null;
-  }
-
-  if (parts.length === 1) {
-    return null;
-  }
+  if (parts.length < 2 || parts[0] !== "novels") return null;
 
   const novelName = parts[1];
-  return novels.find((novel) => novel.title === novelName || novel.id === novelName) || null;
+
+  return novels.find(
+    (novel) => novel.title === novelName || novel.id === novelName
+  ) || null;
 }
 
 function getChapterNumber() {
   const parts = normalizePath();
 
-  if (parts.length < 3 || parts[0] !== "novels") {
-    return null;
-  }
+  if (parts.length < 3 || parts[0] !== "novels") return null;
 
   const chapter = Number(parts[2]);
   return Number.isInteger(chapter) && chapter > 0 ? chapter : null;
 }
 
 function novelUrl(novel) {
-  return `../novels/${encodeURIComponent(novel.title)}/`;
+  return `/novels/${encodeURIComponent(novel.title)}/`;
 }
 
 function chapterUrl(novel, chapter) {
-  return `../novels/${encodeURIComponent(novel.title)}/${chapter}/`;
+  return `/novels/${encodeURIComponent(novel.title)}/${chapter}/`;
 }
 
 function getStatusText(status) {
   switch (status) {
-    case "ongoing":
-      return "連載中";
-    case "completed":
-      return "已完結";
-    case "paused":
-      return "暫停連載";
-    default:
-      return "作品";
+    case "ongoing": return "連載中";
+    case "completed": return "已完結";
+    case "paused": return "暫停連載";
+    default: return "作品";
   }
 }
 
@@ -88,21 +79,24 @@ function saveProgress(novel, chapter, scroll = 0) {
 
 async function loadNovels() {
   try {
-    const response = await fetch("../data/novels.json");
+    // 無論目前是 /novels/ 還是乾淨網址，都從網站根目錄取得資料。
+    const response = await fetch("/data/novels.json", { cache: "no-cache" });
 
     if (!response.ok) {
       throw new Error(`無法取得小說資料：${response.status}`);
     }
 
     novels = await response.json();
-
     renderCurrentPage();
   } catch (error) {
-    console.error(error);
+    console.error("小說資料載入失敗：", error);
 
     if (novelList) {
       novelList.innerHTML = `
-        <p class="load-error">小說資料載入失敗。</p>
+        <div class="section-card">
+          <h2>小說資料載入失敗</h2>
+          <p>請稍後重新整理頁面。</p>
+        </div>
       `;
     }
   }
@@ -134,14 +128,16 @@ function renderNovelList() {
   renderLatestNovel();
 
   novelList.innerHTML = `
-    <div class="section-heading">
-      <p class="section-kicker">WORKS</p>
-      <h2>小說</h2>
-      <p>這裡收錄正在連載與已完成的故事。</p>
-    </div>
+    <div class="section-card">
+      <div class="section-heading">
+        <p class="section-kicker">WORKS</p>
+        <h2>小說</h2>
+        <p>這裡收錄正在連載與已完成的故事。</p>
+      </div>
 
-    <div class="novel-grid">
-      ${novels.map(createNovelCard).join("")}
+      <div class="novel-grid">
+        ${novels.map(createNovelCard).join("")}
+      </div>
     </div>
   `;
 }
@@ -153,7 +149,7 @@ function createNovelCard(novel) {
   return `
     <article class="section-card novel-card">
       <div class="novel-cover">
-        <img src="${cover}" alt="${novel.title} 封面" loading="lazy">
+        ${cover ? `<img src="${cover}" alt="${novel.title} 封面" loading="lazy">` : ""}
       </div>
 
       <div class="novel-info">
@@ -167,9 +163,7 @@ function createNovelCard(novel) {
           <span>最新：第${latest.chapter || 0}章・${latest.title || ""}</span>
         </div>
 
-        <a class="button novel-button" href="${novelUrl(novel)}">
-          閱讀小說 →
-        </a>
+        <a class="btn novel-button" href="${novelUrl(novel)}">閱讀小說 →</a>
       </div>
     </article>
   `;
@@ -181,14 +175,18 @@ function renderLastNovel() {
   const saved = novels
     .map((novel) => ({ novel, progress: getSavedProgress(novel) }))
     .filter((item) => item.progress && item.progress.chapter)
-    .sort((a, b) =>
-      new Date(b.progress.updatedAt || 0) - new Date(a.progress.updatedAt || 0)
+    .sort(
+      (a, b) =>
+        new Date(b.progress.updatedAt || 0) -
+        new Date(a.progress.updatedAt || 0)
     )[0];
 
   if (!saved) {
     lastNovel.innerHTML = `
-      <h3>歡迎回來！</h3>
-      <p>還沒有閱讀紀錄。</p>
+      <div class="section-card">
+        <h3>歡迎回來！</h3>
+        <p>還沒有閱讀紀錄。</p>
+      </div>
     `;
     return;
   }
@@ -196,21 +194,32 @@ function renderLastNovel() {
   const { novel, progress } = saved;
 
   lastNovel.innerHTML = `
-    <div class="novel-feature">
-      <div>
-        <p class="section-kicker">CONTINUE READING</p>
-        <h3>${novel.title}</h3>
-        <p>上次讀到第 ${progress.chapter} 章</p>
+    <div class="section-card">
+      <div class="novel-feature">
+        <div>
+          <p class="section-kicker">CONTINUE READING</p>
+          <h3>${novel.title}</h3>
+          <p>上次讀到第 ${progress.chapter} 章</p>
+        </div>
+
+        <a class="btn" href="${chapterUrl(novel, progress.chapter)}">繼續閱讀 →</a>
       </div>
-      <a class="button" href="${chapterUrl(novel, progress.chapter)}">
-        繼續閱讀 →
-      </a>
     </div>
   `;
 }
 
 function renderLatestNovel() {
-  if (!latestNovel || novels.length === 0) return;
+  if (!latestNovel) return;
+
+  if (novels.length === 0) {
+    latestNovel.innerHTML = `
+      <div class="section-card">
+        <h3>最新上架！</h3>
+        <p>目前還沒有小說。</p>
+      </div>
+    `;
+    return;
+  }
 
   const latest = [...novels].sort(
     (a, b) => new Date(b.updateTime || 0) - new Date(a.updateTime || 0)
@@ -219,15 +228,16 @@ function renderLatestNovel() {
   const chapter = latest.latestChapter || {};
 
   latestNovel.innerHTML = `
-    <div class="novel-feature">
-      <div>
-        <p class="section-kicker">LATEST UPDATE</p>
-        <h3>${latest.title}</h3>
-        <p>第 ${chapter.chapter || 0} 章・${chapter.title || ""}</p>
+    <div class="section-card">
+      <div class="novel-feature">
+        <div>
+          <p class="section-kicker">LATEST UPDATE</p>
+          <h3>${latest.title}</h3>
+          <p>第 ${chapter.chapter || 0} 章・${chapter.title || ""}</p>
+        </div>
+
+        <a class="btn" href="${chapterUrl(latest, chapter.chapter || 1)}">前往最新章 →</a>
       </div>
-      <a class="button" href="${chapterUrl(latest, chapter.chapter || 1)}">
-        前往最新章 →
-      </a>
     </div>
   `;
 }
@@ -235,14 +245,13 @@ function renderLatestNovel() {
 function renderNovelDetail(novel) {
   document.title = `${novel.title} | 光風濟月`;
 
-  const latest = novel.latestChapter || {};
   const progress = getSavedProgress(novel);
 
   document.querySelector(".main-content").innerHTML = `
-    <div class="hero-section novel-detail">
-      <div class="novel-detail-card section-card">
+    <div class="hero-section">
+      <div class="section-card novel-detail-card">
         <div class="novel-detail-cover">
-          <img src="${novel.cover || ""}" alt="${novel.title} 封面">
+          ${novel.cover ? `<img src="${novel.cover}" alt="${novel.title} 封面">` : ""}
         </div>
 
         <div class="novel-detail-info">
@@ -257,19 +266,17 @@ function renderNovelDetail(novel) {
           </div>
 
           <div class="novel-actions">
-            <a class="button" href="${chapterUrl(novel, progress?.chapter || 1)}">
+            <a class="btn" href="${chapterUrl(novel, progress?.chapter || 1)}">
               ${progress?.chapter ? `繼續閱讀 第${progress.chapter}章 →` : "開始閱讀 →"}
             </a>
-            <a class="button secondary-button" href="../novels/">
-              返回小說列表
-            </a>
+            <a class="btn secondary-button" href="/novels/">返回小說列表</a>
           </div>
         </div>
       </div>
     </div>
 
     <div class="hero-section">
-      <div class="section-card chapter-panel">
+      <div class="section-card">
         <div class="section-heading">
           <p class="section-kicker">CHAPTERS</p>
           <h2>章節</h2>
@@ -286,9 +293,7 @@ function renderNovelDetail(novel) {
 function createChapterList(novel) {
   const count = Number(novel.chapterCount || 0);
 
-  if (!count) {
-    return "<p>目前還沒有章節。</p>";
-  }
+  if (!count) return "<p>目前還沒有章節。</p>";
 
   return Array.from({ length: count }, (_, index) => {
     const chapter = index + 1;
@@ -326,10 +331,11 @@ async function renderReader(novel, chapter) {
 
         <nav class="reader-navigation">
           ${chapter > 1
-            ? `<a class="button secondary-button" href="${chapterUrl(novel, chapter - 1)}">← 上一章</a>`
+            ? `<a class="btn secondary-button" href="${chapterUrl(novel, chapter - 1)}">← 上一章</a>`
             : "<span></span>"}
+
           ${chapter < Number(novel.chapterCount || 0)
-            ? `<a class="button" href="${chapterUrl(novel, chapter + 1)}">下一章 →</a>`
+            ? `<a class="btn" href="${chapterUrl(novel, chapter + 1)}">下一章 →</a>`
             : "<span></span>"}
         </nav>
       </article>
@@ -343,50 +349,46 @@ async function loadChapter(novel, chapter) {
   const content = document.querySelector("#reader-content");
   if (!content) return;
 
-  const basePath = `../novels/${encodeURIComponent(novel.title)}/`;
-  const candidates = [
-    `${basePath}${chapter}.md`,
-    `${basePath}${String(chapter).padStart(3, "0")}.md`
-  ];
+  // 小說正文：/data/<小說名稱>/<章節>.txt
+  const path = `/data/${encodeURIComponent(novel.title)}/${chapter}.txt`;
 
-  for (const path of candidates) {
-    try {
-      const response = await fetch(path);
+  try {
+    const response = await fetch(path, { cache: "no-cache" });
 
-      if (!response.ok) continue;
-
-      const markdown = await response.text();
-      content.innerHTML = markdownToHtml(markdown);
-
-      restoreReaderProgress(novel, chapter);
-      setupReaderProgress(novel, chapter);
-      return;
-    } catch (error) {
-      console.warn("章節載入失敗：", path, error);
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
     }
-  }
 
-  content.innerHTML = `
-    <div class="reader-empty">
-      <h2>章節內容尚未上架</h2>
-      <p>第 ${chapter} 章的 Markdown 檔案目前還沒有放進 GitHub。</p>
-    </div>
-  `;
+    const text = await response.text();
+
+    content.innerHTML = textToHtml(text);
+
+    restoreReaderProgress(novel, chapter);
+    setupReaderProgress(novel, chapter);
+  } catch (error) {
+    console.error("章節載入失敗：", path, error);
+
+    content.innerHTML = `
+      <div class="reader-empty">
+        <h2>章節內容尚未上架</h2>
+        <p>第 ${chapter} 章的文字檔目前還沒有放進 GitHub。</p>
+      </div>
+    `;
+  }
 }
 
-function markdownToHtml(markdown) {
-  return markdown
+function textToHtml(text) {
+  const escaped = text
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/^### (.+)$/gm, "<h3>$1</h3>")
-    .replace(/^## (.+)$/gm, "<h2>$1</h2>")
-    .replace(/^# (.+)$/gm, "<h1>$1</h1>")
-    .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
+    .replace(/>/g, "&gt;");
+
+  return escaped
     .split(/\n\s*\n/)
     .map((paragraph) => {
-      if (/^<h[1-3]>/.test(paragraph.trim())) return paragraph;
-      return `<p>${paragraph.replace(/\n/g, "<br>")}</p>`;
+      const value = paragraph.trim();
+      if (!value) return "";
+      return `<p>${value.replace(/\n/g, "<br>")}</p>`;
     })
     .join("");
 }
