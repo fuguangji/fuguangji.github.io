@@ -1,114 +1,38 @@
 <!doctype html>
 <html lang="zh-Hant">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>光風濟月 | 首頁</title>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Noto+Sans+TC:wght@400;700;900&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="main.css" />
-  </head>
-  <body>
-    <!-- 導航列 -->
-    <header id="navbar">
-      <div class="nav-brand" onclick="location.href = 'index.html'">
-        <img src="assets/logo.png" alt="logo" />
-        <span>光風濟月</span>
-      </div>
-      <div class="menu_container">
-        <button id="menu" onclick="toggleMenu()">☰</button>
-        <div class="menu-content" id="menuContent">
-          <a href="#about-me">關於我</a>
-          <a href="./novels/">小說理念</a>
-          <a href="./game">程式專案</a>
-          <a href="javascript:void(0)" onclick="switchTheme()">切換主題</a>
-        </div>
-      </div>
-    </header>
-
-    <div class="main-content">
-      <!-- 介紹區塊 (Hero Section) -->
-      <div class="hero-section">
-        <img src="assets/logo.png" alt="Avatar" />
-        <h2>光風濟月</h2>
-        <h5>你好，我是光風濟月</h5>
-        <p>
-          寫小說，也做一些奇奇怪怪的東西。<br />這裡收錄故事、作品，以及那些還沒被我分類的想法。
-        </p>
-        <div class="card-grid">
-          <div class="section-card full-width">
-            <h2>小說</h2>
-            <p>有些故事還在繼續，有些故事已經走到了終點。</p>
-
-            <div class="btn-group">
-              <div id="latest"><h3>好像還沒有新的章節?</h3></div>
-              <button class="btn">閱讀最新章節</button>
-              <button class="btn" onclick="location.href = './novels'">
-                查看全部小說
-              </button>
-            </div>
-          </div>
-
-          <div class="section-card full-width">
-            <h2>程式專案</h2>
-            <p>
-              不一定實用，也不一定偉大。<br />只是覺得有趣，所以就做了。<br />讓想像化為現實吧！
-            </p>
-            <a href="/game" class="btn">查看專案們</a>
-          </div>
-        </div>
-      </div>
-
-      <!-- 內容卡片網格 -->
-      <div class="card-grid">
-        <div class="section-card" id="about-me">
-          <h2>關於我</h2>
-          <p>一個喜歡寫故事、做程式，偶爾研究一些奇怪東西的高中生。</p>
-          <p>比起定義自己是什麼，我更想看看自己接下來能做出什麼。</p>
-        </div>
-
-        <div class="section-card" id="philosophy">
-          <h2>小說理念</h2>
-          <p>把不存在的世界，寫成存在過的樣子。</p>
-          <p>也把那些壓抑於腦海的故事，重新喚醒。</p>
-        </div>
-
-        <div class="section-card" id="projects">
-          <h2>黑歷史？</h2>
-          <p>我曾花了許多時間製作《Rust Survival》。</p>
-          <p>它也許看起來十分簡陋——但實際上，它就真的很簡陋。</p>
-        </div>
-
-        <div class="section-card" id="project_plan">
-          <h2>專案計劃</h2>
-          <p>有些想法已經開始，但大部分還停留在腦海裡。</p>
-          <a href="/game" target="_blank" style="color: var(--accent)"
-            >查看目前正在進行的計劃</a
-          >
-        </div>
-
-        <div class="section-card" id="inspiration">
-          <h2>聯絡我</h2>
-          <p>
-            如果你發現網站中的問題，或有任何想與我分享的事情，歡迎寄信給我。
-          </p>
-          <p style="color: var(--accent); font-family: monospace">
-            fuguangji19@gmail.com
-          </p>
-        </div>
-
-        <div class="section-card" id="future">
-          <h2>感謝與未來</h2>
-          <p>謝謝每一位曾經讀過我的故事、使用過我的作品的人。</p>
-          <p>故事未完，作品仍在增加。</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="footer">© 2026 光風濟月</div>
-
-    <script src="neccessary.js"></script>
-  </body>
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>光風濟月 | 首頁</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Noto+Sans+TC:wght@400;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="main.css">
+</head>
+<body>
+<header id="navbar">
+<div class="nav-brand" onclick="location.href='index.html'"><img src="assets/logo.png" alt="logo"><span>光風濟月</span></div>
+<div class="menu_container"><button id="menu" onclick="toggleMenu()">☰</button><div class="menu-content" id="menuContent">
+<a href="#about-me">關於我</a><a href="./novels/">小說</a><a href="./submit/">投稿</a><a href="./game">程式專案</a><a href="javascript:void(0)" onclick="switchTheme()">切換主題</a>
+</div></div>
+</header>
+<main class="main-content homepage">
+<section class="hero-section homepage-hero">
+<img src="assets/logo.png" alt="Avatar"><h2>光風濟月</h2><h5>你好，我是光風濟月</h5>
+<p>寫小說，也做一些奇奇怪怪的東西。<br>這裡收錄故事、作品，以及那些還沒被我分類的想法。</p>
+<div class="card-grid">
+<div class="section-card full-width"><h2>小說</h2><p>有些故事還在繼續，有些故事已經走到了終點。</p><div class="btn-group"><div id="latest"><h3>好像還沒有新的章節?</h3></div><a class="btn" href="./novels/">閱讀小說</a><a class="btn" href="./novels/">查看全部小說</a></div></div>
+<div class="section-card full-width"><h2>投稿</h2><p>有作品、建議，或想留下什麼？目前可以先填寫投稿資料。</p><a class="btn" href="./submit/">前往投稿頁</a></div>
+<div class="section-card full-width"><h2>程式專案</h2><p>不一定實用，也不一定偉大。<br>只是覺得有趣，所以就做了。<br>讓想像化為現實吧！</p><a href="/game" class="btn">查看專案們</a></div>
+</div>
+</section>
+<section class="card-grid homepage-cards">
+<div class="section-card" id="about-me"><h2>關於我</h2><p>一個喜歡寫故事、做程式，偶爾研究一些奇怪東西的高中生。</p><p>比起定義自己是什麼，我更想看看自己接下來能做出什麼。</p></div>
+<div class="section-card" id="philosophy"><h2>小說理念</h2><p>把不存在的世界，寫成存在過的樣子。</p><p>也把那些壓抑於腦海的故事，重新喚醒。</p></div>
+<div class="section-card" id="projects"><h2>黑歷史？</h2><p>我曾花了許多時間製作《Rust Survival》。</p><p>它也許看起來十分簡陋——但實際上，它就真的很簡陋。</p></div>
+<div class="section-card" id="project_plan"><h2>專案計劃</h2><p>有些想法已經開始，但大部分還停留在腦海裡。</p><a href="/game" target="_blank" style="color:var(--accent)">查看目前正在進行的計劃</a></div>
+<div class="section-card" id="inspiration"><h2>聯絡我</h2><p>如果你發現網站中的問題，或有任何想與我分享的事情，歡迎寄信給我。</p><p style="color:var(--accent);font-family:monospace">fuguangji19@gmail.com</p></div>
+<div class="section-card" id="future"><h2>感謝與未來</h2><p>謝謝每一位曾經讀過我的故事、使用過我的作品的人。</p><p>故事未完，作品仍在增加。</p></div>
+</section>
+</main>
+<div class="footer">© 2026 光風濟月</div>
+<script src="neccessary.js"></script>
+</body>
 </html>

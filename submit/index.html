@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>投稿 | 光風濟月</title><link href="../main.css" rel="stylesheet"><link href="./submit.css" rel="stylesheet"></head>
+<body>
+<header id="navbar"><div class="nav-brand" onclick="location.href='../'"><img src="../assets/logo.png" alt="logo"><span>光風濟月</span></div><div class="menu_container"><button id="menu" onclick="toggleMenu()">☰</button><div class="menu-content" id="menuContent"><a href="../">首頁</a><a href="../novels/">小說</a><a href="../game">程式專案</a><a href="javascript:void(0)" onclick="switchTheme()">切換主題</a></div></div></header>
+<main class="main-content"><section class="hero-section submit-page"><div class="section-card"><div class="section-heading"><p class="section-kicker">SUBMISSION</p><h1>投稿</h1><p>目前是第一版表單，尚未串接實際投稿系統。</p></div>
+<form class="submit-form" onsubmit="event.preventDefault();document.querySelector('#submit-notice').hidden=false;">
+<label>稱呼<input type="text" name="name" placeholder="怎麼稱呼你？" required></label>
+<label>電子郵件<input type="email" name="email" placeholder="方便聯絡的信箱"></label>
+<label>作品類型<select name="type"><option>小說</option><option>文章</option><option>其他作品</option><option>網站建議</option></select></label>
+<label>作品／投稿標題<input type="text" name="title" placeholder="標題" required></label>
+<label>作品連結<input type="url" name="url" placeholder="如果作品已經上網，可以貼連結"></label>
+<label>投稿內容／說明<textarea name="content" rows="10" placeholder="在這裡簡單介紹你的作品或想說的事情。" required></textarea></label>
+<button class="btn" type="submit">送出表單</button>
+<p id="submit-notice" class="submit-notice" hidden>目前尚未連接投稿後端，所以這個按鈕不會真的送出資料。第一版先把表單介面做好。</p>
+</form></div></section></main>
+<div class="footer">© 2026 光風濟月</div><script src="../neccessary.js"></script>
+</body></html>
