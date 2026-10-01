@@ -36,5 +36,61 @@
     },
     "chapterCount": 23,
     "updateTime": "2026-09-29T10:00:00Z"
+  },
+  {
+    "id": "第零站",
+    "title": "第零站",
+    "author": "",
+    "status": "ongoing",
+    "description": "",
+    "cover": "",
+    "chapterCount": 10,
+    "chapters": [
+      {
+        "chapter": 1,
+        "title": "月台上的紙條"
+      },
+      {
+        "chapter": 2,
+        "title": "第一班車"
+      },
+      {
+        "chapter": 3,
+        "title": "第二班車"
+      },
+      {
+        "chapter": 4,
+        "title": "沒有終點的列車"
+      },
+      {
+        "chapter": 5,
+        "title": "車窗外的雨"
+      },
+      {
+        "chapter": 6,
+        "title": "站名"
+      },
+      {
+        "chapter": 7,
+        "title": "空白的一頁"
+      },
+      {
+        "chapter": 8,
+        "title": "第一班車"
+      },
+      {
+        "chapter": 9,
+        "title": "回程"
+      },
+      {
+        "chapter": 10,
+        "title": "下一班車"
+      }
+    ],
+    "latestChapter": {
+      "chapter": 10,
+      "title": "下一班車"
+    },
+    "updateTime": "2026-10-01T23:24:42+08:00"
   }
 ]
