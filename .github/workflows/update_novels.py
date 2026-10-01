@@ -8,9 +8,9 @@ ROOT = Path(__file__).resolve().parents[2]
 DATA_DIR = ROOT / "data"
 NOVELS_FILE = DATA_DIR / "novels.json"
 
-CHAPTER_PATTERN = re.compile(r"^(\\d+)\\.md$", re.IGNORECASE)
+CHAPTER_PATTERN = re.compile(r"^(\d+)\.md$", re.IGNORECASE)
 TITLE_PATTERN = re.compile(
-    r"^.*?第\\s*[0-9零一二三四五六七八九十百千]+\\s*章\\s*[:：、.\\-–—]?\\s*(.*)$"
+    r"^.*?第\s*[0-9零一二三四五六七八九十百千]+\s*章\s*[:：、.\-–—]?\s*(.*)$"
 )
 
 def git_date(path: Path) -> str | None:
@@ -36,7 +36,7 @@ def chapter_title(path: Path) -> str:
         if not line:
             continue
 
-        heading = re.sub(r"^#{1,6}\\s+", "", line).strip()
+        heading = re.sub(r"^#{1,6}\s+", "", line).strip()
         match = TITLE_PATTERN.match(heading)
         if match and match.group(1).strip():
             return match.group(1).strip()
@@ -59,21 +59,20 @@ def update_novel(existing: dict, folder: Path) -> dict:
 
     chapters.sort(key=lambda item: item[0])
 
-    result = dict(existing)
-    result["chapterCount"] = len(chapters)
+    existing["chapterCount"] = len(chapters)
 
     if chapters:
         number, latest_path = chapters[-1]
-        result["latestChapter"] = {
+        existing["latestChapter"] = {
             "chapter": number,
             "title": chapter_title(latest_path) or f"第{number}章",
         }
 
         updated = git_date(latest_path)
         if updated:
-            result["updateTime"] = updated
+            existing["updateTime"] = updated
 
-    return result
+    return existing
 
 if NOVELS_FILE.exists():
     novels = json.loads(NOVELS_FILE.read_text(encoding="utf-8"))
