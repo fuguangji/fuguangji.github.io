@@ -79,7 +79,6 @@ function saveProgress(novel, chapter, scroll = 0) {
 
 async function loadNovels() {
   try {
-    // 無論目前是 /novels/ 還是乾淨網址，都從網站根目錄取得資料。
     const response = await fetch("/data/novels.json", { cache: "no-cache" });
 
     if (!response.ok) {
@@ -349,7 +348,6 @@ async function loadChapter(novel, chapter) {
   const content = document.querySelector("#reader-content");
   if (!content) return;
 
-  // 小說正文：/data/<小說名稱>/<章節>.md
   const path = `/data/${encodeURIComponent(novel.title)}/${chapter}.md`;
 
   try {
@@ -367,7 +365,7 @@ async function loadChapter(novel, chapter) {
 
     content.innerHTML = marked.parse(markdown, {
       gfm: true,
-      breaks: false,
+      breaks: true,
       headerIds: false,
       mangle: false
     });
@@ -385,7 +383,6 @@ async function loadChapter(novel, chapter) {
     `;
   }
 }
-
 
 function setupReaderProgress(novel, chapter) {
   let ticking = false;

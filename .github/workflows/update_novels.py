@@ -1,7 +1,6 @@
 import json
 import re
 import subprocess
-from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -12,6 +11,7 @@ CHAPTER_PATTERN = re.compile(r"^(\d+)\.md$", re.IGNORECASE)
 TITLE_PATTERN = re.compile(
     r"^.*?第\s*[0-9零一二三四五六七八九十百千]+\s*章\s*[:：、.\-–—]?\s*(.*)$"
 )
+
 
 def git_date(path: Path) -> str | None:
     relative = path.relative_to(ROOT).as_posix()
@@ -24,6 +24,7 @@ def git_date(path: Path) -> str | None:
         return value or None
     except (subprocess.CalledProcessError, OSError):
         return None
+
 
 def chapter_title(path: Path) -> str:
     try:
@@ -38,6 +39,7 @@ def chapter_title(path: Path) -> str:
 
         heading = re.sub(r"^#{1,6}\s+", "", line).strip()
         match = TITLE_PATTERN.match(heading)
+
         if match and match.group(1).strip():
             return match.group(1).strip()
 
@@ -50,15 +52,42 @@ def chapter_title(path: Path) -> str:
 
     return ""
 
+
+def merge_duplicates(novels: list[dict]) -> list[dict]:
+    merged: dict[str, dict] = {}
+
+    for novel in novels:
+        title = novel.get("title")
+        if not title:
+            continue
+
+        if title not in merged:
+            merged[title] = novel.copy()
+            continue
+
+        current = merged[title]
+
+        # 同名資料合併：保留已存在的非空欄位，
+        # 新資料若有內容則補上；章節資訊最後交給 update_novel 重新計算。
+        for key, value in novel.items():
+            if key in {"chapterCount", "latestChapter", "updateTime"}:
+                continue
+
+            if not current.get(key) and value:
+                current[key] = value
+
+    return list(merged.values())
+
+
 def update_novel(existing: dict, folder: Path) -> dict:
     chapters = []
+
     for path in folder.glob("*.md"):
         match = CHAPTER_PATTERN.match(path.name)
         if match:
             chapters.append((int(match.group(1)), path))
 
     chapters.sort(key=lambda item: item[0])
-
     existing["chapterCount"] = len(chapters)
 
     if chapters:
@@ -74,6 +103,7 @@ def update_novel(existing: dict, folder: Path) -> dict:
 
     return existing
 
+
 if NOVELS_FILE.exists():
     novels = json.loads(NOVELS_FILE.read_text(encoding="utf-8"))
 else:
@@ -82,6 +112,7 @@ else:
 if not isinstance(novels, list):
     raise ValueError("data/novels.json 必須是 JSON array")
 
+novels = merge_duplicates(novels)
 by_title = {item.get("title"): item for item in novels if item.get("title")}
 
 for folder in sorted(DATA_DIR.iterdir()):
@@ -104,6 +135,7 @@ for folder in sorted(DATA_DIR.iterdir()):
             "cover": "",
         }
         novels.append(existing)
+        by_title[folder.name] = existing
 
     update_novel(existing, folder)
 

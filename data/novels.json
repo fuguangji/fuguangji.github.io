@@ -1,19 +1,5 @@
 [
   {
-    "id": "稻香方程式",
-    "title": "稻香方程式",
-    "author": "",
-    "status": "ongoing",
-    "description": "",
-    "cover": "",
-    "chapterCount": 1,
-    "latestChapter": {
-      "chapter": 1,
-      "title": "啟程"
-    },
-    "updateTime": "2026-10-01T10:46:32+08:00"
-  },
-  {
     "id": "dao-xiang-s2",
     "title": "稻香方程式第二季",
     "author": "光風濟月",
@@ -39,6 +25,6 @@
       "title": "啟程"
     },
     "chapterCount": 1,
-    "updateTime": "2026-10-01T02:46:32Z"
+    "updateTime": "2026-10-01T10:46:32+08:00"
   }
 ]
