@@ -17,7 +17,6 @@
 
     <div class="menu_container">
       <button id="menu" onclick="toggleMenu()">☰</button>
-
       <div class="menu-content" id="menuContent">
         <a href="/#about-me">關於我</a>
         <a href="/game">程式專案</a>
@@ -28,15 +27,28 @@
 
   <main class="main-content">
     <div class="hero-section">
-      <div class="section-card">
-        <h2>載入中……</h2>
-        <p>正在準備頁面。</p>
+      <div id="last-novel">
+        <div class="section-card">
+          <h3>歡迎回來！</h3>
+        </div>
       </div>
     </div>
 
-    <div id="last-novel" hidden></div>
-    <div id="latest-novel" hidden></div>
-    <div id="novel-list" hidden></div>
+    <div class="hero-section">
+      <div id="latest-novel">
+        <div class="section-card">
+          <h3>最新上架！</h3>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-section">
+      <div id="novel-list">
+        <div class="section-card">
+          <h3>連線中……</h3>
+        </div>
+      </div>
+    </div>
   </main>
 
   <script src="/neccessary.js"></script>
