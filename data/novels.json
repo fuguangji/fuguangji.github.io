@@ -7,17 +7,21 @@
     "description": "",
     "cover": "",
     "latestChapter": {
-      "chapter": 1,
-      "title": "啟程"
+      "chapter": 2,
+      "title": "章"
     },
-    "chapterCount": 1,
+    "chapterCount": 2,
     "chapters": [
       {
         "chapter": 1,
         "title": "啟程"
+      },
+      {
+        "chapter": 2,
+        "title": "章"
       }
     ],
-    "updateTime": "2026-10-01T17:23:06+08:00"
+    "updateTime": "2026-10-01T19:17:29+08:00"
   },
   {
     "id": "dao-xiang-s2",
