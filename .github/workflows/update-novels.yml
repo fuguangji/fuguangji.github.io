@@ -1,0 +1,37 @@
+name: Update novel metadata
+
+on:
+  push:
+    paths:
+      - "data/**/*.md"
+      - ".github/workflows/update-novels.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-novels:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Update novels.json
+        run: python .github/workflows/update_novels.py
+
+      - name: Commit metadata changes
+        run: |
+          if git diff --quiet -- data/novels.json; then
+            echo "novels.json 沒有需要更新的內容。"
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/novels.json
+          git commit -m "chore: update novel metadata"
+          git push
