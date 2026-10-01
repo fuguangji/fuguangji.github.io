@@ -366,16 +366,36 @@ function createNovelCard(novel) {
 
 function renderLastNovel() {
   if (!lastNovel) return;
-  const saved = novels.map((novel) => ({ novel, progress: getSavedProgress(novel) })).filter((item) => item.progress?.chapter).sort((a,b) => new Date(b.progress.updatedAt || 0) - new Date(a.progress.updatedAt || 0))[0];
 
-  if (!saved) {
+  const saved = novels
+    .map((novel) => ({ novel, progress: getSavedProgress(novel) }))
+    .filter((item) => item.progress?.chapter)
+    .sort((a, b) => new Date(b.progress.updatedAt || 0) - new Date(a.progress.updatedAt || 0));
+
+  if (!saved.length) {
     lastNovel.innerHTML = `<div class="section-card"><h3>歡迎回來！</h3><p>還沒有閱讀紀錄。</p></div>`;
     return;
   }
 
-  const { novel, progress } = saved;
   lastNovel.innerHTML = `
-    <div class="section-card"><div class="novel-feature"><div><p class="section-kicker">CONTINUE READING</p><h3>${novel.title}</h3><p>上次讀到第 ${progress.chapter} 章</p></div><a class="btn" href="${chapterUrl(novel, progress.chapter)}">繼續閱讀 →</a></div></div>
+    <div class="section-card">
+      <div class="section-heading">
+        <p class="section-kicker">CONTINUE READING</p>
+        <h3>繼續閱讀</h3>
+        <p>每部小說的閱讀進度會分開保存。</p>
+      </div>
+      <div class="novel-progress-list">
+        ${saved.map(({ novel, progress }) => `
+          <div class="novel-feature">
+            <div>
+              <h3>${novel.title}</h3>
+              <p>上次讀到第 ${progress.chapter} 章</p>
+            </div>
+            <a class="btn" href="${chapterUrl(novel, progress.chapter)}">繼續閱讀 →</a>
+          </div>
+        `).join("")}
+      </div>
+    </div>
   `;
 }
 
@@ -479,26 +499,69 @@ async function loadChapter(novel, chapter) {
     if (typeof marked === "undefined") throw new Error("Markdown parser 尚未載入");
 
     content.innerHTML = marked.parse(markdown, { gfm:true, breaks:true, headerIds:false, mangle:false });
+    ensureReaderProgress(novel, chapter);
     restoreReaderProgress(novel, chapter);
     setupReaderProgress(novel, chapter);
+    setupChapterNavigation(novel, chapter);
   } catch (error) {
     console.error("章節載入失敗：", path, error);
     content.innerHTML = `<div class="reader-empty"><h2>章節內容尚未上架</h2><p>抱歉，第 ${chapter} 章似乎尚未更新上架。</p></div>`;
   }
 }
 
+function ensureReaderProgress(novel, chapter) {
+  const progress = getSavedProgress(novel);
+
+  // 第一次進入這一章時，即使文章短到完全不能捲動，也要留下進度。
+  if (!progress || Number(progress.chapter) !== chapter) {
+    saveProgress(novel, chapter, 0);
+  }
+}
+
 function setupReaderProgress(novel, chapter) {
   let ticking = false;
+
   window.addEventListener("scroll", () => {
     if (ticking) return;
+
     ticking = true;
-    requestAnimationFrame(() => { saveProgress(novel, chapter, window.scrollY); ticking = false; });
+    requestAnimationFrame(() => {
+      saveProgress(novel, chapter, window.scrollY);
+      ticking = false;
+    });
   }, { passive:true });
+}
+
+function setupChapterNavigation(novel, chapter) {
+  const navigation = document.querySelector(".reader-navigation");
+  if (!navigation) return;
+
+  navigation.querySelectorAll("a[href]").forEach((link) => {
+    link.addEventListener("click", () => {
+      const targetUrl = new URL(link.href, location.href);
+      const parts = targetUrl.pathname
+        .replace(/^\\/+|\\/+$/g, "")
+        .split("/")
+        .filter(Boolean);
+
+      const targetChapter = Number(parts[2]);
+
+      // 上一章／下一章都視為「剛進入目標章節」，所以從 0 開始記錄。
+      if (parts[0] === "novels" && Number.isInteger(targetChapter) && targetChapter > 0) {
+        saveProgress(novel, targetChapter, 0);
+      }
+    });
+  });
 }
 
 function restoreReaderProgress(novel, chapter) {
   const progress = getSavedProgress(novel);
-  if (!progress || Number(progress.chapter) !== chapter) { window.scrollTo(0,0); return; }
+
+  if (!progress || Number(progress.chapter) !== chapter) {
+    window.scrollTo(0, 0);
+    return;
+  }
+
   requestAnimationFrame(() => window.scrollTo(0, Number(progress.scroll) || 0));
 }
 
