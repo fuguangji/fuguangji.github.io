@@ -540,7 +540,7 @@ function setupChapterNavigation(novel, chapter) {
     link.addEventListener("click", () => {
       const targetUrl = new URL(link.href, location.href);
       const parts = targetUrl.pathname
-        .replace(/^\\/+|\\/+$/g, "")
+        .replace(/^\/+|\/+$/g, "")
         .split("/")
         .filter(Boolean);
 
