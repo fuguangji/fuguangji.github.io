@@ -449,8 +449,8 @@ async function renderReader(novel, chapter) {
         <div class="reader-header"><p>${novel.title}</p><h1>${chapterTitle}</h1></div>
         <div class="reader-content" id="reader-content"><p class="reader-loading">正在讀取章節……</p></div>
         <nav class="reader-navigation">
-          ${chapter > 1 ? `<a class="btn secondary-button" href="${chapterUrl(novel, chapter - 1)}">← 上一章</a>` : "<span></span>"}
-          ${chapter < maxChapter ? `<a class="btn" href="${chapterUrl(novel, chapter + 1)}">下一章 →</a>` : "<span></span>"}
+          ${chapter > 1 ? `<a class="btn secondary-button" href="${chapterUrl(novel, chapter - 1)}">← 上一章</a>` : `<a class="btn secondary-button" href="${novelUrl(novel)}">沒有上一章了....，回到總覽</a>`}
+          ${chapter < maxChapter ? `<a class="btn" href="${chapterUrl(novel, chapter + 1)}">下一章 →</a>` : `<a class="btn" href="${novelUrl(novel)}">沒有下一章了....，回到總覽</a>`}
         </nav>
         ${readerSettingsMarkup()}
       </article>
@@ -483,7 +483,7 @@ async function loadChapter(novel, chapter) {
     setupReaderProgress(novel, chapter);
   } catch (error) {
     console.error("章節載入失敗：", path, error);
-    content.innerHTML = `<div class="reader-empty"><h2>章節內容尚未上架</h2><p>第 ${chapter} 章的文字檔目前還沒有放進 GitHub。</p></div>`;
+    content.innerHTML = `<div class="reader-empty"><h2>章節內容尚未上架</h2><p>抱歉，第 ${chapter} 章似乎尚未更新上架。</p></div>`;
   }
 }
 
