@@ -14,3 +14,7 @@
 .reader-settings-hint{color:var(--text-secondary);font-size:.9rem;margin:.4rem 0 1rem}
 .custom-theme-status{padding:.7rem .8rem;background:var(--secondary);border:1px solid var(--border);border-radius:7px;color:var(--text-secondary)}
 @media(max-width:700px){.reader-settings-modal{align-items:flex-start;padding-top:84px}.reader-settings-panel{max-height:calc(100vh - 100px)}}
+
+
+/* 小說列表：每部作品各自成卡片，外層僅保留標題區 */
+.novel-list > .section-card{background:transparent;border:0;box-shadow:none;padding:0;margin:0}.novel-grid{margin-top:1.5rem}
