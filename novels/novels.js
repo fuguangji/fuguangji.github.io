@@ -378,23 +378,21 @@ function renderLastNovel() {
   }
 
   lastNovel.innerHTML = `
-    <div class="section-card">
-      <div class="section-heading">
-        <p class="section-kicker">CONTINUE READING</p>
-        <h3>繼續閱讀</h3>
-        <p>每部小說的閱讀進度會分開保存。</p>
-      </div>
-      <div class="novel-progress-list">
-        ${saved.map(({ novel, progress }) => `
-          <div class="novel-feature">
-            <div>
-              <h3>${novel.title}</h3>
-              <p>上次讀到第 ${progress.chapter} 章</p>
-            </div>
-            <a class="btn" href="${chapterUrl(novel, progress.chapter)}">繼續閱讀 →</a>
+    <div class="section-heading">
+      <p class="section-kicker">CONTINUE READING</p>
+      <h3>繼續閱讀</h3>
+      <p>每部小說的閱讀進度會分開保存。</p>
+    </div>
+    <div class="novel-highlight-grid">
+      ${saved.map(({ novel, progress }) => `
+        <article class="section-card novel-feature novel-progress-card">
+          <div>
+            <h3>${novel.title}</h3>
+            <p>上次讀到第 ${progress.chapter} 章</p>
           </div>
-        `).join("")}
-      </div>
+          <a class="btn" href="${chapterUrl(novel, progress.chapter)}">繼續閱讀 →</a>
+        </article>
+      `).join("")}
     </div>
   `;
 }
@@ -407,11 +405,31 @@ function renderLatestNovel() {
     return;
   }
 
-  const latest = [...novels].sort((a,b) => new Date(b.updateTime || 0) - new Date(a.updateTime || 0))[0];
-  const chapter = latest.latestChapter || {};
+  const latest = [...novels]
+    .sort((a, b) => new Date(b.updateTime || 0) - new Date(a.updateTime || 0))
+    .slice(0, 3);
 
   latestNovel.innerHTML = `
-    <div class="section-card"><div class="novel-feature"><div><p class="section-kicker">LATEST UPDATE</p><h3>${latest.title}</h3><p>第 ${chapter.chapter || 0} 章・${chapter.title || ""}</p></div><a class="btn" href="${chapterUrl(latest, chapter.chapter || 1)}">前往最新章 →</a></div></div>
+    <div class="section-heading">
+      <p class="section-kicker">LATEST UPDATES</p>
+      <h3>最新上架</h3>
+      <p>最近更新的三部小說。</p>
+    </div>
+    <div class="novel-highlight-grid">
+      ${latest.map((novel) => {
+        const chapter = novel.latestChapter || {};
+        return `
+          <article class="section-card novel-feature novel-latest-card">
+            <div>
+              <p class="section-kicker">${novel.updateTime ? new Date(novel.updateTime).toLocaleDateString("zh-TW") : ""}</p>
+              <h3>${novel.title}</h3>
+              <p>第 ${chapter.chapter || 0} 章・${chapter.title || ""}</p>
+            </div>
+            <a class="btn" href="${chapterUrl(novel, chapter.chapter || 1)}">前往最新章 →</a>
+          </article>
+        `;
+      }).join("")}
+    </div>
   `;
 }
 
