@@ -7,10 +7,10 @@
     "description": "",
     "cover": "",
     "latestChapter": {
-      "chapter": 4,
-      "title": "戰鬥"
+      "chapter": 8,
+      "title": "畢業"
     },
-    "chapterCount": 4,
+    "chapterCount": 8,
     "chapters": [
       {
         "chapter": 1,
@@ -27,9 +27,25 @@
       {
         "chapter": 4,
         "title": "戰鬥"
+      },
+      {
+        "chapter": 5,
+        "title": "進攻"
+      },
+      {
+        "chapter": 6,
+        "title": "海洋"
+      },
+      {
+        "chapter": 7,
+        "title": "生存"
+      },
+      {
+        "chapter": 8,
+        "title": "畢業"
       }
     ],
-    "updateTime": "2026-10-06T17:22:32+08:00"
+    "updateTime": "2026-10-06T18:43:25+08:00"
   },
   {
     "id": "dao-xiang-s2",
