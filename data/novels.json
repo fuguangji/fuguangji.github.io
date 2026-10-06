@@ -268,6 +268,82 @@
     "updateTime": "2026-10-06T18:59:16+08:00"
   },
   {
+    "id": "稻香方程式 第二季",
+    "title": "稻香方程式 第二季",
+    "author": "",
+    "status": "ongoing",
+    "description": "",
+    "cover": "",
+    "chapterCount": 15,
+    "chapters": [
+      {
+        "chapter": 1,
+        "title": "啟"
+      },
+      {
+        "chapter": 2,
+        "title": "玦"
+      },
+      {
+        "chapter": 3,
+        "title": "術"
+      },
+      {
+        "chapter": 4,
+        "title": "屬性"
+      },
+      {
+        "chapter": 5,
+        "title": "煉"
+      },
+      {
+        "chapter": 6,
+        "title": "劍"
+      },
+      {
+        "chapter": 7,
+        "title": "見"
+      },
+      {
+        "chapter": 8,
+        "title": "整裝待發"
+      },
+      {
+        "chapter": 9,
+        "title": "殲"
+      },
+      {
+        "chapter": 10,
+        "title": "助"
+      },
+      {
+        "chapter": 11,
+        "title": "斬"
+      },
+      {
+        "chapter": 12,
+        "title": "賭"
+      },
+      {
+        "chapter": 13,
+        "title": "命"
+      },
+      {
+        "chapter": 14,
+        "title": "運"
+      },
+      {
+        "chapter": 15,
+        "title": "喘息"
+      }
+    ],
+    "latestChapter": {
+      "chapter": 15,
+      "title": "喘息"
+    },
+    "updateTime": "2026-10-06T19:07:10+08:00"
+  },
+  {
     "id": "dao-xiang-s2",
     "title": "稻香方程式第二季",
     "author": "光風濟月",
