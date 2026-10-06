@@ -7,10 +7,10 @@
     "description": "",
     "cover": "",
     "latestChapter": {
-      "chapter": 2,
-      "title": "計畫"
+      "chapter": 3,
+      "title": "競賽"
     },
-    "chapterCount": 2,
+    "chapterCount": 3,
     "chapters": [
       {
         "chapter": 1,
@@ -19,9 +19,13 @@
       {
         "chapter": 2,
         "title": "計畫"
+      },
+      {
+        "chapter": 3,
+        "title": "競賽"
       }
     ],
-    "updateTime": "2026-10-06T17:10:42+08:00"
+    "updateTime": "2026-10-06T17:16:58+08:00"
   },
   {
     "id": "dao-xiang-s2",
