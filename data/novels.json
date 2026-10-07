@@ -270,7 +270,7 @@
   {
     "id": "稻香方程式 第二季",
     "title": "稻香方程式 第二季",
-    "author": "",
+    "author": "https://iili.io/naelyqx.png",
     "status": "ongoing",
     "description": "",
     "cover": "",
@@ -342,20 +342,6 @@
       "title": "喘息"
     },
     "updateTime": "2026-10-06T19:07:10+08:00"
-  },
-  {
-    "id": "dao-xiang-s2",
-    "title": "稻香方程式第二季",
-    "author": "光風濟月",
-    "status": "ongoing",
-    "description": "一段仍在進行中的故事",
-    "cover": "https://iili.io/naelyqx.png",
-    "latestChapter": {
-      "chapter": 23,
-      "title": "癒"
-    },
-    "chapterCount": 23,
-    "updateTime": "2026-09-29T10:00:00Z"
   },
   {
     "id": "第零站",
