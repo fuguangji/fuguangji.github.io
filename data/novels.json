@@ -1,5 +1,69 @@
 [
   {
+    "id": "在光墜落之前",
+    "title": "在光墜落之前",
+    "author": "光風濟月",
+    "status": "ongoing",
+    "description": "一個長久與人群保持距離的少年，在升上國中後遇見了林以辰。從一次看似普通的相遇開始，他逐漸學會與人說話、建立友誼，也第一次感受到被世界接住的溫度。以物理學與光學概念為章名，故事描寫孤獨、改變、青春，以及一段從靠近開始的關係。",
+    "cover": "",
+    "latestChapter": {
+      "chapter": 12,
+      "title": "相位匹配條件"
+    },
+    "chapterCount": 12,
+    "chapters": [
+      {
+        "chapter": 1,
+        "title": "普朗克關係式"
+      },
+      {
+        "chapter": 2,
+        "title": "史瓦西半徑"
+      },
+      {
+        "chapter": 3,
+        "title": "克卜勒第一定律"
+      },
+      {
+        "chapter": 4,
+        "title": "廣義相對論之重力彎曲原理"
+      },
+      {
+        "chapter": 5,
+        "title": "斯涅耳定律"
+      },
+      {
+        "chapter": 6,
+        "title": "量子態塌縮原理"
+      },
+      {
+        "chapter": 7,
+        "title": "受激放射原理"
+      },
+      {
+        "chapter": 8,
+        "title": "共振捕獲現象"
+      },
+      {
+        "chapter": 9,
+        "title": "狹義相對論"
+      },
+      {
+        "chapter": 10,
+        "title": "萬有引力"
+      },
+      {
+        "chapter": 11,
+        "title": "共振增幅原理"
+      },
+      {
+        "chapter": 12,
+        "title": "相位匹配條件"
+      }
+    ],
+    "updateTime": "2026-10-07T10:42:57+08:00"
+  },
+  {
     "id": "稻香方程式",
     "title": "稻香方程式",
     "author": "光風濟月",
@@ -398,69 +462,5 @@
       "title": "下一班車"
     },
     "updateTime": "2026-10-01T23:24:42+08:00"
-  },
-  {
-    "id": "在光墜落之前",
-    "title": "在光墜落之前",
-    "author": "光風濟月",
-    "status": "ongoing",
-    "description": "一個長久與人群保持距離的少年，在升上國中後遇見了林以辰。從一次看似普通的相遇開始，他逐漸學會與人說話、建立友誼，也第一次感受到被世界接住的溫度。以物理學與光學概念為章名，故事描寫孤獨、改變、青春，以及一段從靠近開始的關係。",
-    "cover": "",
-    "latestChapter": {
-      "chapter": 12,
-      "title": "相位匹配條件"
-    },
-    "chapterCount": 12,
-    "chapters": [
-      {
-        "chapter": 1,
-        "title": "普朗克關係式"
-      },
-      {
-        "chapter": 2,
-        "title": "史瓦西半徑"
-      },
-      {
-        "chapter": 3,
-        "title": "克卜勒第一定律"
-      },
-      {
-        "chapter": 4,
-        "title": "廣義相對論之重力彎曲原理"
-      },
-      {
-        "chapter": 5,
-        "title": "斯涅耳定律"
-      },
-      {
-        "chapter": 6,
-        "title": "量子態塌縮原理"
-      },
-      {
-        "chapter": 7,
-        "title": "受激放射原理"
-      },
-      {
-        "chapter": 8,
-        "title": "共振捕獲現象"
-      },
-      {
-        "chapter": 9,
-        "title": "狹義相對論"
-      },
-      {
-        "chapter": 10,
-        "title": "萬有引力"
-      },
-      {
-        "chapter": 11,
-        "title": "共振增幅原理"
-      },
-      {
-        "chapter": 12,
-        "title": "相位匹配條件"
-      }
-    ],
-    "updateTime": "2026-10-07T00:00:00+08:00"
   }
 ]
