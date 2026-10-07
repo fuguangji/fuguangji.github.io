@@ -4,7 +4,7 @@
     "title": "稻香方程式",
     "author": "光風濟月",
     "status": "ongoing",
-    "description": "",
+    "description": "從稻田旁的少年，到被戰爭與命運推向深淵的旅人。方嶽嶺原本只想和朋友一起長大、看看世界，卻一步步捲入國家、戰爭與力量的漩渦。在一次次啟程與戰鬥之間，他逐漸失去熟悉的人，也開始思考：當一個人擁有足以改變世界的力量時，究竟還能不能守住最初想要的那種普通人生？",
     "cover": "",
     "latestChapter": {
       "chapter": 63,
@@ -12,258 +12,7 @@
     },
     "chapterCount": 63,
     "chapters": [
-      {
-        "chapter": 1,
-        "title": "啟程"
-      },
-      {
-        "chapter": 2,
-        "title": "計畫"
-      },
-      {
-        "chapter": 3,
-        "title": "競賽"
-      },
-      {
-        "chapter": 4,
-        "title": "戰鬥"
-      },
-      {
-        "chapter": 5,
-        "title": "進攻"
-      },
-      {
-        "chapter": 6,
-        "title": "海洋"
-      },
-      {
-        "chapter": 7,
-        "title": "生存"
-      },
-      {
-        "chapter": 8,
-        "title": "畢業"
-      },
-      {
-        "chapter": 9,
-        "title": "再一次戰鬥"
-      },
-      {
-        "chapter": 10,
-        "title": "下一站"
-      },
-      {
-        "chapter": 11,
-        "title": "出擊"
-      },
-      {
-        "chapter": 12,
-        "title": "發覺"
-      },
-      {
-        "chapter": 13,
-        "title": "出發"
-      },
-      {
-        "chapter": 14,
-        "title": "任務"
-      },
-      {
-        "chapter": 15,
-        "title": "防禦"
-      },
-      {
-        "chapter": 16,
-        "title": "預備"
-      },
-      {
-        "chapter": 17,
-        "title": "崛起"
-      },
-      {
-        "chapter": 18,
-        "title": "開戰"
-      },
-      {
-        "chapter": 19,
-        "title": "殺戮"
-      },
-      {
-        "chapter": 20,
-        "title": "合約"
-      },
-      {
-        "chapter": 21,
-        "title": "攻擊"
-      },
-      {
-        "chapter": 22,
-        "title": "海灣"
-      },
-      {
-        "chapter": 23,
-        "title": "再一次啟程"
-      },
-      {
-        "chapter": 24,
-        "title": "目標"
-      },
-      {
-        "chapter": 25,
-        "title": "戰爭"
-      },
-      {
-        "chapter": 26,
-        "title": "遺產"
-      },
-      {
-        "chapter": 27,
-        "title": "破曉"
-      },
-      {
-        "chapter": 28,
-        "title": "橘紅色的煙"
-      },
-      {
-        "chapter": 29,
-        "title": "長驅直入"
-      },
-      {
-        "chapter": 30,
-        "title": "光影"
-      },
-      {
-        "chapter": 31,
-        "title": "追跡"
-      },
-      {
-        "chapter": 32,
-        "title": "終究"
-      },
-      {
-        "chapter": 33,
-        "title": "飛機！"
-      },
-      {
-        "chapter": 34,
-        "title": "飛行"
-      },
-      {
-        "chapter": 35,
-        "title": "旋轉"
-      },
-      {
-        "chapter": 36,
-        "title": "起航！"
-      },
-      {
-        "chapter": 37,
-        "title": "航行…"
-      },
-      {
-        "chapter": 38,
-        "title": "長征"
-      },
-      {
-        "chapter": 39,
-        "title": "爆破"
-      },
-      {
-        "chapter": 40,
-        "title": "烈焰之火"
-      },
-      {
-        "chapter": 41,
-        "title": "降落"
-      },
-      {
-        "chapter": 42,
-        "title": "餘燼"
-      },
-      {
-        "chapter": 43,
-        "title": "存或亡"
-      },
-      {
-        "chapter": 44,
-        "title": "反制"
-      },
-      {
-        "chapter": 45,
-        "title": "全面開戰"
-      },
-      {
-        "chapter": 46,
-        "title": "紛爭"
-      },
-      {
-        "chapter": 47,
-        "title": "冷靜"
-      },
-      {
-        "chapter": 48,
-        "title": "隱居"
-      },
-      {
-        "chapter": 49,
-        "title": "黎明"
-      },
-      {
-        "chapter": 50,
-        "title": "從頭"
-      },
-      {
-        "chapter": 51,
-        "title": "出事"
-      },
-      {
-        "chapter": 52,
-        "title": "恨"
-      },
-      {
-        "chapter": 53,
-        "title": "預見"
-      },
-      {
-        "chapter": 54,
-        "title": "火"
-      },
-      {
-        "chapter": 55,
-        "title": "但"
-      },
-      {
-        "chapter": 56,
-        "title": "風"
-      },
-      {
-        "chapter": 57,
-        "title": "亡"
-      },
-      {
-        "chapter": 58,
-        "title": "開火"
-      },
-      {
-        "chapter": 59,
-        "title": "戰獲"
-      },
-      {
-        "chapter": 60,
-        "title": "鬥"
-      },
-      {
-        "chapter": 61,
-        "title": "屠殺"
-      },
-      {
-        "chapter": 62,
-        "title": "最終章 盡"
-      },
-      {
-        "chapter": 63,
-        "title": "後記 好想…..好想…..回到從前"
-      }
+      {"chapter":1,"title":"啟程"},{"chapter":2,"title":"計畫"},{"chapter":3,"title":"競賽"},{"chapter":4,"title":"戰鬥"},{"chapter":5,"title":"進攻"},{"chapter":6,"title":"海洋"},{"chapter":7,"title":"生存"},{"chapter":8,"title":"畢業"},{"chapter":9,"title":"再一次戰鬥"},{"chapter":10,"title":"下一站"},{"chapter":11,"title":"出擊"},{"chapter":12,"title":"發覺"},{"chapter":13,"title":"出發"},{"chapter":14,"title":"任務"},{"chapter":15,"title":"防禦"},{"chapter":16,"title":"預備"},{"chapter":17,"title":"崛起"},{"chapter":18,"title":"開戰"},{"chapter":19,"title":"殺戮"},{"chapter":20,"title":"合約"},{"chapter":21,"title":"攻擊"},{"chapter":22,"title":"海灣"},{"chapter":23,"title":"再一次啟程"},{"chapter":24,"title":"目標"},{"chapter":25,"title":"戰爭"},{"chapter":26,"title":"遺產"},{"chapter":27,"title":"破曉"},{"chapter":28,"title":"橘紅色的煙"},{"chapter":29,"title":"長驅直入"},{"chapter":30,"title":"光影"},{"chapter":31,"title":"追跡"},{"chapter":32,"title":"終究"},{"chapter":33,"title":"飛機！"},{"chapter":34,"title":"飛行"},{"chapter":35,"title":"旋轉"},{"chapter":36,"title":"起航！"},{"chapter":37,"title":"航行…"},{"chapter":38,"title":"長征"},{"chapter":39,"title":"爆破"},{"chapter":40,"title":"烈焰之火"},{"chapter":41,"title":"降落"},{"chapter":42,"title":"餘燼"},{"chapter":43,"title":"存或亡"},{"chapter":44,"title":"反制"},{"chapter":45,"title":"全面開戰"},{"chapter":46,"title":"紛爭"},{"chapter":47,"title":"冷靜"},{"chapter":48,"title":"隱居"},{"chapter":49,"title":"黎明"},{"chapter":50,"title":"從頭"},{"chapter":51,"title":"出事"},{"chapter":52,"title":"恨"},{"chapter":53,"title":"預見"},{"chapter":54,"title":"火"},{"chapter":55,"title":"但"},{"chapter":56,"title":"風"},{"chapter":57,"title":"亡"},{"chapter":58,"title":"開火"},{"chapter":59,"title":"戰獲"},{"chapter":60,"title":"鬥"},{"chapter":61,"title":"屠殺"},{"chapter":62,"title":"最終章 盡"},{"chapter":63,"title":"後記 好想…..好想…..回到從前"}
     ],
     "updateTime": "2026-10-06T18:59:16+08:00"
   },
@@ -272,75 +21,13 @@
     "title": "稻香方程式 第二季",
     "author": "https://iili.io/naelyqx.png",
     "status": "ongoing",
-    "description": "",
+    "description": "故事並沒有在終點結束。方嶽嶺來到一個陌生而截然不同的世界，熟悉的力量以新的規則存在，新的城市、術式與敵人也接連出現。在失去與重逢之間，他再次踏上旅途，開始學習如何在這個世界活下來，也重新面對那些尚未結束的因果。",
     "cover": "",
     "chapterCount": 15,
     "chapters": [
-      {
-        "chapter": 1,
-        "title": "啟"
-      },
-      {
-        "chapter": 2,
-        "title": "玦"
-      },
-      {
-        "chapter": 3,
-        "title": "術"
-      },
-      {
-        "chapter": 4,
-        "title": "屬性"
-      },
-      {
-        "chapter": 5,
-        "title": "煉"
-      },
-      {
-        "chapter": 6,
-        "title": "劍"
-      },
-      {
-        "chapter": 7,
-        "title": "見"
-      },
-      {
-        "chapter": 8,
-        "title": "整裝待發"
-      },
-      {
-        "chapter": 9,
-        "title": "殲"
-      },
-      {
-        "chapter": 10,
-        "title": "助"
-      },
-      {
-        "chapter": 11,
-        "title": "斬"
-      },
-      {
-        "chapter": 12,
-        "title": "賭"
-      },
-      {
-        "chapter": 13,
-        "title": "命"
-      },
-      {
-        "chapter": 14,
-        "title": "運"
-      },
-      {
-        "chapter": 15,
-        "title": "喘息"
-      }
+      {"chapter":1,"title":"啟"},{"chapter":2,"title":"玦"},{"chapter":3,"title":"術"},{"chapter":4,"title":"屬性"},{"chapter":5,"title":"煉"},{"chapter":6,"title":"劍"},{"chapter":7,"title":"見"},{"chapter":8,"title":"整裝待發"},{"chapter":9,"title":"殲"},{"chapter":10,"title":"助"},{"chapter":11,"title":"斬"},{"chapter":12,"title":"賭"},{"chapter":13,"title":"命"},{"chapter":14,"title":"運"},{"chapter":15,"title":"喘息"}
     ],
-    "latestChapter": {
-      "chapter": 15,
-      "title": "喘息"
-    },
+    "latestChapter": {"chapter":15,"title":"喘息"},
     "updateTime": "2026-10-06T19:07:10+08:00"
   },
   {
@@ -348,55 +35,13 @@
     "title": "第零站",
     "author": "ChatGPT",
     "status": "ongoing",
-    "description": "",
+    "description": "放學後的車站，一張神秘紙條把林澈帶往不該出現的月台。從「不要搭上第一班車」開始，一場關於列車、時間與選擇的故事悄悄展開。當熟悉的車站逐漸顯露出不尋常的一面，林澈開始明白，有些相遇不一定需要答案，而有些旅程，即使沒有終點，也值得踏出下一步。",
     "cover": "",
     "chapterCount": 10,
     "chapters": [
-      {
-        "chapter": 1,
-        "title": "月台上的紙條"
-      },
-      {
-        "chapter": 2,
-        "title": "第一班車"
-      },
-      {
-        "chapter": 3,
-        "title": "第二班車"
-      },
-      {
-        "chapter": 4,
-        "title": "沒有終點的列車"
-      },
-      {
-        "chapter": 5,
-        "title": "車窗外的雨"
-      },
-      {
-        "chapter": 6,
-        "title": "站名"
-      },
-      {
-        "chapter": 7,
-        "title": "空白的一頁"
-      },
-      {
-        "chapter": 8,
-        "title": "第一班車"
-      },
-      {
-        "chapter": 9,
-        "title": "回程"
-      },
-      {
-        "chapter": 10,
-        "title": "下一班車"
-      }
+      {"chapter":1,"title":"月台上的紙條"},{"chapter":2,"title":"第一班車"},{"chapter":3,"title":"第二班車"},{"chapter":4,"title":"沒有終點的列車"},{"chapter":5,"title":"車窗外的雨"},{"chapter":6,"title":"站名"},{"chapter":7,"title":"空白的一頁"},{"chapter":8,"title":"第一班車"},{"chapter":9,"title":"回程"},{"chapter":10,"title":"下一班車"}
     ],
-    "latestChapter": {
-      "chapter": 10,
-      "title": "下一班車"
-    },
+    "latestChapter": {"chapter":10,"title":"下一班車"},
     "updateTime": "2026-10-01T23:24:42+08:00"
   }
 ]
