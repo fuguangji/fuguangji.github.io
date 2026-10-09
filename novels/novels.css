@@ -150,3 +150,33 @@
 .reader-content a:hover {
   color: var(--reader-bold);
 }
+
+
+/* 閱讀器格式色：沿用首頁主題色，閱讀背景對應首頁卡片 */
+.reader-content strong,
+.reader-content b {
+  color: var(--reader-strong, var(--reader-accent));
+  font-weight: 800;
+}
+.reader-content em,
+.reader-content i {
+  color: var(--reader-emphasis, var(--reader-light-accent, var(--reader-accent)));
+}
+.reader-content blockquote {
+  margin: 1.8em 0;
+  padding: .2em 1.1em;
+  color: var(--reader-muted);
+  background: var(--secondary);
+  border-left: 3px solid var(--reader-accent);
+}
+.reader-content hr {
+  border: 0;
+  border-top: 1px solid var(--reader-border);
+  margin: 2.2em 0;
+}
+.reader-content code {
+  color: var(--reader-strong, var(--reader-accent));
+  background: var(--secondary);
+  padding: .12em .35em;
+  border-radius: 4px;
+}
