@@ -146,18 +146,40 @@ function saveCustomTheme(theme) {
 }
 
 function getReaderThemeVars(themeName) {
-  if (themeName === "custom") return getCustomTheme() || BUILTIN_READER_THEMES.paper;
+  if (themeName === "custom") {
+    const custom = getCustomTheme() || BUILTIN_READER_THEMES.paper;
+    const accent = custom["--reader-accent"] || "#8a5a44";
+    return {
+      ...custom,
+      "--reader-light-accent": custom["--reader-light-accent"] || accent,
+      "--reader-strong": custom["--reader-strong"] || accent,
+      "--reader-emphasis": custom["--reader-emphasis"] || accent
+    };
+  }
+
   if (themeName === "site") {
     const root = getComputedStyle(document.documentElement);
+    const accent = root.getPropertyValue("--accent").trim();
+    const lightAccent = root.getPropertyValue("--light-accent").trim() || accent;
     return {
       "--reader-bg": root.getPropertyValue("--card").trim(),
       "--reader-text": root.getPropertyValue("--text").trim(),
       "--reader-muted": root.getPropertyValue("--text-secondary").trim(),
-      "--reader-accent": root.getPropertyValue("--accent").trim(),
+      "--reader-accent": accent,
+      "--reader-light-accent": lightAccent,
+      "--reader-strong": accent,
+      "--reader-emphasis": lightAccent,
       "--reader-border": root.getPropertyValue("--border").trim()
     };
   }
-  return BUILTIN_READER_THEMES[themeName] || BUILTIN_READER_THEMES["morning-mist"];
+
+  const theme = BUILTIN_READER_THEMES[themeName] || BUILTIN_READER_THEMES["morning-mist"];
+  return {
+    ...theme,
+    "--reader-light-accent": theme["--reader-light-accent"] || theme["--reader-accent"],
+    "--reader-strong": theme["--reader-strong"] || theme["--reader-accent"],
+    "--reader-emphasis": theme["--reader-emphasis"] || theme["--reader-accent"]
+  };
 }
 
 function applyReaderSettings() {
@@ -167,7 +189,10 @@ function applyReaderSettings() {
   reader.style.setProperty("--reader-font", READER_FONTS[readerState.settings.font] || READER_FONTS["Noto Sans TC"]);
   reader.style.setProperty("--reader-size", `${Number(readerState.settings.size) || 1.08}rem`);
 
-  Object.keys(BUILTIN_READER_THEMES.paper).forEach((key) => reader.style.removeProperty(key));
+  [
+    "--reader-bg", "--reader-text", "--reader-muted", "--reader-accent",
+    "--reader-light-accent", "--reader-strong", "--reader-emphasis", "--reader-border"
+  ].forEach((key) => reader.style.removeProperty(key));
 
   Object.entries(getReaderThemeVars(readerState.settings.theme)).forEach(([key, value]) => {
     reader.style.setProperty(key, value);
@@ -225,6 +250,9 @@ function bindReaderSettings() {
       "--reader-text": document.querySelector("#custom-text").value,
       "--reader-muted": document.querySelector("#custom-muted").value,
       "--reader-accent": document.querySelector("#custom-accent").value,
+      "--reader-light-accent": document.querySelector("#custom-accent").value,
+      "--reader-strong": document.querySelector("#custom-accent").value,
+      "--reader-emphasis": document.querySelector("#custom-accent").value,
       "--reader-border": document.querySelector("#custom-border").value
     };
 
