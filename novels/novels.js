@@ -23,31 +23,31 @@ const BUILTIN_READER_THEMES = {
   site: null,
   "midnight-lamp": {
     "--reader-bg": "#1e222b", "--reader-text": "#e8e6e1", "--reader-muted": "#9da3ae",
-    "--reader-accent": "#c9a96e", "--reader-border": "#303541"
+    "--reader-accent": "#c9a96e", "--reader-light-accent": "#e3c98a", "--reader-strong": "#c9a96e", "--reader-emphasis": "#e3c98a", "--reader-border": "#303541"
   },
   "ice-fog": {
     "--reader-bg": "#12232e", "--reader-text": "#e5edf3", "--reader-muted": "#93a6b5",
-    "--reader-accent": "#7eb6d8", "--reader-border": "#293744"
+    "--reader-accent": "#7eb6d8", "--reader-light-accent": "#b9e1f5", "--reader-strong": "#7eb6d8", "--reader-emphasis": "#b9e1f5", "--reader-border": "#293744"
   },
   "night-pine": {
     "--reader-bg": "#1b2420", "--reader-text": "#e5e9e5", "--reader-muted": "#99a49d",
-    "--reader-accent": "#72b59a", "--reader-border": "#303b35"
+    "--reader-accent": "#72b59a", "--reader-light-accent": "#a5d6be", "--reader-strong": "#72b59a", "--reader-emphasis": "#a5d6be", "--reader-border": "#303b35"
   },
   "almond-pen": {
     "--reader-bg": "#fffdf7", "--reader-text": "#292722", "--reader-muted": "#706b61",
-    "--reader-accent": "#8a5a44", "--reader-border": "#d8d0c1"
+    "--reader-accent": "#8a5a44", "--reader-light-accent": "#b47a5a", "--reader-strong": "#8a5a44", "--reader-emphasis": "#b47a5a", "--reader-border": "#d8d0c1"
   },
   "fantasy-starry-night": {
     "--reader-bg": "#1d1a27", "--reader-text": "#ece9f2", "--reader-muted": "#a6a0b3",
-    "--reader-accent": "#9b82c4", "--reader-border": "#322d3d"
+    "--reader-accent": "#9b82c4", "--reader-light-accent": "#c3ade8", "--reader-strong": "#9b82c4", "--reader-emphasis": "#c3ade8", "--reader-border": "#322d3d"
   },
   "morning-mist": {
     "--reader-bg": "#ffffff", "--reader-text": "#20282d", "--reader-muted": "#65747d",
-    "--reader-accent": "#4d8296", "--reader-border": "#d5e0e5"
+    "--reader-accent": "#4d8296", "--reader-light-accent": "#76afc2", "--reader-strong": "#4d8296", "--reader-emphasis": "#76afc2", "--reader-border": "#d5e0e5"
   },
   "pine-almond": {
     "--reader-bg": "#fffdf8", "--reader-text": "#29312c", "--reader-muted": "#73796f",
-    "--reader-accent": "#55745f", "--reader-border": "#d9d5c8"
+    "--reader-accent": "#55745f", "--reader-light-accent": "#78947f", "--reader-strong": "#55745f", "--reader-emphasis": "#78947f", "--reader-border": "#d9d5c8"
   },
   paper: {
     "--reader-bg": "#fffdf7", "--reader-text": "#292722", "--reader-muted": "#706b61",
@@ -250,9 +250,9 @@ function bindReaderSettings() {
       "--reader-text": document.querySelector("#custom-text").value,
       "--reader-muted": document.querySelector("#custom-muted").value,
       "--reader-accent": document.querySelector("#custom-accent").value,
-      "--reader-light-accent": document.querySelector("#custom-accent").value,
-      "--reader-strong": document.querySelector("#custom-accent").value,
-      "--reader-emphasis": document.querySelector("#custom-accent").value,
+      "--reader-light-accent": document.querySelector("#custom-italic").value,
+      "--reader-strong": document.querySelector("#custom-strong").value,
+      "--reader-emphasis": document.querySelector("#custom-italic").value,
       "--reader-border": document.querySelector("#custom-border").value
     };
 
@@ -325,7 +325,9 @@ function readerSettingsMarkup() {
             <label>背景 <input id="custom-bg" type="color" value="${custom["--reader-bg"]}"></label>
             <label>文字 <input id="custom-text" type="color" value="${custom["--reader-text"]}"></label>
             <label>次要文字 <input id="custom-muted" type="color" value="${custom["--reader-muted"]}"></label>
-            <label>強調色 <input id="custom-accent" type="color" value="${custom["--reader-accent"]}"></label>
+            <label>連結／強調色 <input id="custom-accent" type="color" value="${custom["--reader-accent"]}"></label>
+            <label>粗體文字 <input id="custom-strong" type="color" value="${custom["--reader-strong"] || custom["--reader-accent"]}"></label>
+            <label>斜體文字 <input id="custom-italic" type="color" value="${custom["--reader-emphasis"] || custom["--reader-light-accent"] || custom["--reader-accent"]}"></label>
             <label>分隔線 <input id="custom-border" type="color" value="${custom["--reader-border"]}"></label>
           </div>
           <button class="btn" type="submit">儲存並套用</button>
