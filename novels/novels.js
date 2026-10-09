@@ -48,14 +48,6 @@ const BUILTIN_READER_THEMES = {
   "pine-almond": {
     "--reader-bg": "#fffdf8", "--reader-text": "#29312c", "--reader-muted": "#73796f",
     "--reader-accent": "#55745f", "--reader-light-accent": "#78947f", "--reader-strong": "#55745f", "--reader-emphasis": "#78947f", "--reader-border": "#d9d5c8"
-  },
-  paper: {
-    "--reader-bg": "#fffdf7", "--reader-text": "#292722", "--reader-muted": "#706b61",
-    "--reader-accent": "#8a5a44", "--reader-border": "#d8d0c1"
-  },
-  night: {
-    "--reader-bg": "#101419", "--reader-text": "#e5edf3", "--reader-muted": "#93a6b5",
-    "--reader-accent": "#7eb6d8", "--reader-border": "#293744"
   }
 };
 
@@ -125,6 +117,8 @@ function saveProgress(novel, chapter, scroll = 0) {
 function loadReaderSettings() {
   try {
     const saved = JSON.parse(localStorage.getItem("readerSettings") || "{}");
+    // 舊版「紙張／夜讀」配色與首頁主題系統不一致，改為跟隨首頁主題。
+    if (saved.theme === "paper" || saved.theme === "night") saved.theme = "site";
     readerState.settings = { ...readerState.settings, ...saved };
   } catch {}
 }
@@ -147,7 +141,7 @@ function saveCustomTheme(theme) {
 
 function getReaderThemeVars(themeName) {
   if (themeName === "custom") {
-    const custom = getCustomTheme() || BUILTIN_READER_THEMES.paper;
+    const custom = getCustomTheme() || BUILTIN_READER_THEMES["almond-pen"];
     const accent = custom["--reader-accent"] || "#8a5a44";
     return {
       ...custom,
@@ -279,7 +273,8 @@ function bindReaderSettings() {
 function readerSettingsMarkup() {
   const custom = getCustomTheme() || {
     "--reader-bg": "#fffdf7", "--reader-text": "#292722", "--reader-muted": "#706b61",
-    "--reader-accent": "#8a5a44", "--reader-border": "#d8d0c1"
+    "--reader-accent": "#8a5a44", "--reader-light-accent": "#b47a5a",
+    "--reader-strong": "#8a5a44", "--reader-emphasis": "#b47a5a", "--reader-border": "#d8d0c1"
   };
 
   return `
@@ -312,8 +307,6 @@ function readerSettingsMarkup() {
             <option value="fantasy-starry-night">奇幻星夜</option>
             <option value="morning-mist">清晨嵐霧</option>
             <option value="pine-almond">松枝與杏</option>
-            <option value="paper">紙張</option>
-            <option value="night">夜讀</option>
             <option value="custom" id="reader-theme-custom">自訂主題</option>
           </select>
         </label>
