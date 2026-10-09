@@ -151,32 +151,89 @@
   color: var(--reader-bold);
 }
 
+/* 閱讀正文格式色：沿用首頁主題變數，背景對應首頁卡片 */
+.reader {
+  --reader-bold: var(--reader-strong, var(--reader-accent));
+  --reader-italic: var(--reader-emphasis, var(--reader-light-accent, var(--reader-accent)));
+  --reader-highlight-bg: var(--secondary);
+  --reader-code-bg: var(--secondary);
+}
 
-/* 閱讀器格式色：沿用首頁主題色，閱讀背景對應首頁卡片 */
 .reader-content strong,
 .reader-content b {
-  color: var(--reader-strong, var(--reader-accent));
+  color: var(--reader-bold);
   font-weight: 800;
 }
+
 .reader-content em,
 .reader-content i {
-  color: var(--reader-emphasis, var(--reader-light-accent, var(--reader-accent)));
+  color: var(--reader-italic);
+  font-style: italic;
 }
+
+.reader-content strong em,
+.reader-content em strong,
+.reader-content b i,
+.reader-content i b {
+  color: var(--reader-bold);
+  text-decoration: underline;
+  text-decoration-color: var(--reader-italic);
+  text-decoration-thickness: 1px;
+  text-underline-offset: .18em;
+}
+
+.reader-content mark {
+  color: var(--reader-text);
+  background: var(--reader-highlight-bg);
+  border-radius: .2em;
+  padding: 0 .15em;
+}
+
 .reader-content blockquote {
-  margin: 1.8em 0;
-  padding: .2em 1.1em;
+  margin: 1.6em 0;
+  padding: .25em 1em;
   color: var(--reader-muted);
-  background: var(--secondary);
   border-left: 3px solid var(--reader-accent);
+  background: color-mix(in srgb, var(--reader-bg) 86%, var(--reader-accent) 14%);
 }
+
+.reader-content code {
+  color: var(--reader-bold);
+  background: var(--reader-code-bg);
+  border: 1px solid var(--reader-border);
+  border-radius: .25em;
+  padding: .08em .3em;
+  font-size: .92em;
+}
+
+.reader-content pre {
+  overflow-x: auto;
+  padding: 1em;
+  color: var(--reader-text);
+  background: var(--reader-code-bg);
+  border: 1px solid var(--reader-border);
+  border-radius: .6em;
+}
+
+.reader-content pre code {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+}
+
+.reader-content a {
+  color: var(--reader-accent);
+  text-decoration-color: color-mix(in srgb, var(--reader-accent) 55%, transparent);
+  text-underline-offset: .18em;
+}
+
+.reader-content a:hover {
+  color: var(--reader-bold);
+}
+
 .reader-content hr {
   border: 0;
   border-top: 1px solid var(--reader-border);
-  margin: 2.2em 0;
-}
-.reader-content code {
-  color: var(--reader-strong, var(--reader-accent));
-  background: var(--secondary);
-  padding: .12em .35em;
-  border-radius: 4px;
+  margin: 2.5em 0;
 }
