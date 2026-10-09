@@ -1,11 +1,17 @@
 [
   {
+      "url1":"https://iili.io/nGt2Ztn.png",
+      "url2":"https://iili.io/nGt2QwX.webp",
+      "url3":"https://iili.io/nGt2Lut.jpg",
+      "url4":"https://iili.io/nGt2s9I.jpg"
+  },
+  {
     "id": "在光墜落之前",
     "title": "在光墜落之前",
     "author": "光風濟月",
     "status": "ongoing",
     "description": "一個長久與人群保持距離的少年，在升上國中後遇見了林以辰。從一次看似普通的相遇開始，他逐漸學會與人說話、建立友誼，也第一次感受到被世界接住的溫度。以物理學與光學概念為章名，故事描寫孤獨、改變、青春，以及一段從靠近開始的關係。",
-    "cover": "",
+    "cover": "https://iili.io/nGt2Ztn.png",
     "latestChapter": {
       "chapter": 11,
       "title": "共振增幅原理"
@@ -65,7 +71,7 @@
     "author": "光風濟月",
     "status": "ongoing",
     "description": "從稻田旁的少年，到被戰爭與命運推向深淵的旅人。方嶽嶺原本只想和朋友一起長大、看看世界，卻一步步捲入國家、戰爭與力量的漩渦。在一次次啟程與戰鬥之間，他逐漸失去熟悉的人，也開始思考：當一個人擁有足以改變世界的力量時，究竟還能不能守住最初想要的那種普通人生？",
-    "cover": "",
+    "cover": "https://iili.io/nGt2s9I.jpg",
     "latestChapter": {
       "chapter": 63,
       "title": "後記 好想…..好想…..回到從前"
@@ -330,10 +336,10 @@
   {
     "id": "稻香方程式 第二季",
     "title": "稻香方程式 第二季",
-    "author": "https://iili.io/naelyqx.png",
+    "author": "光風濟月",
     "status": "ongoing",
     "description": "故事並沒有在終點結束。方嶽嶺來到一個陌生而截然不同的世界，熟悉的力量以新的規則存在，新的城市、術式與敵人也接連出現。在失去與重逢之間，他再次踏上旅途，開始學習如何在這個世界活下來，也重新面對那些尚未結束的因果。",
-    "cover": "",
+    "cover": "https://iili.io/nGt2Lut.jpg",
     "chapterCount": 15,
     "chapters": [
       {
