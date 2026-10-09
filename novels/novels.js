@@ -22,31 +22,31 @@ const READER_FONTS = {
 const BUILTIN_READER_THEMES = {
   site: null,
   "midnight-lamp": {
-    "--reader-bg": "#0f1115", "--reader-text": "#e8e6e1", "--reader-muted": "#9da3ae",
+    "--reader-bg": "#1e222b", "--reader-text": "#e8e6e1", "--reader-muted": "#9da3ae",
     "--reader-accent": "#c9a96e", "--reader-border": "#303541"
   },
   "ice-fog": {
-    "--reader-bg": "#0b1117", "--reader-text": "#e5edf3", "--reader-muted": "#93a6b5",
+    "--reader-bg": "#12232e", "--reader-text": "#e5edf3", "--reader-muted": "#93a6b5",
     "--reader-accent": "#7eb6d8", "--reader-border": "#293744"
   },
   "night-pine": {
-    "--reader-bg": "#0d1110", "--reader-text": "#e5e9e5", "--reader-muted": "#99a49d",
+    "--reader-bg": "#1b2420", "--reader-text": "#e5e9e5", "--reader-muted": "#99a49d",
     "--reader-accent": "#72b59a", "--reader-border": "#303b35"
   },
   "almond-pen": {
-    "--reader-bg": "#f5f1e8", "--reader-text": "#292722", "--reader-muted": "#706b61",
+    "--reader-bg": "#fffdf7", "--reader-text": "#292722", "--reader-muted": "#706b61",
     "--reader-accent": "#8a5a44", "--reader-border": "#d8d0c1"
   },
   "fantasy-starry-night": {
-    "--reader-bg": "#0d0c12", "--reader-text": "#ece9f2", "--reader-muted": "#a6a0b3",
+    "--reader-bg": "#1d1a27", "--reader-text": "#ece9f2", "--reader-muted": "#a6a0b3",
     "--reader-accent": "#9b82c4", "--reader-border": "#322d3d"
   },
   "morning-mist": {
-    "--reader-bg": "#f4f7f8", "--reader-text": "#20282d", "--reader-muted": "#65747d",
+    "--reader-bg": "#ffffff", "--reader-text": "#20282d", "--reader-muted": "#65747d",
     "--reader-accent": "#4d8296", "--reader-border": "#d5e0e5"
   },
   "pine-almond": {
-    "--reader-bg": "#f7f4ec", "--reader-text": "#29312c", "--reader-muted": "#73796f",
+    "--reader-bg": "#fffdf8", "--reader-text": "#29312c", "--reader-muted": "#73796f",
     "--reader-accent": "#55745f", "--reader-border": "#d9d5c8"
   },
   paper: {
