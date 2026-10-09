@@ -66,18 +66,22 @@
     "status": "ongoing",
     "description": "",
     "cover": "",
-    "chapterCount": 1,
+    "chapterCount": 2,
     "chapters": [
       {
         "chapter": 1,
         "title": "夜幕"
+      },
+      {
+        "chapter": 2,
+        "title": "清晨"
       }
     ],
     "latestChapter": {
-      "chapter": 1,
-      "title": "夜幕"
+      "chapter": 2,
+      "title": "清晨"
     },
-    "updateTime": "2026-10-09T22:35:12+08:00"
+    "updateTime": "2026-10-09T22:37:28+08:00"
   },
   {
     "id": "稻香方程式",
