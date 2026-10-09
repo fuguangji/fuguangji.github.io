@@ -18,3 +18,44 @@
 
 /* 小說列表：每部作品各自成卡片，外層僅保留標題區 */
 .novel-list > .section-card{background:transparent;border:0;box-shadow:none;padding:0;margin:0}.novel-grid{margin-top:1.5rem}
+
+
+/* 閱讀器文字強調：沿用主頁卡片主題色 */
+.reader {
+  --reader-strong: var(--reader-accent);
+  --reader-emphasis: var(--reader-light-accent, var(--light-accent));
+}
+.reader-content strong,
+.reader-content b {
+  color: var(--reader-strong);
+  font-weight: 800;
+}
+.reader-content em,
+.reader-content i {
+  color: var(--reader-emphasis);
+  font-style: italic;
+}
+.reader-content strong em,
+.reader-content em strong,
+.reader-content b i,
+.reader-content i b {
+  color: var(--reader-emphasis);
+}
+.reader-content blockquote {
+  margin: 1.5em 0;
+  padding: .25em 1em;
+  color: var(--reader-muted);
+  border-left: 3px solid var(--reader-accent);
+  background: color-mix(in srgb, var(--reader-bg) 86%, var(--reader-accent) 14%);
+}
+.reader-content hr {
+  border: 0;
+  border-top: 1px solid var(--reader-border);
+  margin: 2em 0;
+}
+.reader-content code {
+  color: var(--reader-accent);
+  background: color-mix(in srgb, var(--reader-bg) 82%, var(--reader-accent) 18%);
+  border-radius: .25em;
+  padding: .08em .3em;
+}
