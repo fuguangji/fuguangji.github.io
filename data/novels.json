@@ -66,7 +66,7 @@
     "status": "ongoing",
     "description": "",
     "cover": "",
-    "chapterCount": 2,
+    "chapterCount": 7,
     "chapters": [
       {
         "chapter": 1,
@@ -75,13 +75,33 @@
       {
         "chapter": 2,
         "title": "清晨"
+      },
+      {
+        "chapter": 3,
+        "title": "曉"
+      },
+      {
+        "chapter": 4,
+        "title": "晨"
+      },
+      {
+        "chapter": 5,
+        "title": "夜色"
+      },
+      {
+        "chapter": 6,
+        "title": "第一個，早晨"
+      },
+      {
+        "chapter": 7,
+        "title": "夜幕·反轉"
       }
     ],
     "latestChapter": {
-      "chapter": 2,
-      "title": "清晨"
+      "chapter": 7,
+      "title": "夜幕·反轉"
     },
-    "updateTime": "2026-10-09T22:37:28+08:00"
+    "updateTime": "2026-10-09T22:37:45+08:00"
   },
   {
     "id": "稻香方程式",
