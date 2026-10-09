@@ -7,10 +7,10 @@
     "description": "一個長久與人群保持距離的少年，在升上國中後遇見了林以辰。從一次看似普通的相遇開始，他逐漸學會與人說話、建立友誼，也第一次感受到被世界接住的溫度。以物理學與光學概念為章名，故事描寫孤獨、改變、青春，以及一段從靠近開始的關係。",
     "cover": "",
     "latestChapter": {
-      "chapter": 12,
-      "title": "相位匹配條件"
+      "chapter": 11,
+      "title": "共振增幅原理"
     },
-    "chapterCount": 12,
+    "chapterCount": 11,
     "chapters": [
       {
         "chapter": 1,
@@ -55,10 +55,6 @@
       {
         "chapter": 11,
         "title": "共振增幅原理"
-      },
-      {
-        "chapter": 12,
-        "title": "相位匹配條件"
       }
     ],
     "updateTime": "2026-10-07T10:42:57+08:00"
