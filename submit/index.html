@@ -21,7 +21,7 @@
 <div><code>---</code><span>分隔線</span></div>
 <div><code>空一行</code><span>分段；目前閱讀器也會保留單行換行</span></div>
 </div>
-<p class="markdown-note">章節開頭建議固定寫成：<code>第X章 標題名</code>，下一行開始正文。系統會自動解析篇名。</p>
+<p class="markdown-note">**章節第一行會自動作為正文標題，並以亮強調色顯示。** 投稿時請先在第一行寫標題（例如 <code>第X章 標題名</code>），第二行開始正文；系統會自動將第一行轉成標題，不需要額外加上 <code>#</code>。如果第一行已經有 Markdown 標題標記，也會自動辨識。</p>
 </section>
 <form class="submit-form" onsubmit="event.preventDefault();document.querySelector('#submit-notice').hidden=false;">
 <label>稱呼<input type="text" name="name" placeholder="怎麼稱呼你？" required></label>
