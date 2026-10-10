@@ -237,3 +237,8 @@
   border-top: 1px solid var(--reader-border);
   margin: 2.5em 0;
 }
+
+
+/* 章節第一行自動標題：使用目前閱讀主題的亮強調色 */
+.reader-content .reader-content-title{margin:0 0 1.6em;color:var(--reader-light-accent,var(--light-accent,var(--reader-accent)));font-size:1.35em;font-weight:800;line-height:1.55;letter-spacing:.02em}
+.reader-content .reader-content-title:first-child{margin-top:0}
