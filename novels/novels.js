@@ -540,17 +540,17 @@ async function loadChapter(novel, chapter) {
     if (typeof marked === "undefined") throw new Error("Markdown parser 尚未載入");
 
     // 將章節 Markdown 的第一個非空白行自動作為正文標題，正文不再重複顯示該行。
-    const lines = markdown.replace(/^\\uFEFF/, "").split(/\\r?\\n/);
+    const lines = markdown.replace(/^\uFEFF/, "").split(/\r?\n/);
     const titleIndex = lines.findIndex((line) => line.trim().length > 0);
     let chapterHeading = "";
     if (titleIndex >= 0) {
       const firstLine = lines[titleIndex].trim();
       // 若第一行已使用 Markdown 標題語法，去除標記後再統一套用自動標題樣式。
-      const titleText = firstLine.replace(/^#{1,6}\\s+/, "");
+      const titleText = firstLine.replace(/^#{1,6}\s+/, "");
       chapterHeading = `<h2 class="reader-content-title">${marked.parseInline(titleText, { gfm:true, breaks:true })}</h2>`;
       lines.splice(titleIndex, 1);
     }
-    content.innerHTML = chapterHeading + marked.parse(lines.join("\\n"), { gfm:true, breaks:true, headerIds:false, mangle:false });
+    content.innerHTML = chapterHeading + marked.parse(lines.join("\n"), { gfm:true, breaks:true, headerIds:false, mangle:false });
     ensureReaderProgress(novel, chapter);
     restoreReaderProgress(novel, chapter);
     setupReaderProgress(novel, chapter);
