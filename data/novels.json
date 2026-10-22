@@ -378,7 +378,7 @@
     "status": "ongoing",
     "description": "故事並沒有在終點結束。方嶽嶺來到一個陌生而截然不同的世界，熟悉的力量以新的規則存在，新的城市、術式與敵人也接連出現。在失去與重逢之間，他再次踏上旅途，開始學習如何在這個世界活下來，也重新面對那些尚未結束的因果。",
     "cover": "https://iili.io/nGt2Lut.jpg",
-    "chapterCount": 17,
+    "chapterCount": 18,
     "chapters": [
       {
         "chapter": 1,
@@ -447,13 +447,17 @@
       {
         "chapter": 17,
         "title": "第二季 第十七章 鐵與血"
+      },
+      {
+        "chapter": 18,
+        "title": "燃血"
       }
     ],
     "latestChapter": {
-      "chapter": 17,
-      "title": "第二季 第十七章 鐵與血"
+      "chapter": 18,
+      "title": "燃血"
     },
-    "updateTime": "2026-10-22T11:37:49+08:00"
+    "updateTime": "2026-10-22T11:40:27+08:00"
   },
   {
     "id": "第零站",
