@@ -378,7 +378,7 @@
     "status": "ongoing",
     "description": "故事並沒有在終點結束。方嶽嶺來到一個陌生而截然不同的世界，熟悉的力量以新的規則存在，新的城市、術式與敵人也接連出現。在失去與重逢之間，他再次踏上旅途，開始學習如何在這個世界活下來，也重新面對那些尚未結束的因果。",
     "cover": "https://iili.io/nGt2Lut.jpg",
-    "chapterCount": 15,
+    "chapterCount": 16,
     "chapters": [
       {
         "chapter": 1,
@@ -439,13 +439,17 @@
       {
         "chapter": 15,
         "title": "喘息"
+      },
+      {
+        "chapter": 16,
+        "title": "第二季 第十六章 回憶"
       }
     ],
     "latestChapter": {
-      "chapter": 15,
-      "title": "喘息"
+      "chapter": 16,
+      "title": "第二季 第十六章 回憶"
     },
-    "updateTime": "2026-10-06T19:07:10+08:00"
+    "updateTime": "2026-10-22T11:35:48+08:00"
   },
   {
     "id": "第零站",
