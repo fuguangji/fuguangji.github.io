@@ -1,8 +1,8 @@
 name: Deploy HANEXO
 
 on:
-  # HANEXO is a separate private repository, so this workflow polls its main branch.
-  # GitHub Actions schedules have a minimum interval of 5 minutes.
+  # HANEXO is private and lives in another repository, so poll its main branch.
+  # Scheduled runs may be delayed by GitHub Actions.
   schedule:
     - cron: "*/5 * * * *"
   workflow_dispatch:
@@ -22,7 +22,21 @@ jobs:
       - name: Checkout website repository
         uses: actions/checkout@v4
 
+      - name: Check deployment configuration
+        id: config
+        env:
+          HANEXO_TOKEN: ${{ secrets.HANEXO_TOKEN }}
+        shell: bash
+        run: |
+          if [ -z "$HANEXO_TOKEN" ]; then
+            echo "configured=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::HANEXO_TOKEN is not configured. See the HANEXO README."
+          else
+            echo "configured=true" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Checkout HANEXO source
+        if: steps.config.outputs.configured == 'true'
         uses: actions/checkout@v4
         with:
           repository: fuguangji/Hanexo
@@ -32,6 +46,7 @@ jobs:
 
       - name: Check whether HANEXO is ready and changed
         id: source
+        if: steps.config.outputs.configured == 'true'
         shell: bash
         run: |
           if [ ! -f hanexo-src/package.json ]; then
