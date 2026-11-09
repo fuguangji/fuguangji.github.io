@@ -1,0 +1,107 @@
+name: Deploy HANEXO
+
+on:
+  # HANEXO is a separate private repository, so this workflow polls its main branch.
+  # GitHub Actions schedules have a minimum interval of 5 minutes.
+  schedule:
+    - cron: "*/5 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: deploy-hanexo
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout website repository
+        uses: actions/checkout@v4
+
+      - name: Checkout HANEXO source
+        uses: actions/checkout@v4
+        with:
+          repository: fuguangji/Hanexo
+          ref: main
+          token: ${{ secrets.HANEXO_TOKEN }}
+          path: hanexo-src
+
+      - name: Check whether HANEXO is ready and changed
+        id: source
+        shell: bash
+        run: |
+          if [ ! -f hanexo-src/package.json ]; then
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+            echo "HANEXO has no package.json yet; skipping this run."
+            exit 0
+          fi
+
+          SOURCE_SHA="$(git -C hanexo-src rev-parse HEAD)"
+          echo "ready=true" >> "$GITHUB_OUTPUT"
+          echo "sha=$SOURCE_SHA" >> "$GITHUB_OUTPUT"
+
+          if [ -f .hanexo-deployed-sha ] && [ "$(cat .hanexo-deployed-sha)" = "$SOURCE_SHA" ]; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "No new HANEXO commit to deploy."
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            echo "A new HANEXO commit was found."
+          fi
+
+      - name: Set up Node.js
+        if: steps.source.outputs.ready == 'true' && steps.source.outputs.changed == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: hanexo-src/package-lock.json
+
+      - name: Install dependencies
+        if: steps.source.outputs.ready == 'true' && steps.source.outputs.changed == 'true'
+        working-directory: hanexo-src
+        shell: bash
+        run: |
+          if [ -f package-lock.json ]; then
+            npm ci
+          else
+            npm install
+          fi
+
+      - name: Build HANEXO
+        if: steps.source.outputs.ready == 'true' && steps.source.outputs.changed == 'true'
+        working-directory: hanexo-src
+        run: npm run build
+
+      - name: Publish dist to game/Hanexo
+        if: steps.source.outputs.ready == 'true' && steps.source.outputs.changed == 'true'
+        shell: bash
+        run: |
+          test -d hanexo-src/dist || {
+            echo "Build completed but hanexo-src/dist was not found."
+            exit 1
+          }
+
+          mkdir -p game/Hanexo
+          find game/Hanexo -mindepth 1 -maxdepth 1 -exec rm -rf {} +
+          cp -a hanexo-src/dist/. game/Hanexo/
+          touch game/Hanexo/.nojekyll
+          printf '%s' "${{ steps.source.outputs.sha }}" > .hanexo-deployed-sha
+
+      - name: Commit and push deployment
+        if: steps.source.outputs.ready == 'true' && steps.source.outputs.changed == 'true'
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- game/Hanexo .hanexo-deployed-sha
+
+          if git diff --cached --quiet; then
+            echo "Generated files are unchanged; nothing to commit."
+          else
+            git commit -m "Deploy HANEXO from ${{ steps.source.outputs.sha }}"
+            git push
+          fi
