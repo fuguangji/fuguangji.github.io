@@ -378,7 +378,7 @@
     "status": "ongoing",
     "description": "故事並沒有在終點結束。方嶽嶺來到一個陌生而截然不同的世界，熟悉的力量以新的規則存在，新的城市、術式與敵人也接連出現。在失去與重逢之間，他再次踏上旅途，開始學習如何在這個世界活下來，也重新面對那些尚未結束的因果。",
     "cover": "https://iili.io/nGt2Lut.jpg",
-    "chapterCount": 23,
+    "chapterCount": 24,
     "chapters": [
       {
         "chapter": 1,
@@ -471,13 +471,17 @@
       {
         "chapter": 23,
         "title": "癒"
+      },
+      {
+        "chapter": 24,
+        "title": "記憶"
       }
     ],
     "latestChapter": {
-      "chapter": 23,
-      "title": "癒"
+      "chapter": 24,
+      "title": "記憶"
     },
-    "updateTime": "2026-11-18T18:17:29+08:00"
+    "updateTime": "2026-11-18T18:21:09+08:00"
   },
   {
     "id": "第零站",
