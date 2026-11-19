@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小說列表|光風濟月</title>
+  <link rel="stylesheet" crossorigin href="/game/Hanexo/assets/index-CYc1J02Z.css">
+</head>
+<style>
+</style>
+<body>
+    <button class="back-button" id="back-button" type="button" onclick="homeMode()" hidden>← 返回</button>
+    <div class="main-content">
+        <div class="hero-section" id="main">
+            <h1>Welcome to Hanexo</h1>
+            <p>生產。資源。物流。能源</p>
+            <div class="btn-group">
+                <button onclick="serverMode()">公服模式</button>
+                <button onclick="privateMode()">私人連機</button>
+                <button onclick="personalMode()">個人模式</button>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    const mainContent = document.querySelector('.main-content');
+    const backButton = document.querySelector('#back-button');
+    function homeMode() {
+        mainContent.innerHTML = `
+            <div class="hero-section" id="main">
+                <h1>Welcome to Hanexo</h1>
+                <p>生產。資源。物流。能源</p>
+                <div class="btn-group">
+                    <button onclick="serverMode()">公服模式</button>
+                    <button onclick="privateMode()">私人連機</button>
+                    <button onclick="personalMode()">個人模式</button>
+                </div>
+            </div>
+        `;
+        backButton.hidden = true;
+    }
+    function serverMode() {
+        alert('Hello, Hanexo!');
+    }
+    function privateMode() {
+        backButton.hidden = false;
+        mainContent.innerHTML = `
+            <div class="hero-section" id="main">
+                <h1>私人連機</h1>
+                <p>與朋友享受無限制地遊戲</p>
+                <div class="btn-group">
+                    <button onclick="createServer()">建立伺服器(需要登入plus帳號)</button>
+                    <button onclick="joinServer()">加入伺服器(無須plus，有帳號即可)</button>
+                </div>
+            </div>
+        `;
+    }
+    function personalMode() {
+        const files = localStorage.getItem('files')?JSON.parse(localStorage.getItem('files')):0;
+        backButton.hidden = false;
+        const display = files ?files.map((file, index) => `
+                        <button onclick="loadFile(${index})">${file.name}</button>
+                    `).join(''):"尚未遊玩過";
+        mainContent.innerHTML = `
+            <div class="hero-section" id="main">
+                <h1>個人模式</h1>
+                <p>單人遊戲，無需網路連線</p>
+                <div class="btn-group">
+                    ${display}
+                </div>
+            </div>
+        `;
+    }
+    function createServer() {
+        alert('建立伺服器功能尚未開放');
+    }
+    function joinServer() {
+        alert('加入伺服器功能尚未開放');
+    }
+</script>
+</html>
